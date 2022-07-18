@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::any('callback', function(\Illuminate\Http\Request $request) {
+    \Illuminate\Support\Facades\Log::debug($request->all());
+});
