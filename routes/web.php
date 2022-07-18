@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,7 +57,19 @@ Route::get('firefly/{school}/success', function (\Illuminate\Http\Request $reque
         $array = json_decode($json);
 
         $user = $array->user->{'@attributes'};
-        $user = User::create($user->email, "firefly-".$school, $user->name, $user->username);
+
+        $existingUser = User::where('email', $user->email)->first();
+        if($existingUser){
+            // log them in
+            auth()->login($existingUser, true);
+        } else {
+            // create a new user
+            $user = User::create($user->email, "firefly-".$school, $user->name, $user->username);
+            auth()->login($user, true);
+        }
+
+
+
         return redirect()->to('/home');
     }
 });
