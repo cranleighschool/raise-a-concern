@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -41,35 +43,57 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function googleRedirect()
-    {
-        return Socialite::driver('google')->redirect();
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $school
+     *
+     * @return \Illuminate\Http\RedirectResponse|void
+     * @throws \Illuminate\Http\Client\RequestException
+     */
+    public function callbackSuccess(Request $request, string $school) {
+        if ($request->has('ffauth_secret')) {
+            $host = match ($school) {
+                'senior' => 'https://cranleigh.fireflycloud.net',
+                'prep' => 'https://cranprep.fireflycloud.net'
+            };
+            $output = Http::get($host.'/login/api/sso', [
+                'ffauth_device_id' => 'raiseaconcern-cranleigh',
+                'ffauth_secret' => $request->get('ffauth_secret'),
+            ])->throw()->body();
+
+            $xml = simplexml_load_string($output);
+            $json = json_encode($xml);
+            $array = json_decode($json);
+
+            $user = $array->user->{'@attributes'};
+
+            $existingUser = User::where('email', $user->email)->first();
+            if($existingUser){
+                // log them in
+                auth()->login($existingUser, true);
+            } else {
+                // create a new user
+                $user = User::create($user->email, "firefly-".$school, $user->name, $user->username);
+                auth()->login($user, true);
+            }
+
+            return redirect()->to('/home');
+        }
     }
 
-    public function googleCallback()
-    {
-        try {
-            $user = Socialite::driver('google')->user();
-        } catch (\Exception $e) {
-            return redirect('/login');
-        }
+    /**
+     * @param  string  $school
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function loginRedirect(string $school) {
+        $host = match ($school) {
+            'senior' => 'https://cranleigh.fireflycloud.net',
+            'prep' => 'https://cranprep.fireflycloud.net'
+        };
 
-        // only allow people with @company.com to login
-        if(explode("@", $user->email)[1] !== 'cranleigh.org'){
-            return redirect()->to('/');
-        }
-        // check if they're an existing user
-        $existingUser = User::where('email', $user->email)->first();
-        if($existingUser){
-            // log them in
-            auth()->login($existingUser, true);
-        } else {
-            // create a new user
-            $username = Str::replace('@cranleigh.org', "", $user->email);
-            $user = User::create($user->email, "google", $user->name, $username);
+        $url = route('firefly-success', $school);
 
-            auth()->login($user, true);
-        }
-        return redirect()->to('/home');
+        return redirect($host.'/login/api/webgettoken?app=raiseaconcern-cranleigh&successURL='.$url);
     }
 }
