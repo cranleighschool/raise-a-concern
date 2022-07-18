@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,13 +21,55 @@ Route::get('/', function () {
 Route::get('redirect', [\App\Http\Controllers\Auth\LoginController::class, 'googleRedirect']);
 Route::get('callback', [\App\Http\Controllers\Auth\LoginController::class, 'googleRedirect']);
 
-/*Route::any('callback', function(\Illuminate\Http\Request $request) {
+Route::any('fireflyCallback', function (\Illuminate\Http\Request $request) {
     if ($request->has('ffauth_secret')) {
-        \Illuminate\Support\Facades\Http::get('https://cranleigh.fireflycloud.net/login/api/sso?ffauth_device_id=raiseaconcern-cranleigh');
+
+        $output = \Illuminate\Support\Facades\Http::get('https://cranleigh.fireflycloud.net/login/api/sso', [
+            'ffauth_device_id' => 'raiseaconcern-cranleigh',
+            'ffauth_secret' => $request->get('ffauth_secret'),
+        ])->throw()->body();
+
+        $xml = simplexml_load_string($output);
+        $json = json_encode($xml);
+        $array = json_decode($json);
+
+        $user = $array->user->{'@attributes'};
+        $user = User::create($user->email, "firefly", $user->name, $user->username);
+
+        dd($array->user->{'@attributes'});
     }
     \Illuminate\Support\Facades\Log::debug($request->all());
 });
-*/
+Route::get('firefly/{school}/success', function (\Illuminate\Http\Request $request, string $school) {
+    if ($request->has('ffauth_secret')) {
+        $host = match ($school) {
+            'senior' => 'https://cranleigh.fireflycloud.net',
+            'prep' => 'https://cranprep.fireflycloud.net'
+        };
+        $output = \Illuminate\Support\Facades\Http::get($host.'/login/api/sso', [
+            'ffauth_device_id' => 'raiseaconcern-cranleigh',
+            'ffauth_secret' => $request->get('ffauth_secret'),
+        ])->throw()->body();
+
+        $xml = simplexml_load_string($output);
+        $json = json_encode($xml);
+        $array = json_decode($json);
+
+        $user = $array->user->{'@attributes'};
+        $user = User::create($user->email, "firefly-".$school, $user->name, $user->username);
+        return redirect()->to('/home');
+    }
+});
+
+Route::get('firefly/{school}', function (string $school) {
+    $host = match ($school) {
+        'senior' => 'https://cranleigh.fireflycloud.net',
+        'prep' => 'https://cranprep.fireflycloud.net'
+    };
+    $url = url('firefly/'.$school.'/success');
+    return redirect($host.'/login/api/webgettoken?app=raiseaconcern-cranleigh&successURL='.$url);
+});
+
 
 Auth::routes();
 
