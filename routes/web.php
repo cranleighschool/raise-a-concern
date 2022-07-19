@@ -29,5 +29,5 @@ Route::get('firefly/{school}', [LoginController::class, 'loginRedirect'])->name(
 Route::get('firefly/{school}/success', [LoginController::class, 'callbackSuccess'])->name('firefly-success');
 
 
-Route::get('/submit', [ConcernController::class, 'index'])->name('submit');
+Route::get('submit', [ConcernController::class, 'index'])->name('submit');
 Route::post('submit', [ConcernController::class, 'store'])->name('store');
