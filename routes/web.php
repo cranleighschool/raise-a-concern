@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ConcernController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,11 +22,12 @@ Auth::routes([
 ]);
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::get('firefly/{school}', [LoginController::class, 'loginRedirect'])->name('firefly-login');
 Route::get('firefly/{school}/success', [LoginController::class, 'callbackSuccess'])->name('firefly-success');
 
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/submit', [ConcernController::class, 'index'])->name('submit');
+Route::post('submit', [ConcernController::class, 'store'])->name('store');

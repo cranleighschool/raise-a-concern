@@ -43,6 +43,18 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    private function getIdentifierItems(string $identifier): array
+    {
+        $parts = explode(":", $identifier);
+        $isamsId = end($parts);
+        $db = str_replace("iSAMS", "", $parts[ 3 ]);
+
+        return [
+            'table' => $db,
+            'id' => (int) $isamsId,
+        ];
+    }
+
     /**
      * @param  \Illuminate\Http\Request  $request
      * @param  string  $school
@@ -50,7 +62,8 @@ class LoginController extends Controller
      * @return \Illuminate\Http\RedirectResponse|void
      * @throws \Illuminate\Http\Client\RequestException
      */
-    public function callbackSuccess(Request $request, string $school) {
+    public function callbackSuccess(Request $request, string $school)
+    {
         if ($request->has('ffauth_secret')) {
             $host = match ($school) {
                 'senior' => 'https://cranleigh.fireflycloud.net',
@@ -68,13 +81,14 @@ class LoginController extends Controller
             $user = $array->user->{'@attributes'};
 
             $existingUser = User::where('email', $user->email)->first();
-            if($existingUser){
+            if ($existingUser) {
                 // log them in
-                auth()->login($existingUser, true);
+                auth()->login($existingUser);
             } else {
                 // create a new user
-                $user = User::create($user->email, "firefly-".$school, $user->name, $user->username);
-                auth()->login($user, true);
+                $ssoData = $this->getIdentifierItems($user->identifier);
+                $user = User::create($user->email, $ssoData['table'], $user->name, $user->username, $ssoData['id']);
+                auth()->login($user);
             }
 
             return redirect()->to('/home');
@@ -86,7 +100,8 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function loginRedirect(string $school) {
+    public function loginRedirect(string $school)
+    {
         $host = match ($school) {
             'senior' => 'https://cranleigh.fireflycloud.net',
             'prep' => 'https://cranprep.fireflycloud.net'

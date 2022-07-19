@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'sso_type',
+        'sso_id',
         'username'
     ];
 
@@ -52,7 +53,7 @@ class User extends Authenticatable
      *
      * @return $this
      */
-    public static function create(string $email, string $ssoType, string $name, string $username): self
+    public static function create(string $email, string $ssoType, string $name, string $username, int $ssoId): self
     {
         return self::firstOrCreate(
             [
@@ -60,6 +61,7 @@ class User extends Authenticatable
             ],
             [
                 'sso_type' => $ssoType,
+                'sso_id' => $ssoId,
                 'name' => $name,
                 'username' => $username,
             ]

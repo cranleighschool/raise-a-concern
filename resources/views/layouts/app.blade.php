@@ -76,6 +76,8 @@
         </nav>
 
         <main class="py-4">
+            {{ displayAlertMsg() }}
+
             @yield('content')
         </main>
     </div>
