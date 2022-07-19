@@ -79,7 +79,7 @@ class ConcernController extends Controller
                     session()->flash("alert-warning", "Could not add IP Address to Database");
                 }
                 session()->flash("alert-success", "Submitted. Thank You.");
-                return redirect()->route('home');
+                return redirect()->route('submit');
             }
         } catch (RequestException $exception) {
             session()->flash("alert-danger", "There was an error and your concern was not submitted. If this problem persists please email your concern to safeguarding@cranleigh.org");
