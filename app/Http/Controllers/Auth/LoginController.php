@@ -43,6 +43,11 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * @param  string  $identifier
+     *
+     * @return array
+     */
     private function getIdentifierItems(string $identifier): array
     {
         $parts = explode(":", $identifier);
@@ -65,11 +70,12 @@ class LoginController extends Controller
     public function callbackSuccess(Request $request, string $school)
     {
         if ($request->has('ffauth_secret')) {
-            $host = match ($school) {
-                'senior' => 'https://cranleigh.fireflycloud.net',
-                'prep' => 'https://cranprep.fireflycloud.net'
+
+            $subdomain = match ($school) {
+                'senior' => 'cranleigh',
+                'prep' => 'cranprep'
             };
-            $output = Http::get($host.'/login/api/sso', [
+            $output = Http::get('https://'.$subdomain.'.fireflycloud.net/login/api/sso', [
                 'ffauth_device_id' => 'raiseaconcern-cranleigh',
                 'ffauth_secret' => $request->get('ffauth_secret'),
             ])->throw()->body();
@@ -84,16 +90,21 @@ class LoginController extends Controller
             if ($existingUser) {
                 // log them in
                 auth()->login($existingUser);
+                // Update db with login time
+                auth()->user()->update(['updated_at' => now()]);
             } else {
                 // create a new user
                 $ssoData = $this->getIdentifierItems($user->identifier);
                 $user = User::create($user->email, $ssoData['table'], $user->name, $user->username, $ssoData['id']);
                 auth()->login($user);
             }
+            // Let them know they've logged in
+            session()->flash("alert-success", "You have logged in as: ".auth()->user()->name." (".auth()->user()->sso_type.")");
 
             return redirect()->to('/submit');
         }
     }
+
 
     /**
      * @param  string  $school
@@ -102,13 +113,13 @@ class LoginController extends Controller
      */
     public function loginRedirect(string $school)
     {
-        $host = match ($school) {
-            'senior' => 'https://cranleigh.fireflycloud.net',
-            'prep' => 'https://cranprep.fireflycloud.net'
+        $subdomain = match ($school) {
+            'senior' => 'cranleigh',
+            'prep' => 'cranprep'
         };
 
         $url = route('firefly-success', $school);
 
-        return redirect($host.'/login/api/webgettoken?app=raiseaconcern-cranleigh&successURL='.$url);
+        return redirect('https://'.$subdomain.'.fireflycloud.net/login/api/webgettoken?app=raiseaconcern-cranleigh&successURL='.$url);
     }
 }

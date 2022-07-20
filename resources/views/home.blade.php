@@ -28,7 +28,7 @@
                             <div class="form-group{{ $errors->has('subject') ? ' has-error' : '' }}">
                                 <label>Subject</label>
                                 <input type="text"
-                                       class="form-control"
+                                       class="form-control form-control-lg"
                                        name="subject"
                                        value="{{ old('subject') }}"
                                 >
@@ -56,29 +56,25 @@
                                 <label>Regarding a</label>
                                 <br/>
                                 <input type="radio" name="person_type"
-                                       {{ $personTypePupil ? 'checked="checked' : ''}} value="pupil"/> Pupil
+                                       {{ $personTypePupil ? 'checked="checked' : ''}} value="pupil"/> Pupil <em>(notification will be sent to the Designated Safeguarding Lead)</em>
                                 <br/>
                                 <input type="radio" name="person_type"
-                                       {{ $personTypeStaff ? 'checked="checked"' : '' }} value="staff"/> Staff Member
+                                       {{ $personTypeStaff ? 'checked="checked"' : '' }} value="staff"/> Staff Member <em>(notification will be sent to the Headmaster)</em>
                                 <br/>
                                 <input type="radio" name="person_type"
-                                       {{ $personTypeHead ? 'checked="checked"' : '' }} value="headmaster"/> Headmaster
+                                       {{ $personTypeHead ? 'checked="checked"' : '' }} value="headmaster"/> Headmaster <em>(notification will be sent to the Chair of Governors)</em>
                                 <br/>@include('partials.input-error',['inputName' => 'person_type'])
                             </div>
 
                             <div class="form-group{{ $errors->has('school_id') ? ' has-error' : '' }}">
-                                @if (old('school') == 1)
+                                @if (old('school_id') == 1)
                                     @php ($senior = true)
                                     @php ($prep = false)
                                     @php ($unknown = false)
-                                @elseif (old('school') == 2)
+                                @elseif (old('school_id') == 2)
                                     @php ($senior = false)
                                     @php ($prep = true)
                                     @php ($unknown = false)
-                                @elseif (old('school') == null)
-                                    @php ($senior = false)
-                                    @php ($prep = false)
-                                    @php ($unknown = true)
                                 @else
                                     @php ($senior = false)
                                     @php ($prep = false)
@@ -94,7 +90,7 @@
                                 <br/>
                                 <input type="radio" name="school_id"
                                        {{ $unknown ? 'checked="checked"' : '' }} value=""/> Unknown
-                                @include('partials.input-error',['inputName' => 'school_id'])
+                                <br />@include('partials.input-error',['inputName' => 'school_id'])
 
                             </div>
 
@@ -103,7 +99,7 @@
                                           class="form-control wysiwyg">{{ old('concern') }}</textarea>
                                 @include('partials.input-error',['inputName' => 'concern'])
                             </div>
-
+<br />
                             <button type="submit" class="btn btn-lg btn-dark">
                                 {{ $submitButtonText ?? 'Submit' }}
                             </button>
