@@ -67,7 +67,7 @@ class ConcernController extends Controller
         $data['api_token'] = config('pastoral-module.apiToken');
 
         try {
-            $postData = Http::baseUrl(config('pastoral-module.apiUrl'))->acceptJson()->post('concerns/store', $data)->throw();
+            $postData = Http::withUserAgent("RaiseAConcern")->baseUrl(config('pastoral-module.apiUrl'))->acceptJson()->post('concerns/store', $data)->throw();
             if ($postData->ok()) {
                 $concernId = $postData->object()->concern;
                 try {
