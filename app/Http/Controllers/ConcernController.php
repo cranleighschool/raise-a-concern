@@ -76,12 +76,17 @@ class ConcernController extends Controller
                         'ipaddress' => getRealIpAddress()
                     ]);
                 } catch (QueryException $queryException) {
+                    Log::error("Could not ad IP Address to Database", [
+                        'concern_id' => $concernId,
+                        'ip' => getRealIpAddress()
+                    ]);
                     session()->flash("alert-warning", "Could not add IP Address to Database");
                 }
                 session()->flash("alert-success", "Submitted. Thank You.");
                 return redirect()->route('submit');
             }
         } catch (RequestException $exception) {
+            Log::error($exception->getMessage());
             session()->flash("alert-danger", "There was an error and your concern was not submitted. If this problem persists please email your concern to safeguarding@cranleigh.org");
             return redirect()->back()->withInput($request->only(['person_type', 'school_id', 'subject', 'concern']));
         }
