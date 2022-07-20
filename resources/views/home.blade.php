@@ -16,12 +16,12 @@
                         @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                                @endforeach
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
                                 </ul>
-                    </div>
-                            @endif
+                            </div>
+                        @endif
                         <form id="create-concern" method="post" action="{{ route('store') }}" class="form">
                             {{ csrf_field() }}
                             {{ method_field('POST') }}
@@ -63,7 +63,7 @@
                                 <br/>
                                 <input type="radio" name="person_type"
                                        {{ $personTypeHead ? 'checked="checked"' : '' }} value="headmaster"/> Headmaster
-                                <br />@include('partials.input-error',['inputName' => 'person_type'])
+                                <br/>@include('partials.input-error',['inputName' => 'person_type'])
                             </div>
 
                             <div class="form-group{{ $errors->has('school_id') ? ' has-error' : '' }}">
@@ -82,7 +82,7 @@
                                 @else
                                     @php ($senior = false)
                                     @php ($prep = false)
-                                    @php ($unknown = true)
+                                    @php ($unknown = false)
                                 @endif
                                 <label>School</label>
                                 <br/>
@@ -99,8 +99,8 @@
                             </div>
 
                             <div class="form-group{{$errors->has('concern') ? ' has-error' : '' }}">
-    <textarea id="concern" name="concern" cols="8" rows="10"
-              class="form-control wysiwyg">{{ old('concern') }}</textarea>
+                                <textarea id="concern" name="concern" cols="8" rows="10"
+                                          class="form-control wysiwyg">{{ old('concern') }}</textarea>
                                 @include('partials.input-error',['inputName' => 'concern'])
                             </div>
 
