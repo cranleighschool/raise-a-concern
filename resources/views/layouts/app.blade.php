@@ -23,7 +23,6 @@
         tinymce.init({
             selector: 'textarea.wysiwyg',
             menubar: false,
-            content_css: '/css/editor.css',
             statusbar: false,
             browser_spellcheck: true,
             toolbar1: 'undo redo | styleselect | bold italic | link bullist numlist outdent indent | forecolor backcolor | paste',
