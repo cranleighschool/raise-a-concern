@@ -29,6 +29,10 @@ class ConcernController extends Controller
      */
     public function __construct()
     {
+
+    }
+    private function setVars()
+    {
         $this->loggedInUser = auth()->user();
         $this->pastoralModuleUserId = $this->getPastoralModuleUserId();
     }
@@ -40,6 +44,7 @@ class ConcernController extends Controller
      */
     public function index()
     {
+        $this->setVars();
         $pastoralModuleUserId = $this->pastoralModuleUserId;
 
         return view('home', compact('pastoralModuleUserId'));
@@ -52,6 +57,7 @@ class ConcernController extends Controller
      */
     public function store(Request $request)
     {
+        $this->setVars();
         $request->validate([
             'person_type' => 'required|string',
             'subject' => 'required|string|min:2|max:50',
