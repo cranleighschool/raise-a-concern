@@ -58,7 +58,7 @@ class ConcernController extends Controller
             'person_type' => 'required|string',
             'subject' => 'required|string|min:2|max:50',
             'school_id' => 'nullable|in:1,2',
-            'concern' => 'required|string|min:5|size:4096',
+            'concern' => 'required|string|min:5|max:4096',
         ]);
         $data = $request->only(['person_type', 'school_id', 'subject', 'concern']);
         $data[ 'submitter' ] = $this->getSubmitter();
