@@ -73,7 +73,9 @@ class ConcernController extends Controller
                 try {
                     DB::table('concerns_ip_address')->insert([
                         'concern_id' => $concernId,
-                        'ipaddress' => getRealIpAddress()
+                        'ipaddress' => getRealIpAddress(),
+                        'created_at' => now(),
+                        'updated_at' => now(),
                     ]);
                 } catch (QueryException $queryException) {
                     Log::error("Could not ad IP Address to Database", [
