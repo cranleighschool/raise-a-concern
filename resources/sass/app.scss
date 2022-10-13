@@ -6,3 +6,55 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+$theme-colors: (
+    "primary": #0c223f,
+);
+
+
+nav.navbar.navbar-dark {
+    background: #0c223f !important;
+    color:#fff !important;
+    border-bottom: 10px solid #8eb8ef;
+}
+.container {
+
+}
+a {
+    text-decoration: none;
+}
+.card {
+    border-color: #0c223f;
+}
+.card-header {
+    background-color:#0c223f;
+    color:#fff;
+}
+.card-footer {
+    background-color:#8eb8ef;
+    color:#fff;
+    a {
+        color:#0c223f;
+    }
+}
+.login-images {
+    .img-thumbnail {
+        background-color: #fff;
+        border-width: 2px;
+    }
+    .img-thumbnail:hover {
+        background-color: #f8fafc;
+    }
+}
+
+.spacer {
+    display: block;
+    margin:7.5px;
+}
+.btn-cranleigh {
+    @include button-outline-variant(#0c223f);
+}
+#whogetsnotified {
+    font-weight: bolder;
+}
+

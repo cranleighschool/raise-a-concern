@@ -1,4 +1,5 @@
 <!doctype html>
+{{-- Design Idea: https://www.surreycc.gov.uk/children/contact-childrens-services --}}
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -18,7 +19,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <script src="//cdn.tiny.cloud/1/5aorefy1a3tzggygtpkx81v9k5puvldfm55a0il6y929m3fw/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="//cdn.tiny.cloud/1/5aorefy1a3tzggygtpkx81v9k5puvldfm55a0il6y929m3fw/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"></script>
     <script type="text/javascript">
         tinymce.init({
             selector: 'textarea.wysiwyg',
@@ -45,66 +47,164 @@
     </script>
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+<div id="app">
+    <nav class="navbar navbar-expand-md navbar-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url('/') }}">
+                {{ config('app.name', 'Laravel') }}
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Left Side Of Navbar -->
+                <ul class="navbar-nav me-auto">
 
-                    </ul>
+                </ul>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
+                <!-- Right Side Of Navbar -->
+                <ul class="navbar-nav ms-auto">
+                    <!-- Authentication Links -->
+                    @guest
+                        @if (Route::has('login'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                        @endif
 
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                        @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            </li>
+                        @endif
+                    @else
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                    @endguest
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+    <main class="py-4">
+        <div class="container img-thumbnail bg-white" style="border:0px;padding-top:10px; padding-bottom: 10px;">
+            <div class="row">
+                <div class="col-12">
+                    <p class="lead text-danger text-center">If you think that a child is in immediate danger you should call: <a href="tel:999">999</a>.</p>
+<hr />
+                </div>
+                <div class="col-8">
+                    {{ displayAlertMsg() }}
+
+                    @yield('content')
+                </div>
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Contacts</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <th>Name</th>
+                                    {{--                                    <th>Job Title</th>--}}
+                                    <th>Phone</th>
+                                    <th>Email</th>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Sue Fairbrother<br/>
+                                            <em class="small">Head of Safeguarding</em></td>
+                                        <td><a href="tel:+441483927559">01483 927559</a></td>
+                                        <td><a href="mailto:sff@cranleigh.org">sff@cranleigh.org</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Dr Andrea Saxel<br/>
+                                            <em class="small">CS Designated Safeguarding Lead</em></td>
+                                        <td><a href="tel:+447810026050">07810 026050</a></td>
+                                        <td><a href="mailto:aps@cranleigh.org">aps@cranleigh.org</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mrs Emma Lewis<br/>
+                                            <em class="small">CPS Designated Safeguarding Lead</em></td>
+                                        <td><a href="tel:+447810007922">07810 007922</a></td>
+                                        <td><a href="mailto:efl@cranprep.org">efl@cranprep.org</a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <p>Read more about our safeguarding team on the website: <a href="https://www.cranleigh.org/welcome/people/safeguarding" target="_blank">Cranleigh School</a> | <a href="https://www.cranprep.org/welcome/people/safeguarding" target="_blank">Cranleigh Prep School</a></p>
+                        </div>
+                    </div>
+                    <div class="spacer">&nbsp;</div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Useful Links</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li><a href="https://cranleigh.fireflycloud.net/teen-and-parent-resources"
+                                       target="_blank">Cranleigh's Teen and Parent Resources</a></li>
+                                <li><a href="https://www.cranleigh.org/policies/child-protection-safeguarding/"
+                                       target="_blank">Cranleigh School's Safeguarding Policy</a></li>
+                                <li><a href="https://www.cranprep.org/policies/safeguarding-child-protection-policy/"
+                                       target="_blank">Cranleigh Prep School's Safeguarding Policy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-        </nav>
+        </div>
 
-        <main class="py-4">
-            {{ displayAlertMsg() }}
-
-            @yield('content')
-        </main>
-    </div>
+    </main>
+</div>
 </body>
+<script type="text/javascript">
+    var targetContainer = document.getElementById('notified-container');
+    var target = document.getElementById('whogetsnotified');
+    var head = document.getElementById('person_type_head');
+    var staff = document.getElementById('person_type_staff');
+    var pupil = document.getElementById('person_type_pupils');
+    var btn = document.getElementsByClassName('btn-check');
+    function action() {
+        if (pupil.checked) {
+            target.innerHTML = "The safeguarding team.";
+        }
+        if (staff.checked) {
+            target.innerHTML = "The Headmaster.";
+
+        }
+        if (head.checked) {
+            target.innerHTML = "The Chair of Governors.";
+        }
+        targetContainer.classList.remove('visually-hidden');
+
+    }
+    for (var i = 0; i < btn.length; i++) {
+        btn[i].addEventListener('click', action);
+    }
+</script>
 </html>
