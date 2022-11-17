@@ -189,18 +189,34 @@
     var staff = document.getElementById('person_type_staff');
     var pupil = document.getElementById('person_type_pupils');
     var btn = document.getElementsByClassName('btn-check');
+    var senior = document.getElementById('school_cs');
+    var prep = document.getElementById('school_prep');
+   var unknownSchool = document.getElementById('school_unknown');
     function action() {
         if (pupil.checked) {
-            target.innerHTML = "The safeguarding team.";
+            if (senior.checked) {
+                target.innerHTML = "The safeguarding team at Cranleigh School.";
+            } else if (prep.checked) {
+                target.innerHTML = 'The safeguarding team at Cranleigh Prep School.';
+            } else {
+                target.innerHTML = "The safeguarding team.";
+            }
         }
         if (staff.checked) {
-            target.innerHTML = "The Headmaster.";
-
+            if (senior.checked) {
+                target.innerHTML = "The Headmaster at Cranleigh School, Mr Martin Reader.";
+            } else if (prep.checked) {
+                target.innerHTML = 'The Headmaster at Cranleigh Prep School, Mr Neil Brooks.';
+            } else {
+                target.innerHTML = "The Headmaster.";
+            }
         }
         if (head.checked) {
-            target.innerHTML = "The Chair of Governors.";
+            target.innerHTML = "The Chair of Governors, Mr Adrian Lajtha.";
         }
-        targetContainer.classList.remove('visually-hidden');
+        if (pupil.checked || head.checked || staff.checked) {
+            targetContainer.classList.remove('visually-hidden');
+        }
 
     }
     for (var i = 0; i < btn.length; i++) {
