@@ -64,22 +64,23 @@ class ConcernController extends Controller
         ]);
         $data = $request->only(['person_type', 'school_id', 'subject', 'concern']);
         $data[ 'submitter' ] = $this->getSubmitter();
-        $data[ 'api_token' ] = config('pastoral-module.apiToken');
+        //$data[ 'api_token' ] = config('pastoral-module.apiToken');
 
         $person = $data['person_type'];
         $school = $data['school_id'];
         try {
             $response = Http::withUserAgent("RaiseAConcern")
+                            ->withToken($data['api_token'])
                             ->baseUrl(config('pastoral-module.apiUrl'))
                             ->acceptJson()
                             ->post('concerns/store', $data)
                             ->throw();
+
             $concernId = $response->object()->concern_id;
             $this->addIpAddressToDatabase($concernId);
             session()->flash("alert-success", "Submitted. Thank You.");
             $reviewer = $this->calculateRecipient($person, $school);
             return view('thankyou', ['concernId' => $concernId, 'reviewer' => $reviewer]);
-            return redirect()->route('submit');
 
         } catch (RequestException $exception) {
             Log::error($exception->getMessage());
