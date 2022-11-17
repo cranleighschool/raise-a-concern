@@ -204,15 +204,15 @@
         }
         if (staff.checked) {
             if (senior.checked) {
-                target.innerHTML = "The Headmaster at Cranleigh School, Mr Martin Reader.";
+                target.innerHTML = "The Headmaster at Cranleigh School, {{ config('people.CS_HEAD') }}.";
             } else if (prep.checked) {
-                target.innerHTML = 'The Headmaster at Cranleigh Prep School, Mr Neil Brooks.';
+                target.innerHTML = 'The Headmaster at Cranleigh Prep School, {{ config('people.CPS_HEAD') }}.';
             } else {
                 target.innerHTML = "The Headmaster.";
             }
         }
         if (head.checked) {
-            target.innerHTML = "The Chair of Governors, Mr Adrian Lajtha.";
+            target.innerHTML = "The Chair of Governors, {{ config('people.CHAIR_OF_GOVERNORS') }}.";
         }
         if (pupil.checked || head.checked || staff.checked) {
             targetContainer.classList.remove('visually-hidden');
