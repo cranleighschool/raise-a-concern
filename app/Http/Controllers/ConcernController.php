@@ -15,6 +15,8 @@ use Illuminate\Validation\Rule;
 
 class ConcernController extends Controller
 {
+    public const SENIOR_SCHOOL_ID = 1;
+    public const PREP_SCHOOL_ID = 2;
     /**
      * @var \App\Models\User|\Illuminate\Contracts\Auth\Authenticatable|null
      */
@@ -64,15 +66,19 @@ class ConcernController extends Controller
         $data[ 'submitter' ] = $this->getSubmitter();
         $data[ 'api_token' ] = config('pastoral-module.apiToken');
 
+        $person = $data['person_type'];
+        $school = $data['school_id'];
         try {
             $response = Http::withUserAgent("RaiseAConcern")
                             ->baseUrl(config('pastoral-module.apiUrl'))
                             ->acceptJson()
                             ->post('concerns/store', $data)
                             ->throw();
-
-            $this->addIpAddressToDatabase($response->object()->concern_id);
+            $concernId = $response->object()->concern_id;
+            $this->addIpAddressToDatabase($concernId);
             session()->flash("alert-success", "Submitted. Thank You.");
+            $reviewer = $this->calculateRecipient($person, $school);
+            return view('thankyou', ['concernId' => $concernId, 'reviewer' => $reviewer]);
             return redirect()->route('submit');
 
         } catch (RequestException $exception) {
@@ -81,6 +87,36 @@ class ConcernController extends Controller
                 "There was an error and your concern was not submitted. If this problem persists please email your concern to safeguarding@cranleigh.org");
             return redirect()->back()->withInput($request->only(['person_type', 'school_id', 'subject', 'concern']));
         }
+    }
+
+    private function calculateRecipient(string $person, ?int $school): string
+    {
+        if ($person==='headmaster') {
+            return "The Chair of Governors, ".config('people.CHAIR_OF_GOVERNORS').'.';
+        }
+
+        if ($person==='pupil') {
+            $return = 'The safeguarding team';
+            if ($school===self::SENIOR_SCHOOL_ID) {
+                return $return.' at Cranleigh School.';
+            }
+            if ($school===self::PREP_SCHOOL_ID) {
+                return $return.' at Cranleigh Prep School.';
+            }
+            return $return.'.';
+        }
+        if ($person==='staff') {
+            $return = 'The Headmaster';
+            if ($school===self::SENIOR_SCHOOL_ID) {
+                return $return.', '.config('people.CS_HEAD').'.';
+            }
+            if ($school===self::PREP_SCHOOL_ID) {
+                return $return.', '.config('people.CPS_HEAD').'.';
+            }
+            return $return.'.';
+        }
+
+        return 'the relevant safeguarding team member.';
     }
 
     /**
