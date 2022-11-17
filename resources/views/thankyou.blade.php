@@ -28,7 +28,7 @@
                 response. (Please quote the reference number)</p>
         @elseif(auth()->guest())
             <p>Because you were not logged in there is not automated way for us to contact you again. If you happened to
-                leave contact details within your concern then {{ $reviewer }} will use that if required. Otherwise if
+                leave contact details within your concern then {{ $reviewer }} will use that if required. Otherwise, if
                 you want to follow up on your concern please contact us again leaving a name and contact details.</p>
         @else
             <p>You are welcome to log into the <a href="https://pastoral.cranleigh.org">Pastoral Module</a>, when on the School campus, to check the status of your
