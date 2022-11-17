@@ -112,12 +112,12 @@
                     <p class="lead text-danger text-center">If you think that a child is in immediate danger you should call: <a href="tel:999">999</a>.</p>
 <hr />
                 </div>
-                <div class="col-8">
+                <div class="col-lg-8 col-12">
                     {{ displayAlertMsg() }}
 
                     @yield('content')
                 </div>
-                <div class="col-4">
+                <div class="col-lg-4 col-12">
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">Contacts</h4>
