@@ -23,7 +23,8 @@ class User extends Authenticatable
         'password',
         'sso_type',
         'sso_id',
-        'username'
+        'username',
+        'updated_at'
     ];
 
     /**
