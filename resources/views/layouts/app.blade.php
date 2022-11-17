@@ -127,7 +127,6 @@
                                 <table class="table table-striped">
                                     <thead>
                                     <th>Name</th>
-                                    {{--                                    <th>Job Title</th>--}}
                                     <th>Phone</th>
                                     <th>Email</th>
                                     </thead>
