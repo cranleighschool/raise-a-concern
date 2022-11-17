@@ -114,11 +114,10 @@
                 </div>
                 <div class="col-xl-8 col-12">
                     @if (session()->has('from-pastoral-alert'))
-                        <div class="alert alert-danger">
+                        <div class="alert alert-warning">
                             <p><strong>Warning</strong></p>
-                            <p>{{ session()->get('from-pastoral-alert') }}</p>
+                            <p>{{ session()->pull('from-pastoral-alert') }}</p>
                         </div>
-                        {{ session()->remove('from-pastoral-alert') }}
                     @endif
                     {{ displayAlertMsg() }}
 
