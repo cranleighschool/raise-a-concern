@@ -17,7 +17,7 @@ class IsRedirectFromPastoralModule
     public function handle(Request $request, Closure $next)
     {
         if ($request->has('from') && $request->get('from')==='pm') {
-            session()->flash('alert-warning', 'The Pastoral Module is only accessible from within the Cranleigh network. However if you wish to raise a concern you can now do this following the instructions below.');
+            session()->put('from-pastoral-alert', 'The Pastoral Module is only accessible from within the Cranleigh network. However if you wish to raise a concern you can now do this following the instructions below.');
         }
         return $next($request);
     }
