@@ -51,9 +51,9 @@ class ConcernController extends Controller
     /**
      * @param  \Illuminate\Http\Request  $request
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         $this->setVars();
         $request->validate([
@@ -90,6 +90,12 @@ class ConcernController extends Controller
         }
     }
 
+    /**
+     * @param  string  $person
+     * @param  int|null  $school
+     *
+     * @return string
+     */
     private function calculateRecipient(string $person, ?int $school): string
     {
         if ($person==='headmaster') {
