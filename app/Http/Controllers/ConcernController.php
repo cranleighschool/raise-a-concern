@@ -70,7 +70,7 @@ class ConcernController extends Controller
         $school = $data['school_id'];
         try {
             $response = Http::withUserAgent("RaiseAConcern")
-                            ->withToken($data['api_token'])
+                            ->withToken(config('pastoral-module.apiToken'))
                             ->baseUrl(config('pastoral-module.apiUrl'))
                             ->acceptJson()
                             ->post('concerns/store', $data)
