@@ -1,4 +1,8 @@
 <IfModule mod_rewrite.c>
+    # Allow Symlink to work in Plesk
+    Options +FollowSymlinks
+    Options -SymLinksIfOwnerMatch
+
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
