@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <p class="lead text-center">In most cases it's best if we know who is raising the concern, in case there's further details we
+    <p class="lead text-center">In most cases it's best if we know who is raising the concern, in case there are further details we
         need to in order keep someone safe. However, if you really want to remain anonymous <a
             href="{{ route('submit') }}">you can do that too.</a></p>
 
