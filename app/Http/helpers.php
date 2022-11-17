@@ -18,7 +18,7 @@ if (! function_exists('displayAlertMsg')) {
             array_push($alerts, sprintf('<div class="alert alert-info">%s</div>', Session::get('message')));
         }
         if ($alerts) {
-            echo sprintf('<div class="container">%s</div>', implode('', $alerts));
+            echo sprintf('%s', implode('', $alerts));
         }
 
         return '';
