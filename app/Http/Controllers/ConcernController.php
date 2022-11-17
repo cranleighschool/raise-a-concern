@@ -64,7 +64,6 @@ class ConcernController extends Controller
         ]);
         $data = $request->only(['person_type', 'school_id', 'subject', 'concern']);
         $data[ 'submitter' ] = $this->getSubmitter();
-        //$data[ 'api_token' ] = config('pastoral-module.apiToken');
 
         $person = $data['person_type'];
         $school = $data['school_id'];
