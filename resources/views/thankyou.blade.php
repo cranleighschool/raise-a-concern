@@ -21,13 +21,13 @@
     <div class="alert alert-success">
         <p class="lead">Thank you for submitting your concern.</p>
         <p>This will now be reviewed by {{ $reviewer }}.</p>
-        <p>Your reference number is {{ $concernId }}.</p>
+        <p>Your reference number is #{{ $concernId }}.</p>
         @if (auth()->user()->sso_type === 'parents')
             <p>There is no online facility to check the status of your concern at present, but you are welcome to speak
                 directly to a member of the safeguarding team using the details on this page, if you do not receive a
                 response. (Please quote the reference number)</p>
         @elseif(auth()->guest())
-            <p>Because you were not logged in there is not automated way for us to contact you again. If you happened to
+            <p>Because you were not logged in there is no automated way for us to contact you again. If you happened to
                 leave contact details within your concern then {{ $reviewer }} will use that if required. Otherwise, if
                 you want to follow up on your concern please contact us again leaving a name and contact details.</p>
         @else
