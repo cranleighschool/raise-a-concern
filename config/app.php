@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Raise a Concern'),
+    'name' => env('APP_NAME', 'Raise a Concern at Cranleigh'),
 
     /*
     |--------------------------------------------------------------------------
