@@ -9,6 +9,7 @@
 
     RewriteEngine On
 
+    RewriteCond %{HTTP_HOST} ^pastoral\.cranprep\.org$ [NC]
     RewriteCond %{HTTP_HOST} ^pastoral\.cranleigh\.org$ [NC]
     RewriteRule ^(.*)$ https://raiseaconcern.cranleigh.org?from=pm [R=301,L]
 
