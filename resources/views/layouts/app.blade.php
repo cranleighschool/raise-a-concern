@@ -109,8 +109,9 @@
         <div class="container img-thumbnail bg-white" style="border:0px;padding-top:10px; padding-bottom: 10px;">
             <div class="row">
                 <div class="col-12">
-                    <p class="lead text-danger text-center">If you think that a child is in immediate danger you should call: <a href="tel:999">999</a>.</p>
-<hr />
+                    <p class="lead text-danger text-center">If you think that a child is in immediate danger you should
+                        call: <a href="tel:999">999</a>.</p>
+                    <hr/>
                 </div>
                 <div class="col-xl-8 col-12">
                     @if (session()->has('from-pastoral-alert'))
@@ -160,13 +161,16 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <p>Read more about our safeguarding team on the website: <a href="https://www.cranleigh.org/welcome/people/safeguarding" target="_blank">Cranleigh School</a> | <a href="https://www.cranprep.org/welcome/people/safeguarding" target="_blank">Cranleigh Prep School</a></p>
+                            <p>Read more about our safeguarding team on the website: <a
+                                    href="https://www.cranleigh.org/welcome/people/safeguarding" target="_blank">Cranleigh
+                                    School</a> | <a href="https://www.cranprep.org/welcome/people/safeguarding"
+                                                    target="_blank">Cranleigh Prep School</a></p>
                         </div>
                     </div>
                     <div class="spacer">&nbsp;</div>
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Useful Links</h4>
+                            <h4 class="card-title">Useful School Links</h4>
                         </div>
                         <div class="card-body">
                             <ul>
@@ -179,14 +183,46 @@
                             </ul>
                         </div>
                     </div>
+                    <div class="spacer">&nbsp;</div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Useful External Links</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li><a href="https://www.internetmatters.org/resources/social-media-advice-hub/"
+                                       target="_blank">Internet matters</a> Information about how to help children stay
+                                    safe on social media
+                                </li>
+                                <li>
+                                    <a href="https://www.mariecollinsfoundation.org.uk/what-we-do/working-with-children-and-families"
+                                       target="_blank">Marie Collins Foundation</a> Support for children abused online
+                                    and their families
+                                </li>
+                                <li><a href="https://www.nspcc.org.uk/"
+                                       target="_blank">NSPCC</a> Every child is worth fighting for
+                                </li>
+                                <li><a href="https://www.childline.org.uk"
+                                       target="_blank">Childline</a> Direct Advice for Children
+                                </li>
+                                <li><a href="https://www.youngminds.org.uk"
+                                       target="_blank">Young Minds</a> Fighting for young people's mental health
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
 
                 </div>
             </div>
         </div>
 
     </main>
-    <footer>
-
+    <footer class="py-4">
+        <div class="container img-thumbnail bg-cranleigh text-white" style="border:0px;padding-top:10px; padding-bottom: 10px;">
+            <div class="row">
+                <div class="col">Cranleigh's Raise a Concern and Pastoral Module is a bespoke system designed and developed at Cranleigh. Any technical queries should be directed to <a href="mailto:frb@cranleigh.org">the developer</a>.</div>
+            </div>
+        </div>
     </footer>
 </div>
 </body>
@@ -199,7 +235,8 @@
     var btn = document.getElementsByClassName('btn-check');
     var senior = document.getElementById('school_cs');
     var prep = document.getElementById('school_prep');
-   var unknownSchool = document.getElementById('school_unknown');
+    var unknownSchool = document.getElementById('school_unknown');
+
     function action() {
         if (pupil.checked) {
             if (senior.checked) {
@@ -227,6 +264,7 @@
         }
 
     }
+
     for (var i = 0; i < btn.length; i++) {
         btn[i].addEventListener('click', action);
     }

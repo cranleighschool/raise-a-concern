@@ -10,7 +10,13 @@
 $theme-colors: (
     "primary": #0c223f,
 );
-
+.bg-cranleigh {
+    background: #0c223f;
+}
+footer a {
+    color:white;
+    text-decoration: underline;
+}
 
 nav.navbar.navbar-dark {
     background: #0c223f !important;

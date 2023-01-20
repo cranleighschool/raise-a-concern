@@ -4,6 +4,10 @@
 
     <h2>Welcome</h2>
     <p class="lead">Please click the relevant button below. You will be directed to Firefly which will manage the login process.</p>
+    <ul>
+        <li>Prep School Parents, Pupils and Staff: click the Prep Logo to login with Firefly</li>
+        <li>Senior School Parents, Pupils and Staff: click the Senior Logo to login with Firefly</li>
+    </ul>
     <div class="row login-images">
         <div class="col-md-6 text-center" style="padding:40px;">
             <a href="{{ route('firefly-login', 'senior') }}">
