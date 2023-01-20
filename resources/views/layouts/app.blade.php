@@ -113,7 +113,7 @@
                         call: <a href="tel:999">999</a>.</p>
                     <hr/>
                 </div>
-                <div class="col-xl-8 col-12">
+                <div class="col-xl-7 col-12">
                     @if (session()->has('from-pastoral-alert'))
                         <div class="alert alert-warning">
                             <p><strong>Warning</strong></p>
@@ -124,10 +124,10 @@
 
                     @yield('content')
                 </div>
-                <div class="col-xl-4 col-12">
+                <div class="col-xl-5 col-12 mt-5 mt-xl-0">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Contacts</h4>
+                            <h4 class="card-title">Useful Contacts</h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -191,7 +191,7 @@
                         <div class="card-body">
                             <ul>
                                 <li><a href="https://www.internetmatters.org/resources/social-media-advice-hub/"
-                                       target="_blank">Internet matters</a> Information about how to help children stay
+                                       target="_blank">Internet Matters</a> Information about how to help children stay
                                     safe on social media
                                 </li>
                                 <li>

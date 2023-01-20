@@ -36,6 +36,7 @@
                    class="form-control form-control-lg"
                    name="subject"
                    placeholder="Subject"
+                   required="required"
                    value="{{ old('subject') }}"
             >
             @include('partials.input-error',['inputName' => 'subject'])
@@ -113,7 +114,7 @@
 
         <div class="form-group{{$errors->has('concern') ? ' has-error' : '' }}">
             <label for="concern">Please describe your concern</label>
-                                <textarea id="concern" name="concern" cols="8" rows="10"
+                                <textarea id="concern" name="concern" cols="8" rows="10" required="required"
                                           class="form-control wysiwyg">{{ old('concern') }}</textarea>
             @include('partials.input-error',['inputName' => 'concern'])
         </div>

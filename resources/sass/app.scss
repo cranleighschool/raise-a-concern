@@ -43,22 +43,18 @@ a {
         color:#0c223f;
     }
 }
-.login-images {
-    .img-thumbnail {
-        background-color: #fff;
-        border-width: 2px;
-    }
-    .img-thumbnail:hover {
-        background-color: #f8fafc;
-    }
+.row.login-columns>div {
+    padding:30px;
 }
-
 .spacer {
     display: block;
     margin:7.5px;
 }
 .btn-cranleigh {
     @include button-outline-variant(#0c223f);
+}
+.btn-cranprep {
+    @include button-outline-variant(#8eb8ef, #ffffff);
 }
 #whogetsnotified {
     font-weight: bolder;
