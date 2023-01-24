@@ -190,6 +190,7 @@
                         </div>
                         <div class="card-body">
                             <ul>
+                                <li><a href="https://www.ceop.police.uk/Safety-Centre/" target="_blank">CEOP Safety Centre</a> Reporting a concern direct to the police</li>
                                 <li><a href="https://www.internetmatters.org/resources/social-media-advice-hub/"
                                        target="_blank">Internet Matters</a> Information about how to help children stay
                                     safe on social media
@@ -208,6 +209,7 @@
                                 <li><a href="https://www.youngminds.org.uk"
                                        target="_blank">Young Minds</a> Fighting for young people's mental health
                                 </li>
+                                <li><a href="https://www.surreycc.gov.uk/children/contact-childrens-services" target="_blank">Surrey's Children's Single Point of Access (C-SPA)</a> Surrey County Council's direct details </li>
                             </ul>
                         </div>
                     </div>
