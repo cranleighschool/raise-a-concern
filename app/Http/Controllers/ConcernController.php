@@ -75,7 +75,7 @@ class ConcernController extends Controller
 
             $concernId = $response->object()->concern_id;
             $this->addIpAddressToDatabase($concernId);
-            session()->flash("alert-success", "Submitted. Thank You.");
+//            session()->flash("alert-success", "Submitted. Thank You."); // No need for this as if successful they see a nicer thank you message anyway
             $reviewer = $this->calculateRecipient($person, $school);
             return view('thankyou', ['concernId' => $concernId, 'reviewer' => $reviewer]);
 
