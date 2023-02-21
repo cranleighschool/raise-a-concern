@@ -38,7 +38,7 @@
         @endif
     </div>
     <h3>Where now?</h3>
-    <a href="{{ route('home') }}" class="btn btn-cranleigh">Home</a>
+    <a href="{{ route('submit') }}" class="btn btn-cranleigh">Home</a>
     <a href="https://www.cranleigh.org" class="btn btn-cranleigh">cranleigh.org</a>
     <a href="https://www.cranprep.org" class="btn btn-cranprep">cranprep.org</a>
 @endsection
