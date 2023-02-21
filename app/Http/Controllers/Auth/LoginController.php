@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -64,10 +65,11 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  string  $school
      *
-     * @return \Illuminate\Http\RedirectResponse|void
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Http\Client\RequestException
+     * @throws \Exception
      */
-    public function callbackSuccess(Request $request, string $school)
+    public function callbackSuccess(Request $request, string $school): RedirectResponse
     {
         if ($request->has('ffauth_secret')) {
 
@@ -103,15 +105,17 @@ class LoginController extends Controller
 
             return redirect()->to('/submit');
         }
+
+        throw new \Exception("Firefly Authentication Not Found", 400);
     }
 
 
     /**
      * @param  string  $school
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function loginRedirect(string $school)
+    public function loginRedirect(string $school): RedirectResponse
     {
         $subdomain = match ($school) {
             'senior' => 'cranleigh',
