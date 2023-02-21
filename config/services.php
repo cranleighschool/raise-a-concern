@@ -37,4 +37,7 @@ return [
         'redirect'      => env('GOOGLE_REDIRECT')
     ],
 
+    'github' => [
+        'key' => env('GITHUB_API_KEY')
+    ]
 ];

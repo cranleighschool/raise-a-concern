@@ -15,7 +15,7 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -212,7 +212,8 @@
     <footer class="py-4">
         <div class="container img-thumbnail bg-cranleigh text-white" style="border:0px;padding-top:10px; padding-bottom: 10px;">
             <div class="row">
-                <div class="col">Cranleigh's Raise a Concern and Pastoral Module is a bespoke system designed and developed at Cranleigh. Any technical queries should be directed to <a href="mailto:frb@cranleigh.org">the developer</a>.</div>
+                <div class="col-7">Cranleigh's Raise a Concern and Pastoral Module is a bespoke system designed and developed at Cranleigh. <br />Any technical queries should be directed to <a href="mailto:frb@cranleigh.org">the developer</a>.</div>
+                <div class="col-5"><span class="badge bg-secondary float-end">{{ getAppVersion() }}</span></div>
             </div>
         </div>
     </footer>

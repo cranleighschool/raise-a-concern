@@ -1,5 +1,10 @@
 <?php
 
+use Carbon\Carbon;
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\RequestException;
+use Illuminate\Support\Facades\Log;
+
 if (! function_exists('displayAlertMsg')) {
     /**
      * @return string
@@ -38,5 +43,35 @@ if (!function_exists('getRealIpAddress')) {
             $ip_address = $_SERVER[ 'REMOTE_ADDR' ];
         }
         return $ip_address;
+    }
+
+}
+
+if (! function_exists('getAppVersion')) {
+    function getAppVersion(): string
+    {
+        return Cache::remember('githubReleaseVersion', now()->addWeek(), function (): string {
+            try {
+                $response = Http::withToken(config('services.github.key'))
+                                ->get('https://api.github.com/repos/cranleighschool/raise-a-concern/releases')
+                                ->throw()
+                                ->collect()
+                                ->first();
+
+                return $response['tag_name'].' - '.Carbon::parse($response['published_at'])->format('Y-m-d H:i:s');
+            } catch (RequestException $exception) {
+                if ($exception->getCode() === 401) {
+                    Log::error('Github API token seems to be dead. #sadface');
+
+                    // TODO: send notification to admins
+                }
+            } catch (ConnectionException $exception) {
+                Log::error('Could not connect to github');
+
+                // TODO: send a notification to admins
+            }
+
+            return 'Unknown';
+        });
     }
 }
