@@ -20,7 +20,7 @@
 
     <div class="alert alert-success">
         <p class="lead">Thank you for submitting your concern.</p>
-        <p>This will now be reviewed by {{ $reviewer }}.</p>
+        <p>This will now be reviewed by {{ $reviewer }}</p>
         <p>Your reference number is <strong>#{{ $concernId }}</strong>.</p>
         @if (optional(auth()->user())->sso_type === 'parents')
             <p>There is no online facility to check the status of your concern at present, but you are welcome to speak
