@@ -22,7 +22,7 @@
         <p class="lead">Thank you for submitting your concern.</p>
         <p>This will now be reviewed by {{ $reviewer }}.</p>
         <p>Your reference number is #{{ $concernId }}.</p>
-        @if (auth()->user()->sso_type === 'parents')
+        @if (optional(auth()->user())->sso_type === 'parents')
             <p>There is no online facility to check the status of your concern at present, but you are welcome to speak
                 directly to a member of the safeguarding team using the details on this page, if you do not receive a
                 response. (Please quote the reference number)</p>
