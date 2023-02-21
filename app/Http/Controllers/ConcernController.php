@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\RedirectResponse;
@@ -11,16 +13,15 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\Rule;
 
 class ConcernController extends Controller
 {
     public const SENIOR_SCHOOL_ID = 1;
     public const PREP_SCHOOL_ID = 2;
     /**
-     * @var \App\Models\User|\Illuminate\Contracts\Auth\Authenticatable|null
+     * @var \Illuminate\Contracts\Auth\Authenticatable|\App\Models\User|null
      */
-    private User|null|\Illuminate\Contracts\Auth\Authenticatable $loggedInUser = null;
+    private null|Authenticatable|User $loggedInUser = null;
     /**
      * @var int|null
      */
@@ -29,7 +30,7 @@ class ConcernController extends Controller
     /**
      * @return void
      */
-    private function setVars()
+    private function setVars(): void
     {
         $this->loggedInUser = auth()->user();
         $this->pastoralModuleUserId = $this->getPastoralModuleUserId();
@@ -51,9 +52,9 @@ class ConcernController extends Controller
     /**
      * @param  \Illuminate\Http\Request  $request
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Contracts\Support\Renderable|\Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application|RedirectResponse
+    public function store(Request $request): Renderable|RedirectResponse
     {
         $this->setVars();
         $request->validate([
@@ -65,13 +66,10 @@ class ConcernController extends Controller
         $data = $request->only(['person_type', 'school_id', 'subject', 'concern']);
         $data[ 'submitter' ] = $this->getSubmitter();
 
-        $person = $data['person_type'];
-        $school = $data['school_id'];
+        $person = $data[ 'person_type' ];
+        $school = $data[ 'school_id' ];
         try {
-            $response = Http::withUserAgent("RaiseAConcern")
-                            ->withToken(config('pastoral-module.apiToken'))
-                            ->baseUrl(config('pastoral-module.apiUrl'))
-                            ->acceptJson()
+            $response = Http::pastoralModule()
                             ->post('concerns/store', $data)
                             ->throw();
 
@@ -97,26 +95,26 @@ class ConcernController extends Controller
      */
     private function calculateRecipient(string $person, ?int $school): string
     {
-        if ($person==='headmaster') {
+        if ($person === 'headmaster') {
             return "the Chair of Governors, ".config('people.CHAIR_OF_GOVERNORS').'.';
         }
 
-        if ($person==='pupil') {
+        if ($person === 'pupil') {
             $return = 'the safeguarding team';
-            if ($school===self::SENIOR_SCHOOL_ID) {
+            if ($school === self::SENIOR_SCHOOL_ID) {
                 return $return.' at Cranleigh School.';
             }
-            if ($school===self::PREP_SCHOOL_ID) {
+            if ($school === self::PREP_SCHOOL_ID) {
                 return $return.' at Cranleigh Prep School.';
             }
             return $return.'.';
         }
-        if ($person==='staff') {
+        if ($person === 'staff') {
             $return = 'the Headmaster';
-            if ($school===self::SENIOR_SCHOOL_ID) {
+            if ($school === self::SENIOR_SCHOOL_ID) {
                 return $return.', '.config('people.CS_HEAD').'.';
             }
-            if ($school===self::PREP_SCHOOL_ID) {
+            if ($school === self::PREP_SCHOOL_ID) {
                 return $return.', '.config('people.CPS_HEAD').'.';
             }
             return $return.'.';
@@ -171,9 +169,7 @@ class ConcernController extends Controller
         if ($this->loggedInUser) {
             $pmUser = Cache::remember('pmUserFor'.$this->loggedInUser->email, now()->addMinutes(5), function () {
                 try {
-                    return Http::withUserAgent('RaiseAConcern')
-                               ->baseUrl(config('pastoral-module.apiUrl'))
-                               ->acceptJson()
+                    return Http::pastoralModule()
                                ->post('auth/users/make', [
                                    "email" => $this->loggedInUser->email,
                                    'api_token' => config('pastoral-module.apiToken'),

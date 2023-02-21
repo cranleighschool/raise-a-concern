@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,5 +37,12 @@ class AppServiceProvider extends ServiceProvider
                 info("Attempted to lazy load [{$relation}] on model [{$class}].");
             });
         }
+
+        Http::macro('pastoralModule', function() {
+            return Http::withUserAgent("RaiseAConcern")
+                       ->withToken(config('pastoral-module.apiToken'))
+                       ->baseUrl(config('pastoral-module.apiUrl'))
+                       ->acceptJson();
+        });
     }
 }
