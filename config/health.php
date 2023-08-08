@@ -67,16 +67,16 @@ return [
         ],
 
         'slack' => [
-            'webhook_url' => env('HEALTH_SLACK_WEBHOOK_URL', ''),
+            'webhook_url' => env('LOG_SLACK_WEBHOOK_URL', ''),
 
             /*
              * If this is set to null the default channel of the webhook will be used.
              */
-            'channel' => null,
+            'channel' => '#raise-a-concern-app',
 
-            'username' => null,
+            'username' => 'Health Check',
 
-            'icon' => null,
+            'icon' => ':mending_heart:',
         ],
     ],
 
