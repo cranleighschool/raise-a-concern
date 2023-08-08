@@ -19,7 +19,7 @@ class ConcernController extends Controller
     public const SENIOR_SCHOOL_ID = 1;
     public const PREP_SCHOOL_ID = 2;
     /**
-     * @var \Illuminate\Contracts\Auth\Authenticatable|\App\Models\User|null
+     * @var Authenticatable|User|null
      */
     private null|Authenticatable|User $loggedInUser = null;
     /**
@@ -39,9 +39,9 @@ class ConcernController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
-    public function index(): \Illuminate\Contracts\Support\Renderable
+    public function index(): Renderable
     {
         $this->setVars();
         $pastoralModuleUserId = $this->pastoralModuleUserId;
@@ -50,9 +50,9 @@ class ConcernController extends Controller
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      *
-     * @return \Illuminate\Contracts\Support\Renderable|\Illuminate\Http\RedirectResponse
+     * @return Renderable|RedirectResponse
      */
     public function store(Request $request): Renderable|RedirectResponse
     {
@@ -75,7 +75,7 @@ class ConcernController extends Controller
 
             $concernId = $response->object()->concern_id;
             $this->addIpAddressToDatabase($concernId);
-//            session()->flash("alert-success", "Submitted. Thank You."); // No need for this as if successful they see a nicer thank you message anyway
+
             $reviewer = $this->calculateRecipient($person, $school);
             return view('thankyou', ['concernId' => $concernId, 'reviewer' => $reviewer]);
 

@@ -3,7 +3,10 @@
 use Carbon\Carbon;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 if (! function_exists('displayAlertMsg')) {
     /**
@@ -15,12 +18,12 @@ if (! function_exists('displayAlertMsg')) {
         foreach (['danger', 'warning', 'success', 'info'] as $alert) {
             if (Session::has('alert-'.$alert)) {
                 $msg = Session::get('alert-'.$alert);
-                array_push($alerts, sprintf('<div class="alert alert-%s">%s</div>', $alert, $msg));
+                $alerts[] = sprintf('<div class="alert alert-%s">%s</div>', $alert, $msg);
             }
         }
 
         if (Session::has('message')) {
-            array_push($alerts, sprintf('<div class="alert alert-info">%s</div>', Session::get('message')));
+            $alerts[] = sprintf('<div class="alert alert-info">%s</div>', Session::get('message'));
         }
         if ($alerts) {
             echo sprintf('%s', implode('', $alerts));

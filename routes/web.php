@@ -1,8 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ConcernController;
+use Spatie\Health\Http\Controllers\HealthCheckJsonResultsController;
+use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +37,6 @@ Route::get('login/firefly/{school}/success', [LoginController::class, 'callbackS
 
 Route::get('submit', [ConcernController::class, 'index'])->name('submit');
 Route::post('submit', [ConcernController::class, 'store'])->name('store');
+
+Route::get('health', HealthCheckResultsController::class);
+Route::get('health.json', HealthCheckJsonResultsController::class);

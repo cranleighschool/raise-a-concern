@@ -47,11 +47,11 @@ class User extends Authenticatable
     ];
 
     /**
-     * @param  string  $email
-     * @param  string  $ssoType
-     * @param  string  $name
-     * @param  string  $username
-     *
+     * @param string $email
+     * @param string $ssoType
+     * @param string $name
+     * @param string $username
+     * @param int $ssoId
      * @return $this
      */
     public static function create(string $email, string $ssoType, string $name, string $username, int $ssoId): self
