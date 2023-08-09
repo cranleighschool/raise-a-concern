@@ -9,8 +9,10 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
+use UnhandledMatchError;
 
 class LoginController extends Controller
 {
@@ -45,7 +47,7 @@ class LoginController extends Controller
     }
 
     /**
-     * @param  string  $identifier
+     * @param string $identifier
      *
      * @return array
      */
@@ -53,17 +55,17 @@ class LoginController extends Controller
     {
         $parts = explode(":", $identifier);
         $isamsId = end($parts);
-        $db = str_replace("iSAMS", "", $parts[ 3 ]);
+        $db = str_replace("iSAMS", "", $parts[3]);
 
         return [
             'table' => $db,
-            'id' => (int) $isamsId,
+            'id' => (int)$isamsId,
         ];
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $school
+     * @param \Illuminate\Http\Request $request
+     * @param string $school
      *
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Http\Client\RequestException
@@ -77,7 +79,7 @@ class LoginController extends Controller
                 'senior' => 'cranleigh',
                 'prep' => 'cranprep'
             };
-            $output = Http::get('https://'.$subdomain.'.fireflycloud.net/login/api/sso', [
+            $output = Http::get('https://' . $subdomain . '.fireflycloud.net/login/api/sso', [
                 'ffauth_device_id' => 'raiseaconcern-cranleigh',
                 'ffauth_secret' => $request->get('ffauth_secret'),
             ])->throw()->body();
@@ -101,7 +103,7 @@ class LoginController extends Controller
                 auth()->login($user);
             }
             // Let them know they've logged in
-            session()->flash("alert-success", "You have logged in as: ".auth()->user()->name." (".auth()->user()->sso_type.")");
+            session()->flash("alert-success", "You have logged in as: " . auth()->user()->name . " (" . auth()->user()->sso_type . ")");
 
             return redirect()->to('/submit');
         }
@@ -111,19 +113,28 @@ class LoginController extends Controller
 
 
     /**
-     * @param  string  $school
+     * @param string $school
      *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function loginRedirect(string $school): RedirectResponse
     {
-        $subdomain = match ($school) {
-            'senior' => 'cranleigh',
-            'prep' => 'cranprep'
-        };
+        try {
+            $subdomain = match ($school) {
+                'senior' => 'cranleigh',
+                'prep' => 'cranprep'
+            };
+        } catch (UnhandledMatchError $exception) {
+            Log::debug($exception->getMessage(), [
+                'school' => $school,
+                'request' => request(),
+                'trace' => $exception->getTrace()
+            ]);
+            abort(404, "School not found.");
+        }
 
         $url = route('firefly-success', $school);
 
-        return redirect('https://'.$subdomain.'.fireflycloud.net/login/api/webgettoken?app=raiseaconcern-cranleigh&successURL='.$url);
+        return redirect('https://' . $subdomain . '.fireflycloud.net/login/api/webgettoken?app=raiseaconcern-cranleigh&successURL=' . $url);
     }
 }
