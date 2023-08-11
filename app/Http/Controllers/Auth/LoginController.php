@@ -108,7 +108,14 @@ class LoginController extends Controller
             return redirect()->to('/submit');
         }
 
-        throw new \Exception("Firefly Authentication Not Found", 400);
+        $debugarray = [
+            'school' => $school,
+            'request' => $request,
+        ];
+        if (isset($user)) {
+            $debugarray['user'] = $user;
+        }
+        throw new \Exception("Firefly Authentication Not Found", 400, $debugarray);
     }
 
 
