@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.raiseaconcern')
 
 @section('content')
     <h2>Raising a Concern</h2>

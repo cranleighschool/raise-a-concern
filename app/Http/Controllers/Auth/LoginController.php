@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
+use Exception;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use UnhandledMatchError;
 
@@ -34,7 +35,15 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected string $redirectTo = '/submit'; //RouteServiceProvider::HOME;
+
+    public function showLoginForm(): View
+    {
+        if (request()->host() === config('app.domains.selfreflection.url')) {
+            return view('selfreflection.home');
+        }
+        return view('auth.login');
+    }
 
     /**
      * Create a new controller instance.
@@ -43,7 +52,9 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this
+            ->middleware('guest')
+            ->except('logout');
     }
 
     /**
@@ -64,12 +75,12 @@ class LoginController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param string $school
      *
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Http\Client\RequestException
-     * @throws \Exception
+     * @return RedirectResponse
+     * @throws RequestException
+     * @throws Exception
      */
     public function callbackSuccess(Request $request, string $school): RedirectResponse
     {
@@ -86,11 +97,11 @@ class LoginController extends Controller
 
             $xml = simplexml_load_string($output);
             $json = json_encode($xml);
-            $array = json_decode($json);
+            $obj = json_decode($json);
 
-            $user = $array->user->{'@attributes'};
+            $user = $obj->user->{'@attributes'};
 
-            $existingUser = User::where('email', $user->email)->first();
+            $existingUser = User::query()->where('email', $user->email)->first();
             if ($existingUser) {
                 // log them in
                 auth()->login($existingUser);
@@ -105,7 +116,7 @@ class LoginController extends Controller
             // Let them know they've logged in
             session()->flash("alert-success", "You have logged in as: " . auth()->user()->name . " (" . auth()->user()->sso_type . ")");
 
-            return redirect()->to('/submit');
+            return redirect()->route('raiseaconcern.submit');
         }
 
         $debugarray = [
@@ -115,14 +126,14 @@ class LoginController extends Controller
         if (isset($user)) {
             $debugarray['user'] = $user;
         }
-        throw new \Exception("Firefly Authentication Not Found", 400, $debugarray);
+        throw new Exception("Firefly Authentication Not Found", 400, $debugarray);
     }
 
 
     /**
      * @param string $school
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function loginRedirect(string $school): RedirectResponse
     {
@@ -140,7 +151,7 @@ class LoginController extends Controller
             abort(404, "School not found.");
         }
 
-        $url = route('firefly-success', $school);
+        $url = route('raiseaconcern.firefly-success', $school);
 
         return redirect('https://' . $subdomain . '.fireflycloud.net/login/api/webgettoken?app=raiseaconcern-cranleigh&successURL=' . $url);
     }

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.raiseaconcern')
 
 @section('content')
     <h2>Raising a Concern</h2>
@@ -26,13 +26,14 @@
     </div>
     @endif
     <p class="lead">Please tell us about your concern...</p>
-    <form id="create-concern" method="post" action="{{ route('store') }}" class="form">
+    <form id="create-concern" method="post" action="{{ route('raiseaconcern.store') }}" class="form">
         {{ csrf_field() }}
         {{ method_field('POST') }}
         <div class="form-group{{ $errors->has('subject') ? ' has-error' : '' }}">
-            <label class="form-label">Subject</label>
+            <label class="form-label" for="subject-input">Subject</label>
             <div class="small"><em>Imagine you were writing a subject for the email...</em></div>
             <input type="text"
+                   id="subject-input"
                    class="form-control form-control-lg"
                    name="subject"
                    placeholder="Subject"

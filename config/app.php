@@ -60,6 +60,28 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Class Aliases
+    |--------------------------------------------------------------------------
+    |
+    | This array of class aliases will be registered when this application
+    | is started. However, feel free to register as many as you wish as
+    | the aliases are "lazy" loaded so they don't hinder performance.
+    |
+    */
+
+    'domains' => [
+        'raiseaconcern' => [
+            'url' => env('RAISE_A_CONCERN_HOST', 'raiseaconcern.cranleigh.org'),
+            'name' => 'Raise a Concern at Cranleigh',
+        ],
+        'selfreflection' => [
+            'url' => env('SELF_REFLECTION_HOST', 'selfreflection.cranleigh.org'),
+            'name' => 'Self Reflections for Pupils',
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |
@@ -212,5 +234,6 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
+
 
 ];
