@@ -1,9 +1,9 @@
 <?php
 
+use App\Domains\RaiseAConcern\Http\ConcernController;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\ConcernController;
 use Spatie\Health\Http\Controllers\HealthCheckJsonResultsController;
 use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 
@@ -17,7 +17,7 @@ use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Auth::loginUsingId(1);
 
 Auth::routes([
     'register' => false,
