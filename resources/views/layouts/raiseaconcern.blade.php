@@ -180,7 +180,9 @@
                         </div>
                         <div class="card-body">
                             <ul>
-                                <li><a href="https://www.ceop.police.uk/Safety-Centre/" target="_blank">CEOP Safety Centre</a> Reporting a concern direct to the police</li>
+                                <li><a href="https://www.ceop.police.uk/Safety-Centre/" target="_blank">CEOP Safety
+                                        Centre</a> Reporting a concern direct to the police
+                                </li>
                                 <li><a href="https://www.internetmatters.org/resources/social-media-advice-hub/"
                                        target="_blank">Internet Matters</a> Information about how to help children stay
                                     safe on social media
@@ -199,7 +201,10 @@
                                 <li><a href="https://www.youngminds.org.uk"
                                        target="_blank">Young Minds</a> Fighting for young people's mental health
                                 </li>
-                                <li><a href="https://www.surreycc.gov.uk/children/contact-childrens-services" target="_blank">Surrey's Children's Single Point of Access (C-SPA)</a> Surrey County Council's direct details </li>
+                                <li><a href="https://www.surreycc.gov.uk/children/contact-childrens-services"
+                                       target="_blank">Surrey's Children's Single Point of Access (C-SPA)</a> Surrey
+                                    County Council's direct details
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -207,12 +212,15 @@
                 </div>
             </div>
         </div>
-
     </main>
     <footer class="py-4">
-        <div class="container img-thumbnail bg-cranleigh text-white" style="border:0px;padding-top:10px; padding-bottom: 10px;">
+        <div class="container img-thumbnail bg-cranleigh text-white"
+             style="border:0px;padding-top:10px; padding-bottom: 10px;">
             <div class="row">
-                <div class="col-7">Cranleigh's Raise a Concern and Pastoral Module is a bespoke system designed and developed at Cranleigh. <br />Any technical queries should be directed to <a href="mailto:frb@cranleigh.org">the developer</a>.</div>
+                <div class="col-7">Cranleigh's Raise a Concern and Pastoral Module is a bespoke system designed and
+                    developed at Cranleigh. <br/>Any technical queries should be directed to <a
+                        href="mailto:frb@cranleigh.org">the developer</a>.
+                </div>
                 <div class="col-5"><span class="badge bg-secondary float-end">{{ getAppVersion() }}</span></div>
             </div>
         </div>
