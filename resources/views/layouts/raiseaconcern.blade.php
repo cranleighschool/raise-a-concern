@@ -250,11 +250,11 @@
         }
         if (staff.checked) {
             if (senior.checked) {
-                target.innerHTML = "The Headmaster at Cranleigh School, {{ config('people.CS_HEAD') }}.";
+                target.innerHTML = "The Head at Cranleigh School, {{ config('people.CS_HEAD') }}.";
             } else if (prep.checked) {
-                target.innerHTML = 'The Headmaster at Cranleigh Prep School, {{ config('people.CPS_HEAD') }}.';
+                target.innerHTML = 'The Head at Cranleigh Prep School, {{ config('people.CPS_HEAD') }}.';
             } else {
-                target.innerHTML = "The Headmaster.";
+                target.innerHTML = "The Head.";
             }
         }
         if (head.checked) {
