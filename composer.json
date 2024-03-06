@@ -12,7 +12,8 @@
         "laravel/slack-notification-channel": "^3.0",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.0",
-        "spatie/laravel-health": "^1.23"
+        "spatie/laravel-health": "^1.23",
+      "ext-simplexml": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
