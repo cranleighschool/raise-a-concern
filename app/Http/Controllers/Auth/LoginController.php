@@ -104,14 +104,14 @@ class LoginController extends Controller
             $existingUser = User::query()->where('email', $user->email)->first();
             if ($existingUser) {
                 // log them in
-                auth()->login($existingUser);
+                auth()->login($existingUser, true);
                 // Update db with login time
                 auth()->user()->update(['updated_at' => now()]);
             } else {
                 // create a new user
                 $ssoData = $this->getIdentifierItems($user->identifier);
                 $user = User::create($user->email, $ssoData['table'], $user->name, $user->username, $ssoData['id']);
-                auth()->login($user);
+                auth()->login($user, true);
             }
             // Let them know they've logged in
             session()->flash("alert-success", "You have logged in as: " . auth()->user()->name . " (" . auth()->user()->sso_type . ")");
