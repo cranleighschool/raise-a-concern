@@ -155,7 +155,7 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN', '.cranleigh.org'),
+    'domain' => env('SESSION_DOMAIN', 'raiseaconcern.cranleigh.org'),
 
     /*
     |--------------------------------------------------------------------------
