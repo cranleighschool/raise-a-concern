@@ -13,7 +13,7 @@ class SecurityHeaders
     /**
      * Handle an incoming request.
      *
-     * @param \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response) $next
+     * @param Closure(Request): (Response) $next
      */
     public function handle(Request $request, Closure $next): Response
     {
@@ -33,7 +33,7 @@ class SecurityHeaders
             $this->removeUnwantedHeaders($this->unwanted);
         }
 
-        return $next($request);
+        return $response;
     }
 
     private function removeUnwantedHeaders(array $headers): void
