@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\HealthChecks\PastoralModuleApiConnectionCheck;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Health\Checks\Checks\DatabaseCheck;
 use Spatie\Health\Checks\Checks\PingCheck;
@@ -19,6 +20,7 @@ class HealthCheckServiceProvider extends ServiceProvider
             UsedDiskSpaceCheck::new(),
             DatabaseCheck::new(),
             PingCheck::new()->name('Pastoral Ping')->url('https://pastoral.cranleigh.org'),
+            PastoralModuleApiConnectionCheck::new(),
             //PingCheck::new()->name('Senior Firefly Ping')->url(url('login/firefly/senior')),
             //PingCheck::new()->name('Prep Firefly Ping')->url(url('login/firefly/prep')),
         ]);
