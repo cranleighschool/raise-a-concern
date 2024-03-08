@@ -21,9 +21,10 @@ class PastoralModuleApiConnectionCheck extends Check
         }
 
         if ($user['username'] === 'RAISEACONCERNAPP' && $user['enabled'] === true) {
-            return $result->ok('Pastoral Module API User is accessible');
+            return $result->ok();
         }
-        return $result->warning('Pastoral Module API User is not accessible. Unknown issue.');
+
+        return $result->warning('Pastoral Module API was unable to get the right result.');
     }
 
 }
