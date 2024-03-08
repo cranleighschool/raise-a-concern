@@ -206,7 +206,7 @@
     </footer>
 </div>
 </body>
-<script type="text/javascript">
+<script type="text/javascript" nonce="{{ csp_nonce() }}">
     var targetContainer = document.getElementById('notified-container');
     var target = document.getElementById('whogetsnotified');
     var head = document.getElementById('person_type_head');
