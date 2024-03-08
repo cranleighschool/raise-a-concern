@@ -17,6 +17,7 @@ class ContentSecurityPolicy extends Basic
             ->addNonceForDirective(Directive::STYLE);
 
         $this->addDirective(Directive::STYLE, 'fonts.googleapis.com');
+        $this->addDirective(Directive::CONNECT, 'cdn.tiny.cloud');
         $this->addDirective(Directive::SCRIPT, 'cdn.tiny.cloud');
         $this->addDirective(Directive::STYLE, 'cdn.tiny.cloud');
         $this->addDirective(Directive::FONT, 'fonts.gstatic.com');
