@@ -17,10 +17,11 @@ class ContentSecurityPolicy extends Basic
             ->addNonceForDirective(Directive::STYLE);
 
         $this->addDirective(Directive::STYLE, 'fonts.googleapis.com');
-        $this->addDirective(Directive::SCRIPT, 'https://cdn.tiny.cloud');
+        $this->addDirective(Directive::SCRIPT, 'cdn.tiny.cloud');
+        $this->addDirective(Directive::STYLE, 'cdn.tiny.cloud');
         $this->addDirective(Directive::FONT, 'fonts.gstatic.com');
         $this->addDirective(Directive::FONT, 'data:');
         $this->addDirective(Directive::FONT, 'self');
-        $this->addDirective(Directive::IMG, 'https://sp.tinymce.com');
+        $this->addDirective(Directive::IMG, 'sp.tinymce.com');
     }
 }
