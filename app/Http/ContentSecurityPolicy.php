@@ -24,5 +24,6 @@ class ContentSecurityPolicy extends Basic
         $this->addDirective(Directive::FONT, 'data:');
         $this->addDirective(Directive::FONT, 'self');
         $this->addDirective(Directive::IMG, 'sp.tinymce.com');
+        $this->addDirective(Directive::STYLE, 'rsms.me'); // for laravel health check page
     }
 }
