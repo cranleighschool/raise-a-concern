@@ -10,7 +10,7 @@
         <div class="col-6">
             <div class="card">
                 <a href="{{ route('raiseaconcern.firefly-login', 'senior') }}">
-                    <img class="card-img-top" style="padding:20px;" src="{{ asset('storage/CranleighLogo.png') }}"/>
+                    <img class="card-img-top login-card" src="{{ asset('storage/CranleighLogo.png') }}"/>
                 </a>
                 <div class="card-body">
                     <h5 class="card-title">Senior School</h5>
@@ -26,7 +26,7 @@
         <div class="col-6">
             <div class="card">
                 <a href="{{ route('raiseaconcern.firefly-login', 'prep')}}">
-                    <img class="card-img-top" style="padding:20px;" src="{{ asset('storage/CranleighPrepLogo.png') }}"/>
+                    <img class="card-img-top login-card" src="{{ asset('storage/CranleighPrepLogo.png') }}"/>
                 </a>
                 <div class="card-body">
                     <h5 class="card-title">Prep School</h5>

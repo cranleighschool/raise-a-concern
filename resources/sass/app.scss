@@ -7,6 +7,12 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+.raiseaconcern-container {
+    border:0px;padding-top:10px; padding-bottom: 10px;
+}
+.login-card {
+    padding:20px;
+}
 $theme-colors: (
     "primary": #0c223f,
 );

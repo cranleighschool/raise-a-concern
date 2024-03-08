@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Referrer-Policy" content="no-referrer, strict-origin-when-cross-origin">
 
+    @cspMetaTag(App\Http\ContentSecurityPolicy::class)
 
 
     <!-- CSRF Token -->
@@ -21,7 +22,7 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="//fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Nunito" rel="stylesheet" nonce="{{ csp_nonce() }}">
 
     @include('partials.tinymce')
 </head>
@@ -75,7 +76,7 @@
     </nav>
 
     <main class="py-4">
-        <div class="container img-thumbnail bg-white" style="border:0px;padding-top:10px; padding-bottom: 10px;">
+        <div class="container img-thumbnail bg-white raiseaconcern-container">
             <div class="row">
                 <div class="col-12">
                     <p class="lead text-danger text-center">If you think that a child is in immediate danger you should
@@ -193,8 +194,7 @@
         </div>
     </main>
     <footer class="py-4">
-        <div class="container img-thumbnail bg-cranleigh text-white"
-             style="border:0px;padding-top:10px; padding-bottom: 10px;">
+        <div class="container img-thumbnail bg-cranleigh text-white raiseaconcern-container">
             <div class="row">
                 <div class="col-7">Cranleigh's Raise a Concern and Pastoral Module is a bespoke system designed and
                     developed at Cranleigh. <br/>Any technical queries should be directed to <a
