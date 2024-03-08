@@ -47,15 +47,17 @@ class RouteServiceProvider extends ServiceProvider
 
     private function domainRoutes(array $routes)
     {
-        foreach ($routes as $route) {
-            Route::group([
-                'domain' => config('app.domains.' . $route . '.url'),
-                'as' => $route . '.'
-            ], function () use ($route) {
-                Route::middleware('web')
-                    ->group(base_path('routes/' . $route . '.php'));
-            });
-        }
+        Route::middleware('csp')->group(function() use ($routes) {
+            foreach ($routes as $route) {
+                Route::group([
+                    'domain' => config('app.domains.' . $route . '.url'),
+                    'as' => $route . '.'
+                ], function () use ($route) {
+                    Route::middleware('web')
+                        ->group(base_path('routes/' . $route . '.php'));
+                });
+            }
+        });
     }
 
     /**
