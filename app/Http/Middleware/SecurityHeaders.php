@@ -30,16 +30,11 @@ class SecurityHeaders
             $response->headers->set('Access-Control-Allow-Headers', 'Content-Type,Authorization,X-Requested-With,X-CSRF-Token');
             $response->headers->set('X-Content-Type-Options', 'nosniff');
 
-            $this->removeUnwantedHeaders($this->unwanted);
+            foreach ($this->unwanted as $removedHeader) {
+                $response->headers->remove($removedHeader);
+            }
         }
 
         return $response;
-    }
-
-    private function removeUnwantedHeaders(array $headers): void
-    {
-        foreach ($headers as $header) {
-            header_remove($header);
-        }
     }
 }
