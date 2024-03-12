@@ -5,24 +5,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Referrer-Policy" content="no-referrer, strict-origin-when-cross-origin">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @cspMetaTag(App\Http\ContentSecurityPolicy::class)
 
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" nonce="{{ csp_nonce() }}">
 
     <!-- Scripts -->
     @vite([
     'resources/js/app.js',
     'resources/sass/app.scss'
     ])
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" nonce="{{ csp_nonce() }}">
 
     @include('partials.tinymce')
 </head>
