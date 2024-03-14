@@ -75,6 +75,7 @@ return [
 
         'slack' => [
             'driver' => 'slack',
+            'channel' => '#raise-a-concern-app-logs', // '#your-slack-channel
             'url' => env('LOG_SLACK_WEBHOOK_URL'),
             'username' => env('LOG_SLACK_USERNAME', 'Laravel Log'),
             'emoji' => env('LOG_SLACK_EMOJI', ':boom:'),
