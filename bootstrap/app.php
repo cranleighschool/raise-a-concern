@@ -31,6 +31,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->appendToGroup('web', SecurityHeaders::class);
         $middleware->appendToGroup('web', \Illuminate\Http\Middleware\FrameGuard::class);
+        $middleware->alias(['csp' => AddCspHeaders::class]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
