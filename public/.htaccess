@@ -1,17 +1,9 @@
 <IfModule mod_rewrite.c>
-    # Allow Symlink to work in Plesk
-    Options +FollowSymlinks
-    Options -SymLinksIfOwnerMatch
-
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
 
     RewriteEngine On
-
-    RewriteCond %{HTTP_HOST} ^pastoral\.cranprep\.org$ [NC]
-    RewriteCond %{HTTP_HOST} ^pastoral\.cranleigh\.org$ [NC]
-    RewriteRule ^(.*)$ https://raiseaconcern.cranleigh.org?from=pm [R=301,L]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .

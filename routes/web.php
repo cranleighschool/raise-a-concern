@@ -1,20 +1,16 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Spatie\Health\Http\Controllers\HealthCheckJsonResultsController;
-use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 
-Route::middleware('csp')->group(function() {
-    Auth::routes([
+Route::group([], function() {
+    \Illuminate\Support\Facades\Auth::routes([
         'register' => false,
         'reset' => false,
         'confirm' => false,
     ]);
-
-});
+})->middleware(\Spatie\Csp\AddCspHeaders::class);
 
 
 // The below are not part of the CSP
-Route::get('health', HealthCheckResultsController::class)->name('health');
-Route::get('health.json', HealthCheckJsonResultsController::class)->name('health.json');
+Route::get('health', \Spatie\Health\Http\Controllers\HealthCheckResultsController::class)->name('health');
+Route::get('health.json', \Spatie\Health\Http\Controllers\HealthCheckJsonResultsController::class)->name('health.json');

@@ -8,57 +8,72 @@
 @import '~bootstrap/scss/bootstrap';
 
 .raiseaconcern-container {
-    border:0px;padding-top:10px; padding-bottom: 10px;
+    border: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
+
 .login-card {
-    padding:20px;
+    padding: 20px;
 }
+
 $theme-colors: (
     "primary": #0c223f,
 );
 .bg-cranleigh {
     background: #0c223f;
 }
+
 footer a {
-    color:white;
+    color: white;
     text-decoration: underline;
 }
 
 nav.navbar.navbar-dark {
     background: #0c223f !important;
-    color:#fff !important;
+    color: #fff !important;
     border-bottom: 10px solid #8eb8ef;
 }
+
 a {
     text-decoration: none;
 }
+
 .card {
     border-color: #0c223f;
 }
+
 .card-header {
-    background-color:#0c223f;
-    color:#fff;
+    background-color: #0c223f;
+    color: #fff;
 }
+
 .card-footer {
-    background-color:#8eb8ef;
-    color:#fff;
+    background-color: #8eb8ef;
+    color: #fff;
+
     a {
-        color:#0c223f;
+        color: #0c223f;
     }
 }
-.row.login-columns>div {
-    padding:30px;
+
+.row.login-columns > div {
+    padding: 30px;
 }
+
 .spacer {
     display: block;
-    margin:7.5px;
+    margin: 7.5px;
 }
+
 .btn-cranleigh {
     @include button-outline-variant(#0c223f);
 }
+
 .btn-cranprep {
     @include button-outline-variant(#8eb8ef, #ffffff);
 }
+
 #whogetsnotified {
     font-weight: bolder;
 }
