@@ -67,16 +67,16 @@ return [
         ],
 
         'slack' => [
-            'webhook_url' => env('HEALTH_SLACK_WEBHOOK_URL', ''),
+            'webhook_url' => env('LOG_SLACK_WEBHOOK_URL', ''),
 
             /*
              * If this is set to null the default channel of the webhook will be used.
              */
-            'channel' => null,
+            'channel' => '#raise-a-concern-app',
 
-            'username' => null,
+            'username' => 'Health Check',
 
-            'icon' => null,
+            'icon' => ':mending-heart:',
         ],
     ],
 
@@ -86,7 +86,7 @@ return [
      * Oh Dear, you can also have access to more advanced notification options.
      */
     'oh_dear_endpoint' => [
-        'enabled' => false,
+        'enabled' => true,
 
         /*
          * When this option is enabled, the checks will run before sending a response.
@@ -102,7 +102,7 @@ return [
         /*
          * The URL that should be configured in the Application health settings at Oh Dear.
          */
-        'url' => '/oh-dear-health-check-results',
+        'url' => '/health',
     ],
 
     /*
