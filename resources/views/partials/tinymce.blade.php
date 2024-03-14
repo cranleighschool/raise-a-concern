@@ -1,6 +1,5 @@
 <!-- Styles -->
 <script src="https://cdn.tiny.cloud/1/5aorefy1a3tzggygtpkx81v9k5puvldfm55a0il6y929m3fw/tinymce/6/tinymce.min.js"
-        integrity="sha512-MIh5guD3Q4NZ8HcAjLtAr6ruYR5zsCTFHefr6y/FqgPAjub9cn/796tq5SCwCIwfYT4U/iSHEjWfmsb18QEECA=="
         crossorigin="anonymous" nonce="{{ csp_nonce() }}" referrerpolicy="origin"></script>
 <script type="text/javascript" nonce="{{ csp_nonce() }}">
     tinymce.init({
