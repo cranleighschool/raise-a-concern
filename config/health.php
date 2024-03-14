@@ -76,7 +76,7 @@ return [
 
             'username' => 'Health Check',
 
-            'icon' => ':mending-heart:',
+            'icon' => ':mending_heart:',
         ],
     ],
 
