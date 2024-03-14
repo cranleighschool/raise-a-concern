@@ -21,7 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
                             ->as($route . '.')
                             ->name($route . '.')
                             ->group(function () use ($route) {
-                                Route::middleware('web')
+                                Route::middleware(['web', AddCspHeaders::class])
                                     ->group(base_path('routes/' . $route . '.php'));
                             });
                     }
