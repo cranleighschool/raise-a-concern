@@ -56,10 +56,10 @@ if (! function_exists('getAppVersion')) {
         return Cache::remember('githubReleaseVersion', now()->addWeek(), function (): string {
             try {
                 $response = Http::withToken(config('services.github.key'))
-                                ->get('https://api.github.com/repos/cranleighschool/raise-a-concern/releases')
-                                ->throw()
-                                ->collect()
-                                ->first();
+                    ->get('https://api.github.com/repos/cranleighschool/raise-a-concern/releases')
+                    ->throw()
+                    ->collect()
+                    ->first();
 
                 return $response['tag_name'].' - '.Carbon::parse($response['published_at'])->format('Y-m-d H:i:s');
             } catch (RequestException $exception) {

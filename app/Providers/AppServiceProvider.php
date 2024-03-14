@@ -2,47 +2,38 @@
 
 namespace App\Providers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Model;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         //
     }
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        // Everything strict, all the time.
-        // (https://planetscale.com/blog/laravels-safety-mechanisms)
         Model::shouldBeStrict();
-
-        // In production, merely log lazy loading violations.
         if ($this->app->isProduction()) {
             Model::handleLazyLoadingViolationUsing(function ($model, $relation) {
                 $class = get_class($model);
-
                 info("Attempted to lazy load [{$relation}] on model [{$class}].");
             });
         }
 
-        Http::macro('pastoralModule', function() {
+        Http::macro('pastoralModule', function () {
             return Http::withUserAgent("RaiseAConcern")
-                       ->withToken(config('pastoral-module.apiToken'))
-                       ->baseUrl(config('pastoral-module.apiUrl'))
-                       ->acceptJson();
+                ->withToken(config('pastoral-module.apiToken'))
+                ->baseUrl(config('pastoral-module.apiUrl'))
+                ->acceptJson();
         });
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
      * A result store is responsible for saving the results of the checks. The
      * `EloquentHealthResultStore` will save results in the database. You
@@ -9,6 +8,7 @@ return [
      */
     'result_stores' => [
         Spatie\Health\ResultStores\EloquentHealthResultStore::class => [
+            'connection' => env('HEALTH_DB_CONNECTION', env('DB_CONNECTION')),
             'model' => Spatie\Health\Models\HealthCheckResultHistoryItem::class,
             'keep_history_for_days' => 5,
         ],
@@ -67,16 +67,16 @@ return [
         ],
 
         'slack' => [
-            'webhook_url' => env('LOG_SLACK_WEBHOOK_URL', ''),
+            'webhook_url' => env('HEALTH_SLACK_WEBHOOK_URL', ''),
 
             /*
              * If this is set to null the default channel of the webhook will be used.
              */
-            'channel' => '#raise-a-concern-app',
+            'channel' => null,
 
-            'username' => 'Health Check',
+            'username' => null,
 
-            'icon' => ':mending_heart:',
+            'icon' => null,
         ],
     ],
 
@@ -86,7 +86,7 @@ return [
      * Oh Dear, you can also have access to more advanced notification options.
      */
     'oh_dear_endpoint' => [
-        'enabled' => true,
+        'enabled' => false,
 
         /*
          * When this option is enabled, the checks will run before sending a response.
@@ -102,7 +102,7 @@ return [
         /*
          * The URL that should be configured in the Application health settings at Oh Dear.
          */
-        'url' => '/health',
+        'url' => '/oh-dear-health-check-results',
     ],
 
     /*

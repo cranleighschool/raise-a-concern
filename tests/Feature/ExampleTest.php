@@ -1,21 +1,14 @@
 <?php
 
-namespace Tests\Feature;
+it('returns a successful response', function () {
+    $response = $this->get('/login');
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+    $response->assertStatus(200);
+});
 
-class ExampleTest extends TestCase
-{
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function test_the_application_returns_a_successful_response()
-    {
-        $response = $this->get('/');
+it('can view submit page without logging in', function () {
+    $host = config('app.domains.raiseaconcern.url');
+    $response = $this->get($host.'/submit');
 
-        $response->assertStatus(200);
-    }
-}
+    $response->assertStatus(200);
+});

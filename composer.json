@@ -1,28 +1,34 @@
 {
-    "name": "cranleighschool/raiseaconcern",
+    "name": "cranleigh/raiseaconcern",
     "type": "project",
-    "description": "Raise A Concern.",
-    "keywords": ["pastoral", "safeguarding"],
+    "description": "External facing elements of the Pastoral Module, including Raise a Concern and Self Reflections",
+    "keywords": [
+        "cranleigh",
+        "raiseaconcern",
+        "pastoral",
+        "selfreflection",
+        "safeguarding"
+    ],
     "license": "MIT",
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "ext-simplexml": "*",
-        "arrilot/laravel-widgets": "^3.13",
-        "laravel/framework": "^10.00",
-        "laravel/sanctum": "^3.2",
+        "laravel/framework": "^11.0",
         "laravel/slack-notification-channel": "^3.0",
-        "laravel/tinker": "^2.8",
-        "laravel/ui": "^4.0",
+        "laravel/tinker": "^2.9",
+        "laravel/ui": "^4.5",
         "spatie/laravel-csp": "^2.9",
         "spatie/laravel-health": "^1.23"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.9.1",
-        "laravel/sail": "^1.0.1",
-        "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^7.0",
-        "phpunit/phpunit": "^10.0",
-        "spatie/laravel-ignition": "^2.0"
+        "fakerphp/faker": "^1.23",
+        "laravel/pint": "^1.13",
+        "laravel/sail": "^1.26",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.0",
+        "pestphp/pest": "^2.34",
+        "pestphp/pest-plugin-laravel": "^2.3",
+        "spatie/laravel-ignition": "^2.4"
     },
     "autoload": {
         "psr-4": {
@@ -51,10 +57,15 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "@php artisan key:generate --ansi"
+            "@php artisan key:generate --ansi",
+            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
+            "@php artisan migrate --graceful --ansi"
         ]
     },
     "extra": {
+        "branch-alias": {
+            "dev-master": "11.x-dev"
+        },
         "laravel": {
             "dont-discover": []
         }
@@ -62,7 +73,11 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
     },
     "minimum-stability": "stable",
     "prefer-stable": true

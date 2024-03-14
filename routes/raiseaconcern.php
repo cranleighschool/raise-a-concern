@@ -9,10 +9,10 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('login/firefly/{school}', [LoginController::class, 'loginRedirect'])
-     ->name('firefly-login');
+    ->name('firefly-login');
 
 Route::get('login/firefly/{school}/success', [LoginController::class, 'callbackSuccess'])
-     ->name('firefly-success');
+    ->name('firefly-success');
 
 Route::get('submit', [ConcernController::class, 'index'])->name('submit');
 Route::post('submit', [ConcernController::class, 'store'])->name('store');

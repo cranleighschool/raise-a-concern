@@ -71,8 +71,8 @@ class ConcernController extends Controller
         $school = $data[ 'school_id' ];
         try {
             $response = Http::pastoralModule()
-                            ->post('concerns/store', $data)
-                            ->throw();
+                ->post('concerns/store', $data)
+                ->throw();
 
             $concernId = $response->object()->concern_id;
             $this->addIpAddressToDatabase($concernId);
@@ -171,10 +171,10 @@ class ConcernController extends Controller
             $pmUser = Cache::remember('pmUserFor'.$this->loggedInUser->email, now()->addMinutes(5), function () {
                 try {
                     return Http::pastoralModule()
-                               ->post('auth/users/make', [
-                                   "email" => $this->loggedInUser->email,
-                                   'api_token' => config('pastoral-module.apiToken'),
-                               ])->throw()->object();
+                        ->post('auth/users/make', [
+                            "email" => $this->loggedInUser->email,
+                            'api_token' => config('pastoral-module.apiToken'),
+                        ])->throw()->object();
                 } catch (RequestException $exception) {
                     Log::error($exception->getMessage());
                     return null;

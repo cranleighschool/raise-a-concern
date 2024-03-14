@@ -26,5 +26,4 @@ class PastoralModuleApiConnectionCheck extends Check
 
         return $result->warning('Pastoral Module API was unable to get the right result.');
     }
-
 }
