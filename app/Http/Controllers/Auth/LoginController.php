@@ -52,6 +52,7 @@ class LoginController extends Controller
     public function __construct()
     {
 
+
     }
 
     /**
@@ -110,10 +111,11 @@ class LoginController extends Controller
                 $user = User::create($user->email, $ssoData['table'], $user->name, $user->username, $ssoData['id']);
                 auth()->login($user, true);
             }
+            $request->session()->regenerate();
             // Let them know they've logged in
             session()->flash("alert-success", "You have logged in as: " . auth()->user()->name . " (" . auth()->user()->sso_type . ")");
 
-            return redirect()->route('raiseaconcern.submit');
+            return redirect()->intended(route('raiseaconcern.submit'));
         }
 
         $debugarray = [
