@@ -14,14 +14,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
         then: function () {
             $routes = ['raiseaconcern', 'selfreflection'];
-            Route::middleware(null)
+            Route::middleware(AddCspHeaders::class)
                 ->group(function () use ($routes) {
                     foreach ($routes as $route) {
                         Route::domain(config('app.domains.' . $route . '.url'))
                             ->as($route . '.')
                             ->name($route . '.')
                             ->group(function () use ($route) {
-                                Route::middleware(null)
+                                Route::middleware(['web', AddCspHeaders::class])
                                     ->group(base_path('routes/' . $route . '.php'));
                             });
                     }
