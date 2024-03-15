@@ -29,9 +29,11 @@ return Application::configure(basePath: dirname(__DIR__))
         }
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->appendToGroup('web', \App\Http\Middleware\RedirectIfAuthenticated::class);
-        $middleware->appendToGroup('web', SecurityHeaders::class);
-        $middleware->appendToGroup('web', \Illuminate\Http\Middleware\FrameGuard::class);
+        $middleware->appendToGroup('web', [
+            \App\Http\Middleware\RedirectIfAuthenticated::class,
+            SecurityHeaders::class,
+            \Illuminate\Http\Middleware\FrameGuard::class
+        ]);
         $middleware->alias(['csp' => AddCspHeaders::class]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
