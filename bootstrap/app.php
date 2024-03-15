@@ -4,6 +4,7 @@ use App\Http\Middleware\SecurityHeaders;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Middleware\FrameGuard;
 use Illuminate\Support\Facades\Route;
 use Spatie\Csp\AddCspHeaders;
 
@@ -13,19 +14,16 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
         then: function () {
-            $routes = ['raiseaconcern', 'selfreflection'];
-            Route::middleware('web')
-                ->group(function () use ($routes) {
-                    foreach ($routes as $route) {
-                        Route::domain(config('app.domains.' . $route . '.url'))
-                            ->as($route . '.')
-                            ->name($route . '.')
-                            ->group(function () use ($route) {
-                                Route::middleware('web')
-                                    ->group(base_path('routes/' . $route . '.php'));
-                            });
-                    }
-                });
+            foreach (['raiseaconcern', 'selfreflection'] as $route) {
+                Route::domain(config('app.domains.' . $route . '.url'))
+                    ->as($route . '.')
+                    ->name($route . '.')
+                    ->group(function () use ($route) {
+                        Route::middleware('web')
+                            ->group(base_path('routes/' . $route . '.php'));
+                    });
+            }
+
         }
     )
     ->withMiddleware(function (Middleware $middleware) {
@@ -35,7 +33,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->appendToGroup('web', [
             SecurityHeaders::class,
             AddCspHeaders::class,
-            \Illuminate\Http\Middleware\FrameGuard::class
+            FrameGuard::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
