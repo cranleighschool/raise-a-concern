@@ -14,15 +14,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
         then: function () {
             $routes = ['raiseaconcern', 'selfreflection'];
-            Route::middleware(AddCspHeaders::class)
-                ->group(function () use ($routes) {
+            //Route::middleware(AddCspHeaders::class)
+                Route::group(function () use ($routes) {
                     foreach ($routes as $route) {
                         Route::domain(config('app.domains.' . $route . '.url'))
                             ->as($route . '.')
                             ->name($route . '.')
                             ->group(function () use ($route) {
-                                Route::middleware(['web', AddCspHeaders::class])
-                                    ->group(base_path('routes/' . $route . '.php'));
+                                Route::group(base_path('routes/' . $route . '.php'));
                             });
                     }
                 });
@@ -32,8 +31,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectGuestsTo('/login');
         $middleware->redirectUsersTo('/submit');
         $middleware->appendToGroup('web', [
-            SecurityHeaders::class,
-            \Illuminate\Http\Middleware\FrameGuard::class
+            //SecurityHeaders::class,
+            //\Illuminate\Http\Middleware\FrameGuard::class
         ]);
         $middleware->alias(['csp' => AddCspHeaders::class]);
     })
