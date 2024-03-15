@@ -36,7 +36,7 @@ class LoginController extends Controller
      */
     protected string $redirectTo = '/submit'; //RouteServiceProvider::HOME;
 
-    public function showLoginForm(): View
+    public function showLoginForm(): View|RedirectResponse
     {
         if (auth()->check()) {
             return redirect()->route('raiseaconcern.submit');
