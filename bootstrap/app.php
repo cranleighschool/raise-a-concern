@@ -23,11 +23,10 @@ return Application::configure(basePath: dirname(__DIR__))
                             ->group(base_path('routes/' . $route . '.php'));
                     });
             }
-
         }
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->validateCsrfTokens(except: ['logout']);
+//        $middleware->validateCsrfTokens(except: ['logout']);
         $middleware->redirectGuestsTo('/login');
         $middleware->redirectUsersTo('/submit');
         $middleware->appendToGroup('web', [
