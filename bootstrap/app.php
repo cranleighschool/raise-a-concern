@@ -31,10 +31,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->redirectGuestsTo('/login');
         $middleware->redirectUsersTo('/submit');
-        $middleware->appendToGroup('web', [
+        /*$middleware->appendToGroup('web', [
         //    SecurityHeaders::class,
           //  \Illuminate\Http\Middleware\FrameGuard::class
-        ]);
+        ]);*/
         //$middleware->alias(['csp' => AddCspHeaders::class]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
