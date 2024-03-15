@@ -22,9 +22,11 @@
         @csrf
         <button type="submit">Logout</button>
     </form>
-
-    {{ dump(\Illuminate\Support\Facades\Cache::get('sessionDebugData')) }}
-    {{ dump(csrf_token()) }}
+    @php
+        $sessionData = \Illuminate\Support\Facades\Cache::get('sessionDebugData');
+        $sessionData['currentCsrfToken'] = csrf_token();
+        dd($sessionData)
+    @endphp
 
 
 
