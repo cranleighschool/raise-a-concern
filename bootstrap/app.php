@@ -31,7 +31,6 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->redirectGuestsTo('/login');
         $middleware->appendToGroup('web', [
-            \App\Http\Middleware\RedirectIfAuthenticated::class,
             SecurityHeaders::class,
             \Illuminate\Http\Middleware\FrameGuard::class
         ]);
