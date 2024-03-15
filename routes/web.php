@@ -8,9 +8,12 @@ Route::group([], function() {
         'reset' => false,
         'confirm' => false,
     ]);
-})->middleware(\Spatie\Csp\AddCspHeaders::class);
+});//->middleware(\Spatie\Csp\AddCspHeaders::class);
 
 Route::view('test', 'test')->name('test');
+Route::post('testpost', function (\Illuminate\Http\Request $request) {
+    dd($request->all());
+})->name('testpost');
 
 // The below are not part of the CSP
 Route::get('health', \Spatie\Health\Http\Controllers\HealthCheckResultsController::class)->name('health');

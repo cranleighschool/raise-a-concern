@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use UnhandledMatchError;
@@ -111,6 +112,7 @@ class LoginController extends Controller
                 auth()->login($user, true);
             }
             $sessionAfterLogin = session()->all();
+            Cache::put('sessionDebugData', ['newSession' => $newSession, 'afterLogin' => $sessionAfterLogin], now()->addMinutes(50));
             //dd(['newSession' => $newSession, 'afterLogin' => $sessionAfterLogin]);
             // Let them know they've logged in
             session()->flash("alert-success", "You have logged in as: " . auth()->user()->name . " (" . auth()->user()->sso_type . ")");
