@@ -46,6 +46,9 @@
                 <ul class="navbar-nav ms-auto">
                     <!-- Authentication Links -->
                     @guest
+                        <li class="nav-item">
+                            <a class="btn btn-cranprep" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
 
                     @else
                         <li class="nav-item dropdown">
@@ -67,6 +70,13 @@
                         </li>
                     @endguest
                 </ul>
+                @if (auth()->user())
+                    <form class="d-flex" role="logout" action="{{ route('logout') }}" method="POST">
+                        {{ csrf_field() }}
+                        {{ method_field('POST') }}
+                        <button class="btn btn-danger" type="submit">Logout</button>
+                    </form>
+                @endif
             </div>
         </div>
     </nav>
