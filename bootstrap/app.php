@@ -26,6 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
         }
     )
     ->withMiddleware(function (Middleware $middleware) {
+        dd(request()->all());
 //        $middleware->validateCsrfTokens(except: ['logout']);
         $middleware->redirectGuestsTo('/login');
         $middleware->redirectUsersTo('/submit');
