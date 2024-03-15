@@ -34,7 +34,7 @@ return Application::configure(basePath: dirname(__DIR__))
             //SecurityHeaders::class,
             //\Illuminate\Http\Middleware\FrameGuard::class
         ]);
-        $middleware->alias(['csp' => AddCspHeaders::class]);
+        //$middleware->alias(['csp' => AddCspHeaders::class]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
