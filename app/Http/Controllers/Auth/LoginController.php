@@ -38,6 +38,9 @@ class LoginController extends Controller
 
     public function showLoginForm(): View
     {
+        if (auth()->check()) {
+            return redirect()->route('raiseaconcern.submit');
+        }
         if (request()->host() === config('app.domains.selfreflection.url')) {
             return view('selfreflection.home');
         }
