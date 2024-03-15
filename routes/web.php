@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group([], function() {
+Route::group([], function () {
     \Illuminate\Support\Facades\Auth::routes([
         'register' => false,
         'reset' => false,
@@ -12,7 +12,10 @@ Route::group([], function() {
 
 Route::view('test', 'test')->name('test');
 Route::post('testpost', function (\Illuminate\Http\Request $request) {
-    dd($request->all());
+    $sessionDebug = \Illuminate\Support\Facades\Cache::get('sessionDebugData');
+    $sessionDebug['csrf'] = csrf_token();
+    $sessionDebug['request'] = $request->all();
+    dd($sessionDebug);
 })->name('testpost');
 
 // The below are not part of the CSP
