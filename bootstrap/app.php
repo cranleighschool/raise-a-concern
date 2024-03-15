@@ -30,7 +30,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectGuestsTo('/login');
         $middleware->redirectUsersTo('/submit');
         $middleware->appendToGroup('web', [
-//            SecurityHeaders::class,
+            SecurityHeaders::class,
             AddCspHeaders::class,
             FrameGuard::class
         ]);
