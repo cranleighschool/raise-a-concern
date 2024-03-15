@@ -20,7 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
                         Route::domain(config('app.domains.' . $route . '.url'))
                             ->as($route . '.')
                             ->name($route . '.')
-                            ->group(function () use ($route) {
+                            ->group([], function () use ($route) {
                                 Route::group(base_path('routes/' . $route . '.php'));
                             });
                     }
