@@ -111,7 +111,7 @@ class LoginController extends Controller
                 auth()->login($user, true);
             }
             $sessionAfterLogin = session()->all();
-            dd(['newSession' => $newSession, 'afterLogin' => $sessionAfterLogin]);
+            //dd(['newSession' => $newSession, 'afterLogin' => $sessionAfterLogin]);
             // Let them know they've logged in
             session()->flash("alert-success", "You have logged in as: " . auth()->user()->name . " (" . auth()->user()->sso_type . ")");
 
