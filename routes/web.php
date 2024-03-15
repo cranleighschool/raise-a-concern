@@ -10,6 +10,7 @@ Route::group([], function() {
     ]);
 })->middleware(\Spatie\Csp\AddCspHeaders::class);
 
+Route::view('test', 'test')->name('test');
 
 // The below are not part of the CSP
 Route::get('health', \Spatie\Health\Http\Controllers\HealthCheckResultsController::class)->name('health');
