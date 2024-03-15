@@ -15,7 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         then: function () {
             $routes = ['raiseaconcern', 'selfreflection'];
             //Route::middleware(AddCspHeaders::class)
-                Route::group(function () use ($routes) {
+                Route::group([], function () use ($routes) {
                     foreach ($routes as $route) {
                         Route::domain(config('app.domains.' . $route . '.url'))
                             ->as($route . '.')
