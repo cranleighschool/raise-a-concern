@@ -48,17 +48,6 @@ class LoginController extends Controller
     }
 
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-
-
-    }
-
-    /**
      * @param string $identifier
      *
      * @return array
@@ -73,6 +62,15 @@ class LoginController extends Controller
             'table' => $db,
             'id' => (int)$isamsId,
         ];
+    }
+
+    public function logout(Request $request)
+    {
+        auth()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 
     /**
@@ -114,7 +112,6 @@ class LoginController extends Controller
                 $user = User::create($user->email, $ssoData['table'], $user->name, $user->username, $ssoData['id']);
                 auth()->login($user, true);
             }
-            $request->session()->regenerate();
             // Let them know they've logged in
             session()->flash("alert-success", "You have logged in as: " . auth()->user()->name . " (" . auth()->user()->sso_type . ")");
 
