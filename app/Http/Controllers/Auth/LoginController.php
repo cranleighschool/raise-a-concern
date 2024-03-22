@@ -98,7 +98,6 @@ class LoginController extends Controller
             $obj = json_decode($json);
 
             $user = $obj->user->{'@attributes'};
-            $newSession = session()->all();
             $existingUser = User::query()->where('email', $user->email)->first();
             if ($existingUser) {
                 // log them in
@@ -111,9 +110,7 @@ class LoginController extends Controller
                 $user = User::create($user->email, $ssoData['table'], $user->name, $user->username, $ssoData['id']);
                 auth()->login($user, true);
             }
-            $sessionAfterLogin = session()->all();
-            Cache::put('sessionDebugData', ['newSession' => $newSession, 'afterLogin' => $sessionAfterLogin], now()->addMinutes(50));
-            //dd(['newSession' => $newSession, 'afterLogin' => $sessionAfterLogin]);
+
             // Let them know they've logged in
             session()->flash("alert-success", "You have logged in as: " . auth()->user()->name . " (" . auth()->user()->sso_type . ")");
 
