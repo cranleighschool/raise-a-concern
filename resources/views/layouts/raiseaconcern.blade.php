@@ -46,28 +46,11 @@
                 <ul class="navbar-nav ms-auto">
                     <!-- Authentication Links -->
                     @guest
-                        <li class="nav-item">
-                            <a class="btn btn-cranprep" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        </li>
-
-                    @else
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <button type="link" id="logout-btn" class="dropdown-item">
-                                    {{ __('Logout') }}
-                                </button>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    {{ csrf_field() }}
-                                    {{ method_field('POST') }}
-                                </form>
-                            </div>
-                        </li>
+                        @if (!request()->routeIs('login'))
+                            <li class="nav-item">
+                                <a class="btn btn-cranprep" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                        @endif
                     @endguest
                 </ul>
                 @if (auth()->user())
