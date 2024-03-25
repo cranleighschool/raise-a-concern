@@ -184,7 +184,6 @@ class ConcernController extends Controller
             if (isset($pmUser->user_id)) {
                 return $pmUser->user_id;
             }
-
         }
 
         return null;
