@@ -19,10 +19,10 @@
     @endif
     @if (auth()->guest())
     <div class="alert alert-warning">
-        <p class=""><strong>You are not <a href="{{ route('login') }}">logged in</a>.</strong> In most cases it's best if we know who is raising the
+        <p class=""><strong>You are not <a href="{{ route('raiseaconcern.login') }}">logged in</a>.</strong> In most cases it's best if we know who is raising the
             concern, in case there's further details we
             need to in order keep someone safe. However, if you really want to remain anonymous, please continue the
-            form below. <a href="{{ route('login') }}">Log In</a>.</p>
+            form below. <a href="{{ route('raiseaconcern.login') }}">Log In</a>.</p>
     </div>
     @endif
     <p class="lead">Please tell us about your concern...</p>

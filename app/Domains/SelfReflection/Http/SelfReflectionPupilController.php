@@ -6,7 +6,10 @@ use App\Domains\SelfReflection\Actions\PupilData;
 use App\Domains\SelfReflection\Actions\ReportCycles;
 use App\Exceptions\ReportCycleNotFound;
 use App\Http\Controllers\Controller;
+use Exception;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -30,7 +33,7 @@ class SelfReflectionPupilController extends Controller
         return true;
     }
 
-    public function index(int $pupilId)
+    public function index(int $pupilId): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         Gate::authorize('parent-can-view-pupil', $pupilId);
         $data = Http::pastoralModule()
@@ -55,7 +58,7 @@ class SelfReflectionPupilController extends Controller
     }
 
     /**
-     * @throws RequestException
+     * @throws RequestException|ReportCycleNotFound
      */
     public function store(int $reportCycleId, int $teachingSetId, int $teacherId, Request $request): RedirectResponse
     {
@@ -127,7 +130,7 @@ class SelfReflectionPupilController extends Controller
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function show(int $reportCycle, int $pupilId): View
     {

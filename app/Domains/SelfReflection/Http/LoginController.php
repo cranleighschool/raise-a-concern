@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\FireflyAuth;
 use App\Models\User;
 use DOMDocument;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Http;
 class LoginController
 {
     use FireflyAuth;
+
+    public string $url;
 
     public function __construct()
     {
@@ -35,7 +38,7 @@ class LoginController
         return redirect($this->url . '/login/api/webgettoken?' . $query);
     }
 
-    public function callbackSuccess(Request $request)
+    public function callbackSuccess(Request $request): View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         $request->validate([
             'ffauth_secret' => 'string|required',
@@ -49,8 +52,6 @@ class LoginController
             'reportCycles' => ReportCycles::all(),
         ]);
         return redirect(route('selfreflection.home'));
-
-
     }
 
     public function getUserData(string $secret): Authenticatable
