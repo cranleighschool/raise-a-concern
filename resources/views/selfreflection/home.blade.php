@@ -1,6 +1,6 @@
 <x-selfreflection pageTitle="Home">
     @guest
-        <p class="lead">You are not logged in. Please <a href="{{ route('login') }}">login</a> to continue.</p>
+        <p class="lead">You are not logged in. Please <a href="{{ route('selfreflection.login') }}">login</a> to continue.</p>
     @else
         <p class="lead">You are logged in as {{ auth()->user()->name }}</p>
         @if (auth()->user()->isParent())
@@ -28,6 +28,9 @@
                     <button type="submit" class="btn btn-primary btn-lg">Go</button>
                 </div>
             </form>
+        @endif
+        @if (auth()->user()->isStaff())
+            You are a staff member - you should probably be using the <a href="https://pastoral.cranleigh.org">Pastoral Module</a> to submit self reflections.
         @endif
     @endguest
 </x-selfreflection>

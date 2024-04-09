@@ -15,12 +15,12 @@
         "ext-simplexml": "*",
         "laravel/framework": "^11.0",
         "laravel/slack-notification-channel": "^3.0",
-        "laravel/socialite": "^5.12",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.5",
         "livewire/livewire": "^3.4",
         "spatie/laravel-csp": "^2.9",
-        "spatie/laravel-health": "^1.23"
+        "spatie/laravel-health": "^1.23",
+        "ext-dom": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.12",

@@ -4,7 +4,7 @@ use App\Domains\SelfReflection\Actions\ReportCycles;
 use App\Domains\SelfReflection\Http\SelfReflectionPupilController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('test', function() {
+Route::get('test', function () {
     \Illuminate\Support\Facades\Gate::authorize('parent-can-view-pupil', 198);
 
     return 'Hello World';
@@ -29,3 +29,11 @@ Route::post('{reportCycle}/save/{teachingSet}/{teacher}', [SelfReflectionPupilCo
 
 Route::get('lookup/{reportCycle}', \App\Domains\SelfReflection\Http\LookupController::class)
     ->name('lookup');
+
+Route::get('login', [\App\Domains\SelfReflection\Http\LoginController::class, 'redirectTo'])
+    ->name('login');
+
+Route::get('login/callback/success', [\App\Domains\SelfReflection\Http\LoginController::class, 'callbackSuccess'])
+    ->name('login.callback.success');
+Route::get('login/callback/failure', [\App\Domains\SelfReflection\Http\LoginController::class, 'callbackFailure'])
+    ->name('login.callback.failure');

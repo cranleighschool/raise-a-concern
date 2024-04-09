@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Exception;
+use FredBradley\LaraflyAuth\LaraflyLogin;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Client\RequestException;
@@ -27,7 +28,7 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    use FireflyAuth;
 
     /**
      * Where to redirect users after login.
@@ -35,6 +36,8 @@ class LoginController extends Controller
      * @var string
      */
     protected string $redirectTo = '/submit'; //RouteServiceProvider::HOME;
+
+
 
     public function showLoginForm(): View|RedirectResponse
     {
@@ -45,30 +48,6 @@ class LoginController extends Controller
             return view('selfreflection.home');
         }
         return view('auth.login');
-    }
-
-    /**
-     * @param string $identifier
-     *
-     * @return array
-     */
-    private function getIdentifierItems(string $identifier): array
-    {
-        $parts = explode(":", $identifier);
-        $isamsId = end($parts);
-        $db = str_replace("iSAMS", "", $parts[3]);
-
-        return [
-            'table' => $db,
-            'id' => (int)$isamsId,
-        ];
-    }
-
-    public function logout(Request $request)
-    {
-        auth()->logout();
-
-        return redirect('/');
     }
 
     /**
@@ -92,26 +71,7 @@ class LoginController extends Controller
                 'ffauth_secret' => $request->get('ffauth_secret'),
             ])->throw()->body();
 
-            $xml = simplexml_load_string($output);
-            $json = json_encode($xml);
-            $obj = json_decode($json);
-
-            $user = $obj->user->{'@attributes'};
-            $existingUser = User::query()->where('email', $user->email)->first();
-            if ($existingUser) {
-                // log them in
-                auth()->login($existingUser, true);
-                // Update db with login time
-                auth()->user()->update(['updated_at' => now()]);
-            } else {
-                // create a new user
-                $ssoData = $this->getIdentifierItems($user->identifier);
-                $user = User::create($user->email, $ssoData['table'], $user->name, $user->username, $ssoData['id']);
-                auth()->login($user, true);
-            }
-
-            // Let them know they've logged in
-            session()->flash("alert-success", "You have logged in as: " . auth()->user()->name . " (" . auth()->user()->sso_type . ")");
+            $this->findOrCreateUserAndLogin($output);
 
             return redirect()->intended(route('raiseaconcern.submit'));
         }
@@ -152,4 +112,5 @@ class LoginController extends Controller
 
         return redirect('https://' . $subdomain . '.fireflycloud.net/login/api/webgettoken?app=raiseaconcern-cranleigh&successURL=' . $url);
     }
+
 }

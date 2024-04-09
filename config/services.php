@@ -34,7 +34,11 @@ return [
         'key' => env('GITHUB_API_KEY')
     ],
     'firefly' => [
-        'url' => env('FIREFLY_URL')
+        'url' => env('FIREFLY_URL'),
+        'selfreflections' => [
+            'url' => env('FIREFLY_SELFREFLECTIONS_URL'),
+            'app' => env('FIREFLY_SELFREFLECTIONS_APP')
+        ],
     ],
     'isams' => [
         'batch_api_key' => env('ISAMS_BATCH_API_KEY'),

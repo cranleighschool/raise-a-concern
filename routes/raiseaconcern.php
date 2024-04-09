@@ -4,8 +4,16 @@ use App\Domains\RaiseAConcern\Http\ConcernController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
+Route::group([], function () {
+    \Illuminate\Support\Facades\Auth::routes([
+         'register' => false,
+         'reset' => false,
+         'confirm' => false,
+     ]);
+})->middleware(\Spatie\Csp\AddCspHeaders::class);
+
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect()->route('raiseaconcern.login');
 })->name('home');
 
 Route::get('login/firefly/{school}', [LoginController::class, 'loginRedirect'])

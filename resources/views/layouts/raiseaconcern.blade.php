@@ -46,9 +46,9 @@
                 <ul class="navbar-nav ms-auto">
                     <!-- Authentication Links -->
                     @guest
-                        @if (!request()->routeIs('login'))
+                        @if (!request()->routeIs('raiseaconcern.login'))
                             <li class="nav-item">
-                                <a class="btn btn-cranprep" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="btn btn-cranprep" href="{{ route('raiseaconcern.login') }}">{{ __('Login') }}</a>
                             </li>
                         @endif
                     @endguest
