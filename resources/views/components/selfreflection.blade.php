@@ -38,10 +38,7 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Self Reflections</a>
+                        <a class="nav-link" href="{{ route('selfreflection.home') }}">Home</a>
                     </li>
                 </ul>
 
@@ -79,6 +76,15 @@
         <div class="container img-thumbnail bg-white" style="border:0px;padding-top:10px; padding-bottom: 10px;">
             <div class="row">
                 <div class="col-12">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     @if (session()->has('from-pastoral-alert'))
                         <div class="alert alert-warning">
                             <p><strong>Warning</strong></p>

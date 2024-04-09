@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Http;
 
 class User extends Authenticatable
 {
@@ -72,5 +74,26 @@ class User extends Authenticatable
                 'username' => $username,
             ]
         );
+    }
+    public function getPupilsOfParent(): Collection
+    {
+        if (!$this->isParent()) {
+            return collect();
+        }
+        return Http::pastoralModule()->post("selfreflections/parents/pupils", [
+            'email' => $this->email,
+        ])->throw()->collect();
+    }
+    public function isStaff(): bool
+    {
+        return $this->sso_type === 'staff';
+    }
+    public function isPupil(): bool
+    {
+        return $this->sso_type === 'stu';
+    }
+    public function isParent(): bool
+    {
+        return $this->sso_type === 'parents';
     }
 }
