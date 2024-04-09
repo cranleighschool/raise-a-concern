@@ -84,7 +84,7 @@ class SelfReflectionPupilController extends Controller
                 'teaching_set_id' => $teachingSetId,
                 'teacher_id' => $teacherId,
                 'academic_year' => $reportCycle->ReportYear,
-                'nc_year_id' => (new PupilData())->ncYear,
+                'nc_year' => (new PupilData())->ncYear,
             ])
             ->throw();
 
