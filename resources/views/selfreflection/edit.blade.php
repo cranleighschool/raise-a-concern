@@ -5,7 +5,7 @@
         @csrf
         <div class="form-floating mb-3">
         <textarea class="form-control" name="reflection" id="reflection"
-                  rows="10" style="height: 200px;">{{ old('reflection', $current['reflection'] ?? '') }}</textarea>
+                  rows="10">{{ old('reflection', $current['reflection'] ?? '') }}</textarea>
             <label for="reflection">Reflection</label>
         </div>
         <button class="btn-lg btn btn-outline-primary" type="submit">Save</button>
