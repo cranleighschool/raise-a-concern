@@ -46,7 +46,8 @@
                 <ul class="navbar-nav ms-auto">
                     <!-- Authentication Links -->
                     @guest
-                        <a href="{{ route('selfreflection.login') }}" class="btn btn-cranprep me-2" type="button">Log In</a>
+                        <a href="{{ route('selfreflection.login') }}" class="btn btn-cranprep me-2" type="button">Log
+                            In</a>
                     @else
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
