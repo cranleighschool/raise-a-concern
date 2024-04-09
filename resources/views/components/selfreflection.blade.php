@@ -109,8 +109,7 @@
 
     </main>
     <footer class="py-4">
-        <div class="container img-thumbnail bg-cranleigh text-white"
-             style="border:0px;padding-top:10px; padding-bottom: 10px;">
+        <div class="container img-thumbnail bg-cranleigh text-white">
             <div class="row">
                 <div class="col-7">Cranleigh's Self Reflection and Pastoral Module are bespokes system designed and
                     developed at Cranleigh. <br/>Any technical queries should be directed to <a
