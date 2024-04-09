@@ -66,6 +66,12 @@ a {
     margin: 7.5px;
 }
 
+.self-reflection-card {
+    border: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 .btn-cranleigh {
     @include button-outline-variant(#0c223f);
 }

@@ -73,7 +73,7 @@
     </nav>
 
     <main class="py-4">
-        <div class="container img-thumbnail bg-white" style="border:0px;padding-top:10px; padding-bottom: 10px;">
+        <div class="container img-thumbnail bg-white self-reflection-card">
             <div class="row">
                 <div class="col-12">
                     @if ($errors->any())
