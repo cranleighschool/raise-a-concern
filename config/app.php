@@ -71,7 +71,7 @@ return [
             'name' => 'Raise a Concern at Cranleigh',
         ],
         'selfreflection' => [
-            'url' => env('SELF_REFLECTION_HOST', 'selfreflection.cranleigh.org'),
+            'url' => env('SELF_REFLECTION_HOST', 'selfreflections.cranleigh.org'),
             'name' => 'Self Reflections for Pupils',
         ],
     ],
