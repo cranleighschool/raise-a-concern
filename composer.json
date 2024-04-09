@@ -15,6 +15,7 @@
         "ext-simplexml": "*",
         "laravel/framework": "^11.0",
         "laravel/slack-notification-channel": "^3.0",
+        "laravel/socialite": "^5.12",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.5",
         "livewire/livewire": "^3.4",
