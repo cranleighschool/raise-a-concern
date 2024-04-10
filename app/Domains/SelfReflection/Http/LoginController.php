@@ -45,7 +45,7 @@ class LoginController
 
         $this->getUserData($secret);
 
-        return redirect('/');
+        return redirect('/')->flush();
     }
 
     public function getUserData(string $secret): Authenticatable
