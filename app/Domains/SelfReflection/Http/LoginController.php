@@ -23,7 +23,6 @@ class LoginController
 
     public function redirectTo(): RedirectResponse
     {
-
         $success = route('selfreflection.login.callback.success');
         $failure = route('selfreflection.login.callback.failure');
 
@@ -36,7 +35,7 @@ class LoginController
         return redirect($this->url.'/login/api/webgettoken?'.$query);
     }
 
-    public function callbackSuccess(Request $request): View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function callbackSuccess(Request $request): RedirectResponse
     {
         $request->validate([
             'ffauth_secret' => 'string|required',
@@ -46,11 +45,7 @@ class LoginController
 
         $this->getUserData($secret);
 
-        return view('selfreflection.home', [
-            'reportCycles' => ReportCycles::all(),
-        ]);
-
-        return redirect(route('selfreflection.home'));
+        return redirect()->setIntendedUrl('/');
     }
 
     public function getUserData(string $secret): Authenticatable
