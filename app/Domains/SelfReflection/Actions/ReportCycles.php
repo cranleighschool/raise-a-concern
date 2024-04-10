@@ -20,9 +20,10 @@ final class ReportCycles
     public static function all(bool $withoutFilter = false): Collection
     {
         $configKey = 'services.isams.batch_api_key';
-        if (!config()->has($configKey) || is_null(config($configKey))) {
-            throw new Exception('Missing configuration key: ' . $configKey);
+        if (! config()->has($configKey) || is_null(config($configKey))) {
+            throw new Exception('Missing configuration key: '.$configKey);
         }
+
         return (new self(withoutFilter: $withoutFilter))();
     }
 
@@ -38,17 +39,13 @@ final class ReportCycles
             return $reportCycle;
         }
         throw new ReportCycleNotFound('Report cycle not found', 404);
-
     }
 
-    /**
-     */
     public function __construct(private readonly bool $withoutFilter = false)
     {
     }
 
     /**
-     * @return Collection
      * @throws RequestException
      * @throws Exception
      */
@@ -57,9 +54,6 @@ final class ReportCycles
         return $this->getReportCycles();
     }
 
-    /**
-     * @return int
-     */
     private function getCurrentAcademicYear(): int
     {
         $currentMonth = now()->month;
@@ -69,7 +63,6 @@ final class ReportCycles
     }
 
     /**
-     * @return Collection
      * @throws Exception
      */
     public function getReportCycles(): Collection
@@ -106,19 +99,15 @@ final class ReportCycles
             if (app()->environment('local') && app()->hasDebugModeEnabled()) {
                 return true;
             }
+
             return $reportCycle->EndDate > now();
         })->map(function (object $reportCycle) {
-            $reportCycle->reportCycleId = $reportCycle->{"@attributes"}->Id;
+            $reportCycle->reportCycleId = $reportCycle->{'@attributes'}->Id;
+
             return $reportCycle;
         });
     }
 
-    /**
-     * @param int|null $reportYear
-     * @param int $reportCycleType
-     * @param int|null $reportTerm
-     * @return string
-     */
     private function filters(?int $reportYear = null, int $reportCycleType = 0, ?int $reportTerm = null): string
     {
         return '<?xml version="1.0" encoding="utf-8" ?>
@@ -127,7 +116,7 @@ final class ReportCycles
         <Method>SchoolReports_GetReportCycles</Method>
     </MethodsToRun>
     <SchoolReports>
-        <ReportCycles reportYear="' . $reportYear . '" reportCycleType="' . $reportCycleType . '" reportTerm="' . $reportTerm . '"></ReportCycles>
+        <ReportCycles reportYear="'.$reportYear.'" reportCycleType="'.$reportCycleType.'" reportTerm="'.$reportTerm.'"></ReportCycles>
     </SchoolReports>
 </Filters>';
     }

@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Http;
  */
 readonly class ValidateReportCycleWithYearGroup
 {
-    /**
-     * @param int $reportCycleId
-     * @param int $ncYear
-     */
     public function __construct(private int $reportCycleId, private int $ncYear)
     {
     }
@@ -30,7 +26,6 @@ readonly class ValidateReportCycleWithYearGroup
     }
 
     /**
-     * @return bool
      * @throws RequestException
      * @throws Exception
      */
@@ -58,11 +53,6 @@ readonly class ValidateReportCycleWithYearGroup
         }
     }
 
-    /**
-     * @param int $ncYear
-     * @param int $reportCycleId
-     * @return string
-     */
     private function filters(int $ncYear, int $reportCycleId): string
     {
         return '<?xml version="1.0" encoding="utf-8" ?>
@@ -71,7 +61,7 @@ readonly class ValidateReportCycleWithYearGroup
                         <Method>SchoolReports_GetReports</Method>
                     </MethodsToRun>
                     <SchoolReports>
-                        <Reports ncYear="' . $ncYear . '" reportCycleIdsToInclude="' . $reportCycleId . '"></Reports>
+                        <Reports ncYear="'.$ncYear.'" reportCycleIdsToInclude="'.$reportCycleId.'"></Reports>
                     </SchoolReports>
                 </Filters>';
     }

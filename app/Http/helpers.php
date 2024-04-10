@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 if (! function_exists('displayAlertMsg')) {
-    /**
-     * @return string
-     */
     function displayAlertMsg(): string
     {
         $alerts = [];
@@ -32,19 +29,20 @@ if (! function_exists('displayAlertMsg')) {
         return '';
     }
 }
-if (!function_exists('getRealIpAddress')) {
+if (! function_exists('getRealIpAddress')) {
     function getRealIpAddress()
     {
         //whether ip is from share internet
-        if (! empty($_SERVER[ 'HTTP_CLIENT_IP' ])) {
-            $ip_address = $_SERVER[ 'HTTP_CLIENT_IP' ];
+        if (! empty($_SERVER['HTTP_CLIENT_IP'])) {
+            $ip_address = $_SERVER['HTTP_CLIENT_IP'];
         } //whether ip is from proxy
-        elseif (! empty($_SERVER[ 'HTTP_X_FORWARDED_FOR' ])) {
-            $ip_address = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
+        elseif (! empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } //whether ip is from remote address
         else {
-            $ip_address = $_SERVER[ 'REMOTE_ADDR' ];
+            $ip_address = $_SERVER['REMOTE_ADDR'];
         }
+
         return $ip_address;
     }
 

@@ -8,7 +8,9 @@ use Livewire\Component;
 class SelfReflection extends Component
 {
     private object $reflection;
+
     private object $current;
+
     public int $reportCycleId;
 
     public function mount(object $reflection, object $current, int $reportCycleId): void

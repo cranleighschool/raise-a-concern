@@ -4,8 +4,6 @@ namespace App\Domains\SelfReflection\Http;
 
 use App\Domains\SelfReflection\Actions\ReportCycles;
 use App\Http\Controllers\Auth\FireflyAuth;
-use App\Models\User;
-use DOMDocument;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -35,7 +33,7 @@ class LoginController
             'failURL' => $failure,
         ]);
 
-        return redirect($this->url . '/login/api/webgettoken?' . $query);
+        return redirect($this->url.'/login/api/webgettoken?'.$query);
     }
 
     public function callbackSuccess(Request $request): View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
@@ -51,14 +49,15 @@ class LoginController
         return view('selfreflection.home', [
             'reportCycles' => ReportCycles::all(),
         ]);
+
         return redirect(route('selfreflection.home'));
     }
 
     public function getUserData(string $secret): Authenticatable
     {
-        $response = Http::get($this->url . '/login/api/sso', [
+        $response = Http::get($this->url.'/login/api/sso', [
             'ffauth_secret' => $secret,
-            'ffauth_device_id' => config('services.firefly.selfreflections.app')
+            'ffauth_device_id' => config('services.firefly.selfreflections.app'),
         ]);
 
         $this->findOrCreateUserAndLogin($response->throw()->body());
@@ -69,6 +68,7 @@ class LoginController
     public function callbackFailure()
     {
         session()->flash('alert-danger', 'There was an issue with the Firefly authentication. Please try again.');
+
         return redirect(route('selfreflection.login'));
     }
 }

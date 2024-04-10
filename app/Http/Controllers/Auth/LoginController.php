@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Exception;
-use FredBradley\LaraflyAuth\LaraflyLogin;
 use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -32,12 +29,8 @@ class LoginController extends Controller
 
     /**
      * Where to redirect users after login.
-     *
-     * @var string
      */
     protected string $redirectTo = '/submit'; //RouteServiceProvider::HOME;
-
-
 
     public function showLoginForm(): View|RedirectResponse
     {
@@ -47,14 +40,11 @@ class LoginController extends Controller
         if (request()->host() === config('app.domains.selfreflection.url')) {
             return view('selfreflection.home');
         }
+
         return view('auth.login');
     }
 
     /**
-     * @param Request $request
-     * @param string $school
-     *
-     * @return RedirectResponse
      * @throws RequestException
      * @throws Exception
      */
@@ -66,7 +56,7 @@ class LoginController extends Controller
                 'senior' => 'cranleigh',
                 'prep' => 'cranprep'
             };
-            $output = Http::get('https://' . $subdomain . '.fireflycloud.net/login/api/sso', [
+            $output = Http::get('https://'.$subdomain.'.fireflycloud.net/login/api/sso', [
                 'ffauth_device_id' => 'raiseaconcern-cranleigh',
                 'ffauth_secret' => $request->get('ffauth_secret'),
             ])->throw()->body();
@@ -83,15 +73,9 @@ class LoginController extends Controller
         if (isset($user)) {
             $debugarray['user'] = $user;
         }
-        throw new Exception("Firefly Authentication Not Found", 400, $debugarray);
+        throw new Exception('Firefly Authentication Not Found', 400, $debugarray);
     }
 
-
-    /**
-     * @param string $school
-     *
-     * @return RedirectResponse
-     */
     public function loginRedirect(string $school): RedirectResponse
     {
         try {
@@ -103,14 +87,13 @@ class LoginController extends Controller
             Log::debug($exception->getMessage(), [
                 'school' => $school,
                 'request' => request(),
-                'trace' => $exception->getTrace()
+                'trace' => $exception->getTrace(),
             ]);
-            abort(404, "School not found.");
+            abort(404, 'School not found.');
         }
 
         $url = route('raiseaconcern.firefly-success', $school);
 
-        return redirect('https://' . $subdomain . '.fireflycloud.net/login/api/webgettoken?app=raiseaconcern-cranleigh&successURL=' . $url);
+        return redirect('https://'.$subdomain.'.fireflycloud.net/login/api/webgettoken?app=raiseaconcern-cranleigh&successURL='.$url);
     }
-
 }

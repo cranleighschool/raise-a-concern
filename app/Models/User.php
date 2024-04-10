@@ -52,13 +52,7 @@ class User extends Authenticatable
         ];
     }
 
-
     /**
-     * @param string $email
-     * @param string $ssoType
-     * @param string $name
-     * @param string $username
-     * @param int $ssoId
      * @return $this
      */
     public static function create(string $email, string $ssoType, string $name, string $username, int $ssoId): Model
@@ -75,23 +69,28 @@ class User extends Authenticatable
             ]
         );
     }
+
     public function getPupilsOfParent(): Collection
     {
-        if (!$this->isParent()) {
+        if (! $this->isParent()) {
             return collect();
         }
-        return Http::pastoralModule()->post("selfreflections/parents/pupils", [
+
+        return Http::pastoralModule()->post('selfreflections/parents/pupils', [
             'email' => $this->email,
         ])->throw()->collect();
     }
+
     public function isStaff(): bool
     {
         return $this->sso_type === 'staff';
     }
+
     public function isPupil(): bool
     {
         return $this->sso_type === 'stu';
     }
+
     public function isParent(): bool
     {
         return $this->sso_type === 'parents';

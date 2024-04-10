@@ -30,7 +30,7 @@ Route::get('report-cycles', function (Request $request) {
         return ReportCycles::all(withoutFilter: $withoutFilter)
             ->map(function (object $obj) {
                 return [
-                    'reportCycleId' => (int)$obj->reportCycleId,
+                    'reportCycleId' => (int) $obj->reportCycleId,
                     'CycleName' => $obj->CycleName,
                     'StartDate' => $obj->StartDate,
                     'EndDate' => $obj->EndDate,

@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         Http::macro('pastoralModule', function () {
-            return Http::withUserAgent("RaiseAConcern")
+            return Http::withUserAgent('RaiseAConcern')
                 ->withToken(config('pastoral-module.apiToken'))
                 ->baseUrl(config('pastoral-module.apiUrl'))
                 ->acceptJson();

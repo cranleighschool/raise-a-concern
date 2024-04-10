@@ -17,19 +17,20 @@ class SelfReflectionGateProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::define('parent-can-view-pupil', function ($user, int $pupilId) {
-            if (!$user->isParent()) {
+            if (! $user->isParent()) {
                 return Response::deny('You are not a parent user');
             }
             try {
-                $result = Http::pastoralModule()->post("selfreflections/pupils/" . $pupilId . "/contacts")
+                $result = Http::pastoralModule()->post('selfreflections/pupils/'.$pupilId.'/contacts')
                     ->throw()
                     ->object();
             } catch (RequestException $exception) {
                 return Response::deny($exception->response->json()['message']);
             }
-            if (!in_array($user->email, $result)) {
+            if (! in_array($user->email, $result)) {
                 return Response::deny('You are not a contact for this pupil');
             }
+
             return Response::allow();
         });
 
@@ -42,6 +43,7 @@ class SelfReflectionGateProvider extends ServiceProvider
             if (now() > $reportCycle->EndDate) {
                 return false;
             }
+
             return true;
         });
     }

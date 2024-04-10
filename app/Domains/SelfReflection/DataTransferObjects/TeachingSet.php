@@ -9,7 +9,9 @@ use stdClass;
 class TeachingSet
 {
     public int $id;
+
     public string $subject;
+
     public Collection $teachers;
 
     /**
@@ -17,13 +19,13 @@ class TeachingSet
      */
     public function __construct(stdClass $data)
     {
-        if (!isset($data->id)) {
+        if (! isset($data->id)) {
             throw new Exception('TeachingSet ID is required');
         }
-        if (!isset($data->subject)) {
+        if (! isset($data->subject)) {
             throw new Exception('TeachingSet subject is required');
         }
-        if (!isset($data->teachers)) {
+        if (! isset($data->teachers)) {
             throw new Exception('TeachingSet teachers are required');
         }
 
@@ -37,5 +39,4 @@ class TeachingSet
             throw new Exception('TeachingSet must have at least one teacher');
         }
     }
-
 }

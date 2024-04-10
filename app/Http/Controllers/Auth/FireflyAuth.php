@@ -10,20 +10,15 @@ trait FireflyAuth
 {
     use AuthenticatesUsers;
 
-    /**
-     * @param string $identifier
-     *
-     * @return array
-     */
     private function getIdentifierItems(string $identifier): array
     {
-        $parts = explode(":", $identifier);
+        $parts = explode(':', $identifier);
         $isamsId = end($parts);
-        $db = str_replace("iSAMS", "", $parts[3]);
+        $db = str_replace('iSAMS', '', $parts[3]);
 
         return [
             'table' => $db,
-            'id' => (int)$isamsId,
+            'id' => (int) $isamsId,
         ];
     }
 
@@ -34,6 +29,7 @@ trait FireflyAuth
         if ($request->server('HTTP_HOST') === config('app.domains.selfreflection.url')) {
             return redirect()->route('selfreflection.home');
         }
+
         return redirect('/');
     }
 
@@ -46,6 +42,7 @@ trait FireflyAuth
         $xml = simplexml_load_string($xmlString);
         $json = json_encode($xml);
         $obj = json_decode($json);
+
         return $obj;
     }
 
@@ -68,6 +65,6 @@ trait FireflyAuth
         auth()->user()->update(['updated_at' => now()]);
 
         // Let them know they've logged in
-        session()->flash("alert-success", "You have logged in as: " . auth()->user()->name);
+        session()->flash('alert-success', 'You have logged in as: '.auth()->user()->name);
     }
 }

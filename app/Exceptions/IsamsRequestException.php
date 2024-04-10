@@ -17,7 +17,7 @@ class IsamsRequestException extends Exception
 
         if ($err->message === "Document labelled UTF-16 but has UTF-8 content\n") {
             libxml_clear_errors();
-            $message = str_replace("utf-16", "UTF-8", $message);
+            $message = str_replace('utf-16', 'UTF-8', $message);
             $xml = simplexml_load_string($message);
         }
         if (libxml_get_last_error()) {
@@ -25,6 +25,7 @@ class IsamsRequestException extends Exception
         }
         $json = json_encode($xml);
         $array = json_decode($json, true);
+
         return response()->view('selfreflection.errors.isamsrequest', ['message' => null, 'xml' => $array]);
     }
 }

@@ -10,19 +10,19 @@ use Spatie\Csp\AddCspHeaders;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        api: __DIR__ . '/../routes/api.php',
+        api: __DIR__.'/../routes/api.php',
         apiPrefix: 'api',
-        web: __DIR__ . '/../routes/web.php',
-        commands: __DIR__ . '/../routes/console.php',
+        web: __DIR__.'/../routes/web.php',
+        commands: __DIR__.'/../routes/console.php',
         health: '/up',
         then: function () {
             foreach (['raiseaconcern', 'selfreflection'] as $route) {
-                Route::domain(config('app.domains.' . $route . '.url'))
-                    ->as($route . '.')
-                    ->name($route . '.')
+                Route::domain(config('app.domains.'.$route.'.url'))
+                    ->as($route.'.')
+                    ->name($route.'.')
                     ->group(function () use ($route) {
                         Route::middleware('web')
-                            ->group(base_path('routes/' . $route . '.php'));
+                            ->group(base_path('routes/'.$route.'.php'));
                     });
             }
         }
@@ -33,7 +33,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->appendToGroup('web', [
             SecurityHeaders::class,
             AddCspHeaders::class,
-            FrameGuard::class
+            FrameGuard::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

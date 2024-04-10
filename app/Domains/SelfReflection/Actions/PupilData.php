@@ -7,22 +7,23 @@ use App\Exceptions\PastoralModuleConnectionFailure;
 use Exception;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Http;
 
 readonly class PupilData
 {
     public int $pupil_id;
+
     public string $isamsId;
+
     public string $username;
+
     public string $prename;
+
     public string $surname;
+
     public int $ncYear;
 
-    /**
-     * @var Collection
-     */
     public Collection $teachingSets;
 
     /**
@@ -50,11 +51,11 @@ readonly class PupilData
 
         try {
             $result = Http::pastoralModule()
-                ->post("selfreflections/find-pupil", $this->getQuery($pupil))
+                ->post('selfreflections/find-pupil', $this->getQuery($pupil))
                 ->throw()
                 ->object();
         } catch (ConnectionException $exception) {
-            throw new PastoralModuleConnectionFailure("Failed to connect to ISAMS", 503);
+            throw new PastoralModuleConnectionFailure('Failed to connect to ISAMS', 503);
         }
 
         if (is_int($pupil) && auth()->user()->isPupil() && strtolower($result->data->username) !== $authUsername) {
@@ -66,6 +67,7 @@ readonly class PupilData
                 $this->teachingSets = collect($data)
                     ->mapInto(TeachingSet::class)
                     ->ensure(TeachingSet::class);
+
                 continue;
             }
             $this->{$key} = $data;
@@ -89,8 +91,9 @@ readonly class PupilData
             ];
         }
         if (is_null($query)) {
-            throw new Exception("Invalid query");
+            throw new Exception('Invalid query');
         }
+
         return $query;
     }
 

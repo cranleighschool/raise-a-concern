@@ -37,16 +37,16 @@ class SelfReflectionPupilController extends Controller
     {
         Gate::authorize('parent-can-view-pupil', $pupilId);
         $data = Http::pastoralModule()
-            ->get("selfreflections/pupils/" . $pupilId . "/reflections")
+            ->get('selfreflections/pupils/'.$pupilId.'/reflections')
             ->throw()
             ->collect();
-
 
         $reportCycles = $data->keys()->map(function (int $key) {
             try {
                 return ReportCycles::find($key);
             } catch (ReportCycleNotFound $exception) {
-                session()->flash('alert-danger', 'Data was found for a report cycle that no longer exists (id: ' . $key . '). Please contact support.');
+                session()->flash('alert-danger', 'Data was found for a report cycle that no longer exists (id: '.$key.'). Please contact support.');
+
                 return null;
             }
         })->filter();
@@ -62,7 +62,7 @@ class SelfReflectionPupilController extends Controller
      */
     public function store(int $reportCycleId, int $teachingSetId, int $teacherId, Request $request): RedirectResponse
     {
-        if (!$this->authorizeEdit($teachingSetId, $teacherId)) {
+        if (! $this->authorizeEdit($teachingSetId, $teacherId)) {
             abort(403, 'The combination of pupil, teaching set and teacher is not valid. Malicious activity detected.');
         }
 
@@ -79,7 +79,7 @@ class SelfReflectionPupilController extends Controller
         $reportCycle = ReportCycles::find($reportCycleId);
 
         Http::pastoralModule()
-            ->post("selfreflections/reports/" . $reportCycleId . "/pupil/" . (new PupilData())->pupil_id, [
+            ->post('selfreflections/reports/'.$reportCycleId.'/pupil/'.(new PupilData())->pupil_id, [
                 'reflection' => $writtenReflection,
                 'teaching_set_id' => $teachingSetId,
                 'teacher_id' => $teacherId,
@@ -88,7 +88,8 @@ class SelfReflectionPupilController extends Controller
             ])
             ->throw();
 
-        session()->flash("alert-success", "Reflection saved successfully.");
+        session()->flash('alert-success', 'Reflection saved successfully.');
+
         return redirect()->route('selfreflection.showget', [
             'reportCycle' => $reportCycleId,
             'pupilId' => (new PupilData())->pupil_id,
@@ -108,7 +109,7 @@ class SelfReflectionPupilController extends Controller
             ]);
         }
 
-        if (!$this->authorizeEdit($teachingSetId, $teacherId)) {
+        if (! $this->authorizeEdit($teachingSetId, $teacherId)) {
             abort(403, 'The combination of pupil, teaching set and teacher is not valid. Malicious activity detected.');
         }
 
@@ -117,7 +118,7 @@ class SelfReflectionPupilController extends Controller
         $teacher = collect($teachingSets->where('id', $teachingSetId)->first()->teachers)->where('staff_id', $teacherId)->first()->name;
 
         $current = Http::pastoralModule()
-            ->get("selfreflections/reports/" . $reportCycleId . "/pupil/" . (new PupilData())->pupil_id)
+            ->get('selfreflections/reports/'.$reportCycleId.'/pupil/'.(new PupilData())->pupil_id)
             ->throw()->collect();
 
         return view('selfreflection.edit', [
@@ -126,7 +127,7 @@ class SelfReflectionPupilController extends Controller
             'reportCycle' => $reportCycle,
             'teachingSetId' => $teachingSetId,
             'teacherId' => $teacherId,
-            'current' => collect($current->where('teaching_set_id', $teachingSetId)->where('teacher_id', $teacherId)->first())
+            'current' => collect($current->where('teaching_set_id', $teachingSetId)->where('teacher_id', $teacherId)->first()),
         ]);
     }
 
@@ -140,7 +141,7 @@ class SelfReflectionPupilController extends Controller
         }, "Don't attempt to change the URL to view another pupil's self-reflection. Malicious activity detected.");
 
         $current = Http::pastoralModule()
-            ->get("selfreflections/reports/" . $reportCycle . "/pupil/" . $pupilId)
+            ->get('selfreflections/reports/'.$reportCycle.'/pupil/'.$pupilId)
             ->throw()->collect();
 
         return view('selfreflection.dataentry', [

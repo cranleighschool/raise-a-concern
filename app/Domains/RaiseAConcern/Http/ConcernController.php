@@ -18,19 +18,13 @@ use Illuminate\Support\Facades\Log;
 class ConcernController extends Controller
 {
     public const SENIOR_SCHOOL_ID = 1;
-    public const PREP_SCHOOL_ID = 2;
-    /**
-     * @var Authenticatable|User|null
-     */
-    private null|Authenticatable|User $loggedInUser = null;
-    /**
-     * @var int|null
-     */
-    private int|null $pastoralModuleUserId = null;
 
-    /**
-     * @return void
-     */
+    public const PREP_SCHOOL_ID = 2;
+
+    private null|Authenticatable|User $loggedInUser = null;
+
+    private ?int $pastoralModuleUserId = null;
+
     private function setVars(): void
     {
         $this->loggedInUser = auth()->user();
@@ -39,8 +33,6 @@ class ConcernController extends Controller
 
     /**
      * Show the application dashboard.
-     *
-     * @return Renderable
      */
     public function index(): Renderable
     {
@@ -50,11 +42,6 @@ class ConcernController extends Controller
         return view('home', compact('pastoralModuleUserId'));
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return Renderable|RedirectResponse
-     */
     public function store(Request $request): Renderable|RedirectResponse
     {
         $this->setVars();
@@ -65,10 +52,10 @@ class ConcernController extends Controller
             'concern' => 'required|string|min:5|max:4096',
         ]);
         $data = $request->only(['person_type', 'school_id', 'subject', 'concern']);
-        $data[ 'submitter' ] = $this->getSubmitter();
+        $data['submitter'] = $this->getSubmitter();
 
-        $person = $data[ 'person_type' ];
-        $school = $data[ 'school_id' ];
+        $person = $data['person_type'];
+        $school = $data['school_id'];
         try {
             $response = Http::pastoralModule()
                 ->post('concerns/store', $data)
@@ -78,26 +65,22 @@ class ConcernController extends Controller
             $this->addIpAddressToDatabase($concernId);
 
             $reviewer = $this->calculateRecipient($person, $school);
+
             return view('thankyou', ['concernId' => $concernId, 'reviewer' => $reviewer]);
 
         } catch (RequestException $exception) {
             Log::error($exception->getMessage());
-            session()->flash("alert-danger",
-                "There was an error and your concern was not submitted. If this problem persists please email your concern to safeguarding@cranleigh.org");
+            session()->flash('alert-danger',
+                'There was an error and your concern was not submitted. If this problem persists please email your concern to safeguarding@cranleigh.org');
+
             return redirect()->back()->withInput($request->only(['person_type', 'school_id', 'subject', 'concern']));
         }
     }
 
-    /**
-     * @param  string  $person
-     * @param  int|null  $school
-     *
-     * @return string
-     */
     private function calculateRecipient(string $person, ?int $school): string
     {
         if ($person === 'headmaster') {
-            return "the Chair of Governors, ".config('people.CHAIR_OF_GOVERNORS').'.';
+            return 'the Chair of Governors, '.config('people.CHAIR_OF_GOVERNORS').'.';
         }
 
         if ($person === 'pupil') {
@@ -108,6 +91,7 @@ class ConcernController extends Controller
             if ($school === self::PREP_SCHOOL_ID) {
                 return $return.' at Cranleigh Prep School.';
             }
+
             return $return.'.';
         }
         if ($person === 'staff') {
@@ -118,17 +102,13 @@ class ConcernController extends Controller
             if ($school === self::PREP_SCHOOL_ID) {
                 return $return.', '.config('people.CPS_HEAD').'.';
             }
+
             return $return.'.';
         }
 
         return 'the relevant safeguarding team member.';
     }
 
-    /**
-     * @param  int  $concernId
-     *
-     * @return void
-     */
     private function addIpAddressToDatabase(int $concernId): void
     {
         try {
@@ -140,17 +120,14 @@ class ConcernController extends Controller
             ]);
         } catch (QueryException $queryException) {
             Log::debug($queryException->getMessage());
-            Log::error("Could not ad IP Address to Database", [
+            Log::error('Could not ad IP Address to Database', [
                 'concern_id' => $concernId,
                 'ip' => getRealIpAddress(),
             ]);
-            session()->flash("alert-warning", "Could not add IP Address to Database");
+            session()->flash('alert-warning', 'Could not add IP Address to Database');
         }
     }
 
-    /**
-     * @return int|string
-     */
     private function getSubmitter(): int|string
     {
         if ($this->loggedInUser && ! is_null($this->pastoralModuleUserId)) {
@@ -159,24 +136,23 @@ class ConcernController extends Controller
         if ($this->loggedInUser && is_null($this->pastoralModuleUserId)) {
             return auth()->user()->email;
         }
+
         return 'Unknown';
     }
 
-    /**
-     * @return int|null
-     */
-    private function getPastoralModuleUserId(): int|null
+    private function getPastoralModuleUserId(): ?int
     {
         if ($this->loggedInUser) {
             $pmUser = Cache::remember('pmUserFor'.$this->loggedInUser->email, now()->addMinutes(5), function () {
                 try {
                     return Http::pastoralModule()
                         ->post('auth/users/make', [
-                            "email" => $this->loggedInUser->email,
+                            'email' => $this->loggedInUser->email,
                             'api_token' => config('pastoral-module.apiToken'),
                         ])->throw()->object();
                 } catch (RequestException $exception) {
                     Log::error($exception->getMessage());
+
                     return null;
                 }
             });
