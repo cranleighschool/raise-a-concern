@@ -2,10 +2,9 @@
 
 namespace App\Domains\SelfReflection\Http;
 
-use App\Domains\SelfReflection\Actions\ReportCycles;
 use App\Http\Controllers\Auth\FireflyAuth;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Contracts\View\View;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -35,6 +34,9 @@ class LoginController
         return redirect($this->url.'/login/api/webgettoken?'.$query);
     }
 
+    /**
+     * @throws RequestException
+     */
     public function callbackSuccess(Request $request): RedirectResponse
     {
         $request->validate([
@@ -45,9 +47,12 @@ class LoginController
 
         $this->getUserData($secret);
 
-        return redirect('/')->flush();
+        return redirect()->route('selfreflection.home');
     }
 
+    /**
+     * @throws RequestException
+     */
     public function getUserData(string $secret): Authenticatable
     {
         $response = Http::get($this->url.'/login/api/sso', [
@@ -60,10 +65,10 @@ class LoginController
         return auth()->user();
     }
 
-    public function callbackFailure()
+    public function callbackFailure(): RedirectResponse
     {
         session()->flash('alert-danger', 'There was an issue with the Firefly authentication. Please try again.');
 
-        return redirect(route('selfreflection.login'));
+        return redirect()->route('selfreflection.login');
     }
 }
