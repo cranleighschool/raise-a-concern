@@ -7,20 +7,10 @@ use Spatie\Csp\Policies\Basic;
 
 class ContentSecurityPolicy extends Basic
 {
-    private function forUpPage()
-    {
-        $this->addDirective(Directive::SCRIPT, 'self');
-        $this->addDirective(Directive::STYLE, 'self');
-        $this->addDirective(Directive::STYLE, 'fonts.bunny.net');
-        $this->addDirective(Directive::SCRIPT, 'cdn.tailwindcss.com');
-    }
-    public function configure()
+    public function configure(): void
     {
         parent::configure();
         if (app()->environment('production')) {
-            if (request()->is('up')) {
-                $this->forUpPage();
-            }
             $this
                 ->addDirective(Directive::SCRIPT, 'self')
                 ->addDirective(Directive::STYLE, 'self')

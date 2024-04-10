@@ -14,7 +14,6 @@ return Application::configure(basePath: dirname(__DIR__))
         apiPrefix: 'api',
         web: __DIR__.'/../routes/web.php',
         commands: __DIR__.'/../routes/console.php',
-        health: '/up',
         then: function () {
             foreach (['raiseaconcern', 'selfreflection'] as $route) {
                 Route::domain(config('app.domains.'.$route.'.url'))
