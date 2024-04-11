@@ -63,7 +63,7 @@ class LoginController extends Controller
 
             $this->findOrCreateUserAndLogin($output);
 
-            return redirect()->to(route('raiseaconcern.submit'));
+            return redirect('/submit');
         }
 
         $debugarray = [

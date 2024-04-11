@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 trait FireflyAuth
 {
@@ -22,7 +24,7 @@ trait FireflyAuth
         ];
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request): RedirectResponse
     {
         auth()->logout();
 
@@ -41,9 +43,8 @@ trait FireflyAuth
          */
         $xml = simplexml_load_string($xmlString);
         $json = json_encode($xml);
-        $obj = json_decode($json);
 
-        return $obj;
+        return json_decode($json);
     }
 
     private function findOrCreateUserAndLogin(string $xmlString): void
@@ -60,7 +61,8 @@ trait FireflyAuth
         }
 
         // log them in
-        auth()->login($existingUser, true);
+        session()->flush();
+        Auth::login($existingUser, true);
         // Update db with login time
         auth()->user()->update(['updated_at' => now()]);
 
