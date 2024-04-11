@@ -50,31 +50,29 @@ class LoginController extends Controller
      */
     public function callbackSuccess(Request $request, string $school): RedirectResponse
     {
-        if ($request->has('ffauth_secret')) {
+        $request->validate([
+            'ffauth_secret' => 'string|required',
+        ]);
 
+        try {
             $subdomain = match ($school) {
                 'senior' => 'cranleigh',
                 'prep' => 'cranprep'
             };
-            $output = Http::get('https://'.$subdomain.'.fireflycloud.net/login/api/sso', [
+            $fireflyReponse = Http::get('https://' . $subdomain . '.fireflycloud.net/login/api/sso', [
                 'ffauth_device_id' => 'raiseaconcern-cranleigh',
                 'ffauth_secret' => $request->get('ffauth_secret'),
-            ])->throw()->body();
+            ]);
 
-            return $this->findOrCreateUserAndLogin($output, $request);
-
-            return $this->sendLoginResponse($request);
-            return redirect('/submit');
+            return $this->findOrCreateUserAndLogin($fireflyReponse, $request);
+        } catch (Exception $exception) {
+            $debugArr = [
+                'school' => $school,
+                'request' => $request,
+            ];
+            Log::error($exception->getMessage(), $debugArr);
+            throw new Exception('Firefly Authentication Not Found', 400, $debugArr);
         }
-
-        $debugarray = [
-            'school' => $school,
-            'request' => $request,
-        ];
-        if (isset($user)) {
-            $debugarray['user'] = $user;
-        }
-        throw new Exception('Firefly Authentication Not Found', 400, $debugarray);
     }
 
     public function loginRedirect(string $school): RedirectResponse
@@ -95,6 +93,6 @@ class LoginController extends Controller
 
         $url = route('raiseaconcern.firefly-success', $school);
 
-        return redirect('https://'.$subdomain.'.fireflycloud.net/login/api/webgettoken?app=raiseaconcern-cranleigh&successURL='.$url);
+        return redirect('https://' . $subdomain . '.fireflycloud.net/login/api/webgettoken?app=raiseaconcern-cranleigh&successURL=' . $url);
     }
 }

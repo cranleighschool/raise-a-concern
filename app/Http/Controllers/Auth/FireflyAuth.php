@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Http\Client\RequestException;
+use Illuminate\Http\Client\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,18 +15,6 @@ use Illuminate\Support\Facades\Auth;
 trait FireflyAuth
 {
     use AuthenticatesUsers;
-
-    private function getIdentifierItems(string $identifier): array
-    {
-        $parts = explode(':', $identifier);
-        $isamsId = end($parts);
-        $db = str_replace('iSAMS', '', $parts[3]);
-
-        return [
-            'table' => $db,
-            'id' => (int) $isamsId,
-        ];
-    }
 
     public function logout(Request $request): RedirectResponse
     {
@@ -33,6 +25,29 @@ trait FireflyAuth
         }
 
         return redirect('/');
+    }
+
+    /**
+     * @throws RequestException
+     * @throws Exception
+     */
+    private function findOrCreateUserAndLogin(Response $fireflyReponse, Request $request): RedirectResponse
+    {
+        $xmlString = $fireflyReponse->throw()->body();
+
+        $obj = $this->convertXmlToObject($xmlString);
+
+        $user = $this->getUserObject($obj->user->{'@attributes'});
+
+        // log them in
+        $this->guard()->login($user);
+        // Update db with login time
+        auth()->user()->update(['updated_at' => now()]);
+        // Fake request data (for the sendLoginResponse method work)
+        $request->merge(['email' => $user->email, 'username' => $user->email, 'password' => 'cranleigh12']);
+        session()->flash('alert-success', 'You have logged in as: ' . auth()->user()->name);
+
+        return $this->sendLoginResponse($request);
     }
 
     private function convertXmlToObject(string $xmlString): object
@@ -47,29 +62,32 @@ trait FireflyAuth
         return json_decode($json);
     }
 
-    private function findOrCreateUserAndLogin(string $xmlString, Request $request): RedirectResponse
+    /**
+     * @throws Exception
+     */
+    private function getUserObject(object $userData): User
     {
-        $obj = $this->convertXmlToObject($xmlString);
-
-        $user = $obj->user->{'@attributes'};
-        $existingUser = User::query()->where('email', $user->email)->first();
-
+        $existingUser = User::query()->where('email', '=', $userData->email)->first();
         if (is_null($existingUser)) {
             // create a new user
-            $ssoData = $this->getIdentifierItems($user->identifier);
-            $existingUser = User::create($user->email, $ssoData['table'], $user->name, $user->username, $ssoData['id']);
+            $ssoData = $this->getIdentifierItems($userData->identifier);
+            $existingUser = User::create($userData->email, $ssoData['table'], $userData->name, $userData->username, $ssoData['id']);
         }
+        if ($existingUser instanceof User) {
+            return $existingUser;
+        }
+        throw new Exception('User not found');
+    }
 
-        // log them in
-        $this->guard()->login($existingUser);
-        // Update db with login time
-        auth()->user()->update(['updated_at' => now()]);
-        // Fake request data
-        $request->merge(['email' => $user->email, 'username' => $user->email, 'password' => 'cranleigh12']);
-        session()->flash('alert-success', 'You have logged in as: '.auth()->user()->name);
+    private function getIdentifierItems(string $identifier): array
+    {
+        $parts = explode(':', $identifier);
+        $isamsId = end($parts);
+        $db = str_replace('iSAMS', '', $parts[3]);
 
-        return $this->sendLoginResponse($request);
-
-        // Let them know they've logged in
+        return [
+            'table' => $db,
+            'id' => (int)$isamsId,
+        ];
     }
 }
