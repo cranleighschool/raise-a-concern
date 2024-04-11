@@ -53,11 +53,16 @@ class User extends Authenticatable
     }
 
     /**
-     * @return $this
+     * @param string $email
+     * @param string $ssoType
+     * @param string $name
+     * @param string $username
+     * @param int $ssoId
+     * @return Model
      */
     public static function create(string $email, string $ssoType, string $name, string $username, int $ssoId): Model
     {
-        return self::query()->firstOrCreate(
+        $user = self::query()->firstOrCreate(
             [
                 'email' => $email,
             ],
@@ -68,6 +73,7 @@ class User extends Authenticatable
                 'username' => $username,
             ]
         );
+        return self::query()->where('email', $email)->firstOrFail();
     }
 
     public function getPupilsOfParent(): Collection
