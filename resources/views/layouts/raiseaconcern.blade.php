@@ -54,7 +54,7 @@
                     @endguest
                 </ul>
                 @if (auth()->user())
-                    <form class="d-flex" role="logout" action="{{ route('logout') }}" method="POST">
+                    <form class="d-flex" role="logout" action="{{ route('raiseaconcern.logout') }}" method="POST">
                         @csrf
                         <button class="btn btn-danger" type="submit">Logout</button>
                     </form>
