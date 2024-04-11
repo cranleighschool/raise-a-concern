@@ -1,6 +1,8 @@
 <?php
 
 use App\Domains\SelfReflection\Actions\ReportCycles;
+use App\Domains\SelfReflection\Http\LoginController;
+use App\Domains\SelfReflection\Http\LookupController;
 use App\Domains\SelfReflection\Http\SelfReflectionPupilController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,13 +29,14 @@ Route::get('{reportCycle}/compose/{teachingSet}/{teacher}', [SelfReflectionPupil
 Route::post('{reportCycle}/save/{teachingSet}/{teacher}', [SelfReflectionPupilController::class, 'store'])
     ->name('save');
 
-Route::get('lookup/{reportCycle}', \App\Domains\SelfReflection\Http\LookupController::class)
+Route::get('lookup/{reportCycle}', LookupController::class)
     ->name('lookup');
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('login', [\App\Domains\SelfReflection\Http\LoginController::class, 'redirectTo'])
+Route::get('login', [LoginController::class, 'redirectTo'])
     ->name('login');
 
-Route::get('login/callback/success', [\App\Domains\SelfReflection\Http\LoginController::class, 'callbackSuccess'])
+Route::get('login/callback/success', [LoginController::class, 'callbackSuccess'])
     ->name('login.callback.success');
-Route::get('login/callback/failure', [\App\Domains\SelfReflection\Http\LoginController::class, 'callbackFailure'])
+Route::get('login/callback/failure', [LoginController::class, 'callbackFailure'])
     ->name('login.callback.failure');

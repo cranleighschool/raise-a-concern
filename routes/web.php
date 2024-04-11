@@ -8,4 +8,3 @@ use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 // The below are not part of the CSP
 Route::get('health', HealthCheckResultsController::class)->name('health');
 Route::get('health.json', HealthCheckJsonResultsController::class)->name('health.json');
-Route::post('logout', [LoginController::class, 'logout'])->name('logout');
