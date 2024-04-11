@@ -52,15 +52,15 @@ trait FireflyAuth
 
         $user = $obj->user->{'@attributes'};
         $existingUser = User::query()->where('email', $user->email)->first();
-        if ($existingUser) {
-            // log them in
-            auth()->login($existingUser, true);
-        } else {
+
+        if (is_null($existingUser)) {
             // create a new user
             $ssoData = $this->getIdentifierItems($user->identifier);
-            $laravelUser = User::create($user->email, $ssoData['table'], $user->name, $user->username, $ssoData['id']);
-            auth()->login($laravelUser, true);
+            $existingUser = User::create($user->email, $ssoData['table'], $user->name, $user->username, $ssoData['id']);
         }
+
+        // log them in
+        auth()->login($existingUser, true);
         // Update db with login time
         auth()->user()->update(['updated_at' => now()]);
 
