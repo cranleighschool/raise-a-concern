@@ -45,7 +45,7 @@ class LoginController
 
         $secret = $request->get('ffauth_secret');
 
-        $this->getUserData($secret);
+        return $this->getUserData($secret);
 
         return redirect()->route('selfreflection.home');
     }
@@ -53,14 +53,14 @@ class LoginController
     /**
      * @throws RequestException
      */
-    public function getUserData(string $secret): Authenticatable
+    public function getUserData(string $secret): RedirectResponse
     {
         $response = Http::get($this->url.'/login/api/sso', [
             'ffauth_secret' => $secret,
             'ffauth_device_id' => config('services.firefly.selfreflections.app'),
         ]);
 
-        $this->findOrCreateUserAndLogin($response->throw()->body());
+        return $this->findOrCreateUserAndLogin($response->throw()->body(), request());
 
         return auth()->user();
     }

@@ -47,7 +47,7 @@ trait FireflyAuth
         return json_decode($json);
     }
 
-    private function findOrCreateUserAndLogin(string $xmlString): void
+    private function findOrCreateUserAndLogin(string $xmlString, Request $request): RedirectResponse
     {
         $obj = $this->convertXmlToObject($xmlString);
 
@@ -61,10 +61,10 @@ trait FireflyAuth
         }
 
         // log them in
-        session()->flush();
-        Auth::login($existingUser, true);
+        $this->guard()->login($existingUser);
         // Update db with login time
         auth()->user()->update(['updated_at' => now()]);
+        return $this->sendLoginResponse($request);
 
         // Let them know they've logged in
         session()->flash('alert-success', 'You have logged in as: '.auth()->user()->name);

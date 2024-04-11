@@ -61,8 +61,9 @@ class LoginController extends Controller
                 'ffauth_secret' => $request->get('ffauth_secret'),
             ])->throw()->body();
 
-            $this->findOrCreateUserAndLogin($output);
+            return $this->findOrCreateUserAndLogin($output, $request);
 
+            return $this->sendLoginResponse($request);
             return redirect('/submit');
         }
 
