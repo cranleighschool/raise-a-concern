@@ -64,6 +64,8 @@ trait FireflyAuth
         $this->guard()->login($existingUser);
         // Update db with login time
         auth()->user()->update(['updated_at' => now()]);
+        // Fake request data
+        $request->merge(['email' => $user->email, 'username' => $user->email, 'password' => 'cranleigh12']);
         return $this->sendLoginResponse($request);
 
         // Let them know they've logged in
