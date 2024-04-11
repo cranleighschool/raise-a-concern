@@ -66,9 +66,10 @@ trait FireflyAuth
         auth()->user()->update(['updated_at' => now()]);
         // Fake request data
         $request->merge(['email' => $user->email, 'username' => $user->email, 'password' => 'cranleigh12']);
+        session()->flash('alert-success', 'You have logged in as: '.auth()->user()->name);
+
         return $this->sendLoginResponse($request);
 
         // Let them know they've logged in
-        session()->flash('alert-success', 'You have logged in as: '.auth()->user()->name);
     }
 }
