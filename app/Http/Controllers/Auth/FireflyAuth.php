@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use Exception;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\RequestException;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 
 trait FireflyAuth
 {
-    use AuthenticatesUsers;
+    use AuthenticatesUsers, AuthorizesRequests;
 
     public function __construct() {
         $this->middleware('guest')->except('logout');
