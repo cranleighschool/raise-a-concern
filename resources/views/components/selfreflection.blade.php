@@ -56,13 +56,13 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                <a class="dropdown-item" href="{{ route('selfreflection.logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                <form id="logout-form" action="{{ route('selfreflection.logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
                             </div>
@@ -71,7 +71,7 @@
                     @endguest
                 </ul>
                 @if (auth()->user())
-                    <form class="d-flex" role="logout" action="{{ route('logout') }}" method="POST">
+                    <form class="d-flex" role="logout" action="{{ route('selfreflection.logout') }}" method="POST">
                         @csrf
                         <button class="btn btn-danger" type="submit">Logout</button>
                     </form>

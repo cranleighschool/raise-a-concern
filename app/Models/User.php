@@ -62,7 +62,7 @@ class User extends Authenticatable
      */
     public static function create(string $email, string $ssoType, string $name, string $username, int $ssoId): Model
     {
-        $user = self::query()->firstOrCreate(
+        self::query()->firstOrCreate(
             [
                 'email' => $email,
             ],

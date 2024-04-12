@@ -33,7 +33,7 @@ Route::get('lookup/{reportCycle}', LookupController::class)
     ->name('lookup');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('login', [LoginController::class, 'redirectTo'])
+Route::get('login', [LoginController::class, 'redirectLogin'])
     ->name('login');
 
 Route::get('login/callback/success', [LoginController::class, 'callbackSuccess'])

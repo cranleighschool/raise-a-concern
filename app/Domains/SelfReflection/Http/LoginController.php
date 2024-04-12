@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
 {
@@ -16,12 +17,14 @@ class LoginController extends Controller
 
     public string $url;
 
+    protected string $redirectTo = '/';
+
     public function __construct()
     {
         $this->url = config('services.firefly.selfreflections.url');
     }
 
-    public function redirectTo(): RedirectResponse
+    public function redirectLogin(): RedirectResponse
     {
         $success = route('selfreflection.login.callback.success');
         $failure = route('selfreflection.login.callback.failure');
@@ -32,7 +35,7 @@ class LoginController extends Controller
             'failURL' => $failure,
         ]);
 
-        return redirect($this->url.'/login/api/webgettoken?'.$query);
+        return redirect($this->url . '/login/api/webgettoken?' . $query);
     }
 
     /**
@@ -44,7 +47,7 @@ class LoginController extends Controller
             'ffauth_secret' => 'string|required',
         ]);
 
-        $fireflyReponse = Http::get($this->url.'/login/api/sso', [
+        $fireflyReponse = Http::get($this->url . '/login/api/sso', [
             'ffauth_secret' => $request->get('ffauth_secret'),
             'ffauth_device_id' => config('services.firefly.selfreflections.app'),
         ]);
@@ -55,7 +58,7 @@ class LoginController extends Controller
     /**
      * @throws ValidationException
      */
-    public function callbackFailure(): \Symfony\Component\HttpFoundation\Response
+    public function callbackFailure(): Response
     {
         session()->flash('alert-danger', 'There was an issue with the Firefly authentication. Please try again.');
 

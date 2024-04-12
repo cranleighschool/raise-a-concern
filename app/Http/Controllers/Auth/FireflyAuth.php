@@ -10,15 +10,13 @@ use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Client\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 trait FireflyAuth
 {
     use AuthenticatesUsers, AuthorizesRequests;
-
-    public function __construct() {
-        $this->middleware('guest')->except('logout');
-    }
-    public function logout(Request $request): RedirectResponse
+/*
+    public function logoutUser(Request $request): RedirectResponse
     {
         auth()->logout();
 
@@ -27,7 +25,7 @@ trait FireflyAuth
         }
 
         return redirect('/');
-    }
+    }*/
 
     /**
      * @throws RequestException
@@ -38,15 +36,19 @@ trait FireflyAuth
         $xmlString = $fireflyReponse->throw()->body();
 
         $obj = $this->convertXmlToObject($xmlString);
-
         $user = $this->getUserObject($obj->user->{'@attributes'});
 
         // log them in
         $this->guard()->login($user);
+
         // Update db with login time
         auth()->user()->update(['updated_at' => now()]);
-        // Fake request data (for the sendLoginResponse method work)
-        $request->merge(['email' => $user->email, 'username' => $user->email, 'password' => 'cranleigh12']);
+        // Fake request data (for the sendLoginResponse method to work)
+        $request->merge([
+            'email' => $user->email,
+            'username' => $user->email,
+            'password' => Str::random()
+        ]);
         session()->flash('alert-success', 'You have logged in as: ' . auth()->user()->name);
 
         return $this->sendLoginResponse($request);
