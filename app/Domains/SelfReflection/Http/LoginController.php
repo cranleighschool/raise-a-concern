@@ -3,14 +3,14 @@
 namespace App\Domains\SelfReflection\Http;
 
 use App\Http\Controllers\Auth\FireflyAuth;
-use Illuminate\Contracts\Auth\Authenticatable;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
 
-class LoginController
+class LoginController extends Controller
 {
     use FireflyAuth;
 
