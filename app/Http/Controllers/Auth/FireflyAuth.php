@@ -57,8 +57,9 @@ trait FireflyAuth
     private function convertXmlToObject(string $xmlString): object
     {
         /**
-         * We know this is a bit messy - but can't figure out a cleaner way to do it at the moment. DOMDocument was
-         * not working as expected. If you can improve this, please do!
+         * We know this is a bit messy - but can't figure out a cleaner
+         * way to do it at the moment. DOMDocument was not working
+         * as expected. If you can improve this, please do!
          */
         $xml = simplexml_load_string($xmlString);
         $json = json_encode($xml);
