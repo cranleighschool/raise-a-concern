@@ -101,12 +101,7 @@ class SelfReflectionPupilController extends Controller
         $reportCycle = ReportCycles::find($reportCycleId);
 
         if (Gate::check('report-editable', $reportCycle) === false) {
-            session()->flash('alert-danger', 'This report cycle has ended and is no longer editable.');
-
-            return redirect()->route('selfreflection.showget', [
-                'reportCycle' => $reportCycleId,
-                'pupilId' => (new PupilData())->pupil_id,
-            ]);
+            abort(403, 'You are not able to edit this reflection');
         }
 
         if (! $this->authorizeEdit($teachingSetId, $teacherId)) {

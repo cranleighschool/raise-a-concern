@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Domains\SelfReflection\Actions\ReportCycles;
+use App\Models\User;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Gate;
@@ -34,7 +35,7 @@ class SelfReflectionGateProvider extends ServiceProvider
             return Response::allow();
         });
 
-        Gate::define('report-editable', function ($user, int|object $reportCycle) {
+        Gate::define('report-editable', function (User $user, int|object $reportCycle) {
 
             if (is_int($reportCycle)) {
                 $reportCycle = ReportCycles::find($reportCycle);
@@ -44,7 +45,7 @@ class SelfReflectionGateProvider extends ServiceProvider
                 return false;
             }
 
-            return true;
+            return $user->isPupil();
         });
     }
 }
