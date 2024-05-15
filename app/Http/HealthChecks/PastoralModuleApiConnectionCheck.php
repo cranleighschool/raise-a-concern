@@ -3,6 +3,7 @@
 namespace App\Http\HealthChecks;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Spatie\Health\Checks\Check;
 use Spatie\Health\Checks\Result;
 
@@ -14,6 +15,7 @@ class PastoralModuleApiConnectionCheck extends Check
         try {
             $user = Http::pastoralModule()->get('auth/me')->throw()->collect()->first();
         } catch (\Exception $e) {
+            Log::error($e->getMessage(), $e->getTrace());
             return $result->failed('Error thrown whilst trying to access Pastoral Module API User');
         }
         if (is_null($user)) {
