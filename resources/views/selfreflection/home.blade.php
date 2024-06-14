@@ -24,7 +24,7 @@
                     The things you should be focussing on in your comments are:</p>
                     <ol>
                     <li>
-                       Your effort and engagementin class and for prep throughout the year
+                       Your effort and engagement in class and for prep throughout the year
                     </li>
                     <li>What went well and what would you do differently next year when it comes to revising for your assessments</li>
                     <li>Specific things you feel you need to work on to improve at the start of next year</li>

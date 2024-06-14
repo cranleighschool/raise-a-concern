@@ -59,6 +59,7 @@ final class ReportCycles
         $currentMonth = now()->month;
         $currentYear = now()->year;
 
+        // If the current month is less than September, then we are in the previous calendar year
         return $currentMonth < 9 ? $currentYear - 1 : $currentYear;
     }
 
