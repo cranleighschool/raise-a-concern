@@ -1,5 +1,5 @@
 <x-selfreflection pageTitle="Home">
-    <div class="alert alert-info">
+    <div class="alert alert-warning">
         <p class="lead">Instructions for pupils:</p>
         <p>Following your summer assessments, we would like you to reflect on your progress in each of the subjects you
             will carry on next year for your GCSEs. Your teachers will see these comments before writing their end of
