@@ -99,7 +99,9 @@ final class ReportCycles
             if (app()->environment('local') && app()->hasDebugModeEnabled()) {
                 return true;
             }
-
+            if ($this->withoutFilter) {
+                return true;
+            }
             return $reportCycle->EndDate > now();
         })->map(function (object $reportCycle) {
             $reportCycle->reportCycleId = $reportCycle->{'@attributes'}->Id;
