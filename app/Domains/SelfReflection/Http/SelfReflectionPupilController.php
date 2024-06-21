@@ -67,8 +67,9 @@ class SelfReflectionPupilController extends Controller
         }
 
         $data = $request->validate([
-            'reflection' => 'required|string|max:5000|min:10',
+            'reflection' => 'required|string|max:5000|min:10|regex:/\A(?!.*[:;]-\))[ -~]+\z/',
         ], [
+            'reflection.regex' => 'Please only use standard characters. No emojis or special characters.',
             'reflection.required' => 'Please enter a reflection.',
             'reflection.max' => 'You\'ve written a bit more than we expected. Please keep it to less than 5000 characters.',
             'reflection.min' => 'To be meaningful, please write a longer reflection.',
