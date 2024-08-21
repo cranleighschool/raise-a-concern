@@ -52,7 +52,7 @@
                 @php ($personTypePupil = false)
                 @php ($personTypeStaff = true)
                 @php ($personTypeHead = false)
-            @elseif (old('person_type') == 'headmaster')
+            @elseif (old('person_type') == 'head')
                 @php ($personTypePupil = false)
                 @php ($personTypeStaff = false)
                 @php ($personTypeHead = true)
@@ -73,8 +73,8 @@
                 <label class="btn btn-cranleigh" for="person_type_staff">Staff Member</label>
 
                 <input class="btn-check" id="person_type_head" type="radio" name="person_type"
-                       {{ $personTypeHead ? 'checked="checked"' : '' }} value="headmaster"/>
-                <label class="btn btn-cranleigh" for="person_type_head">Headmaster</label>
+                       {{ $personTypeHead ? 'checked="checked"' : '' }} value="head"/>
+                <label class="btn btn-cranleigh" for="person_type_head">Head</label>
             </div>
             <br/>@include('partials.input-error',['inputName' => 'person_type'])
             <div id="notified-container" class="alert alert-primary visually-hidden">This will create a notification to: <span id="whogetsnotified"></span></div>

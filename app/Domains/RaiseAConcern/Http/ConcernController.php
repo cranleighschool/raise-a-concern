@@ -79,7 +79,7 @@ class ConcernController extends Controller
 
     private function calculateRecipient(string $person, ?int $school): string
     {
-        if ($person === 'headmaster') {
+        if ($person === 'head') {
             return 'the Chair of Governors, '.config('people.CHAIR_OF_GOVERNORS').'.';
         }
 
@@ -95,7 +95,7 @@ class ConcernController extends Controller
             return $return.'.';
         }
         if ($person === 'staff') {
-            $return = 'the Headmaster';
+            $return = 'the Head';
             if ($school === self::SENIOR_SCHOOL_ID) {
                 return $return.', '.config('people.CS_HEAD').'.';
             }
