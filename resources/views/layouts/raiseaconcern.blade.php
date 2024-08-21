@@ -186,7 +186,7 @@
             <div class="row">
                 <div class="col-7">Cranleigh's Raise a Concern and Pastoral Module is a bespoke system designed and
                     developed at Cranleigh. <br/>Any technical queries should be directed to <a
-                        href="mailto:frb@cranleigh.org">the developer</a>.
+                        href="mailto:servicedesk@cranleigh.org">the developer</a>.
                 </div>
                 <div class="col-5"><span class="badge bg-secondary float-end">{{ getAppVersion() }}</span></div>
             </div>
