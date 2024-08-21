@@ -13,7 +13,7 @@ class PastoralModuleApiConnectionCheck extends Check
     {
         $result = Result::make();
         try {
-            $user = Http::connectTimeout(300)->pastoralModule()->get('auth/me')->throw()->collect()->first();
+            $user = Http::pastoralModule()->connectTimeout(300)->get('auth/me')->throw()->collect()->first();
         } catch (\Exception $e) {
             Log::error($e->getMessage(), $e->getTrace());
             return $result->failed('Error thrown whilst trying to access Pastoral Module API User');
