@@ -21,7 +21,7 @@
     'resources/sass/app.scss'
     ])
 
-    @include('partials.tinymce')
+{{--    @include('partials.tinymce')--}}
 </head>
 <body>
 <div id="app">
