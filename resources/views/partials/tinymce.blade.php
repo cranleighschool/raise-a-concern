@@ -1,6 +1,7 @@
 <!-- Styles -->
-<script src="https://cdn.tiny.cloud/1/5aorefy1a3tzggygtpkx81v9k5puvldfm55a0il6y929m3fw/tinymce/6/tinymce.min.js"
-        crossorigin="anonymous" nonce="{{ csp_nonce() }}" referrerpolicy="origin"></script>
+{{--<script src="https://cdn.tiny.cloud/1/5aorefy1a3tzggygtpkx81v9k5puvldfm55a0il6y929m3fw/tinymce/6/tinymce.min.js"
+        crossorigin="anonymous" nonce="{{ csp_nonce() }}" referrerpolicy="origin"></script>--}}
+
 <script type="text/javascript" nonce="{{ csp_nonce() }}">
     tinymce.init({
         selector: 'textarea.wysiwyg',

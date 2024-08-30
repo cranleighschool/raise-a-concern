@@ -1,5 +1,5 @@
 import './bootstrap';
-
+import 'tinymce';
 import 'bootstrap';
 import '@popperjs/core';
 
