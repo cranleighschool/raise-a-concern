@@ -28,7 +28,7 @@ import 'tinymce/plugins/table';
 /* import './plugins/<plugincode>'; */
 
 /* content UI CSS is required */
-tinymce/skins/ui/oxide/content.js;
+import 'tinymce/skins/ui/oxide/content.js';
 
 /* The default content CSS can be changed or replaced with appropriate CSS for the editor content. */
 import contentCss from 'tinymce/skins/content/default/content.js';
