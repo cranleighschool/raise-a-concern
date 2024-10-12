@@ -140,8 +140,14 @@ class SelfReflectionPupilController extends Controller
             ->get('selfreflections/reports/'.$reportCycle.'/pupil/'.$pupilId)
             ->throw()->collect();
 
+        $subjects = (new PupilData($pupilId))->teachingSets->filter(function($teachingSet) {
+            if (in_array($teachingSet->subject, ['PSHE', 'Deputy House', 'House'])) {
+                return false;
+            }
+            return true;
+        });
         return view('selfreflection.dataentry', [
-            'subjects' => (new PupilData($pupilId))->teachingSets,
+            'subjects' => $subjects,
             'current' => $current,
             'reportCycleId' => $reportCycle,
         ]);
