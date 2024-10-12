@@ -141,7 +141,7 @@ class SelfReflectionPupilController extends Controller
             ->throw()->collect();
 
         $subjects = (new PupilData($pupilId))->teachingSets->filter(function($teachingSet) {
-            if (in_array($teachingSet->subject, ['PSHE', 'Deputy House', 'House'])) {
+            if (in_array($teachingSet->subject, ['PSHE', 'Deputy House', 'House', 'Supervised Private Study'])) {
                 return false;
             }
             return true;
