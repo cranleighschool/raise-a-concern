@@ -51,7 +51,7 @@
             </form>
         @endif
         @if (auth()->user()->isStaff())
-            You are a staff member - you should probably be using the <a href="https://pastoral.cranleigh.org">Pastoral Module</a> to submit self reflections.
+            You are a staff member - you should probably be using the <a href="https://pastoral.cranleigh.org">Pastoral Module</a>'s Tutor Dashboard to read self reflections.
         @endif
     @endguest
 </x-selfreflection>
