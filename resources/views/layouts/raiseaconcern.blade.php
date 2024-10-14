@@ -7,6 +7,8 @@
     <meta http-equiv="Referrer-Policy" content="no-referrer, strict-origin-when-cross-origin">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    @include('partials.favicons')
+
     @cspMetaTag(App\Http\ContentSecurityPolicy::class)
 
     <title>{{ config('app.name', 'Raise a Concern') }}</title>

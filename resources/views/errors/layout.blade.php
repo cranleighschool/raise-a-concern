@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>@yield('title')</title>
-
+@include('partials.favicons')
         <!-- Styles -->
         <style nonce="{{ csp_nonce() }}">
             html, body {
