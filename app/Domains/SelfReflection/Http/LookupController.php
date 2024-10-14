@@ -10,7 +10,7 @@ class LookupController
     public function __invoke(int $reportCycle): RedirectResponse
     {
         if (auth()->user()->isStaff()) {
-            abort(403, 'This page is intended for pupils and parents only. Staff should use the self-reflection page withing their Teaching Set in the pastoral module.');
+            abort(403, 'This page is intended for pupils and parents only. Staff should use the self-reflection page within their Teaching Set in the pastoral module.');
         }
 
         $pupilData = new PupilData();
