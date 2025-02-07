@@ -41,9 +41,7 @@ final class ReportCycles
         throw new ReportCycleNotFound('Report cycle not found', 404);
     }
 
-    public function __construct(private readonly bool $withoutFilter = false)
-    {
-    }
+    public function __construct(private readonly bool $withoutFilter = false) {}
 
     /**
      * @throws RequestException
@@ -103,6 +101,7 @@ final class ReportCycles
             if ($this->withoutFilter) {
                 return true;
             }
+
             return $reportCycle->EndDate > now();
         })->map(function (object $reportCycle) {
             $reportCycle->reportCycleId = $reportCycle->{'@attributes'}->Id;
