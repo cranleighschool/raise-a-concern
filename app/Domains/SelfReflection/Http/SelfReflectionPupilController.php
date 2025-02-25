@@ -20,7 +20,7 @@ class SelfReflectionPupilController extends Controller
 {
     private function authorizeEdit(int $teachingSetId, int $teacherId): bool
     {
-        $teachingSets = (new PupilData())->teachingSets;
+        $teachingSets = (new PupilData)->teachingSets;
         if ($teachingSets->pluck('id')->doesntContain($teachingSetId)) {
             return false;
         }
@@ -57,6 +57,17 @@ class SelfReflectionPupilController extends Controller
         ]);
     }
 
+    private function normalizeText(?string $text): ?string
+    {
+        if (! $text) {
+            return $text;
+        }
+        $text = \Normalizer::normalize($text, \Normalizer::FORM_KD);
+        $text = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $text);
+
+        return trim($text);
+    }
+
     /**
      * @throws RequestException|ReportCycleNotFound
      */
@@ -65,9 +76,12 @@ class SelfReflectionPupilController extends Controller
         if (! $this->authorizeEdit($teachingSetId, $teacherId)) {
             abort(403, 'The combination of pupil, teaching set and teacher is not valid. Malicious activity detected.');
         }
+        $request->merge([
+            'reflection' => $this->normalizeText($request->input('reflection')),
+        ]);
 
         $data = $request->validate([
-            'reflection' => 'required|string|max:5000|min:10|regex:/\A(?!.*[:;]-\))[ -~]+\z/',
+            'reflection' => 'required|string|max:5000|min:10|regex:/\A(?!.*[:;]-\))[\r\n -~]+\z/',
         ], [
             'reflection.regex' => 'Please only use standard characters. No emojis or special characters.',
             'reflection.required' => 'Please enter a reflection.',
@@ -80,12 +94,12 @@ class SelfReflectionPupilController extends Controller
         $reportCycle = ReportCycles::find($reportCycleId);
 
         Http::pastoralModule()
-            ->post('selfreflections/reports/'.$reportCycleId.'/pupil/'.(new PupilData())->pupil_id, [
+            ->post('selfreflections/reports/'.$reportCycleId.'/pupil/'.(new PupilData)->pupil_id, [
                 'reflection' => $writtenReflection,
                 'teaching_set_id' => $teachingSetId,
                 'teacher_id' => $teacherId,
                 'academic_year' => $reportCycle->ReportYear,
-                'nc_year' => (new PupilData())->ncYear,
+                'nc_year' => (new PupilData)->ncYear,
             ])
             ->throw();
 
@@ -93,7 +107,7 @@ class SelfReflectionPupilController extends Controller
 
         return redirect()->route('selfreflection.showget', [
             'reportCycle' => $reportCycleId,
-            'pupilId' => (new PupilData())->pupil_id,
+            'pupilId' => (new PupilData)->pupil_id,
         ]);
     }
 
@@ -109,12 +123,12 @@ class SelfReflectionPupilController extends Controller
             abort(403, 'The combination of pupil, teaching set and teacher is not valid. Malicious activity detected.');
         }
 
-        $teachingSets = (new PupilData())->teachingSets;
+        $teachingSets = (new PupilData)->teachingSets;
         $subject = $teachingSets->where('id', $teachingSetId)->first()->subject;
         $teacher = collect($teachingSets->where('id', $teachingSetId)->first()->teachers)->where('staff_id', $teacherId)->first()->name;
 
         $current = Http::pastoralModule()
-            ->get('selfreflections/reports/'.$reportCycleId.'/pupil/'.(new PupilData())->pupil_id)
+            ->get('selfreflections/reports/'.$reportCycleId.'/pupil/'.(new PupilData)->pupil_id)
             ->throw()->collect();
 
         return view('selfreflection.edit', [
@@ -140,12 +154,14 @@ class SelfReflectionPupilController extends Controller
             ->get('selfreflections/reports/'.$reportCycle.'/pupil/'.$pupilId)
             ->throw()->collect();
 
-        $subjects = (new PupilData($pupilId))->teachingSets->filter(function($teachingSet) {
+        $subjects = (new PupilData($pupilId))->teachingSets->filter(function ($teachingSet) {
             if (in_array($teachingSet->subject, ['PSHE', 'Deputy House', 'House', 'Supervised Private Study'])) {
                 return false;
             }
+
             return true;
         });
+
         return view('selfreflection.dataentry', [
             'subjects' => $subjects,
             'current' => $current,
@@ -161,7 +177,7 @@ class SelfReflectionPupilController extends Controller
 
         return redirect()->route('selfreflection.showget', [
             'reportCycle' => $request->get('reportCycle'),
-            'pupilId' => (new PupilData())->pupil_id,
+            'pupilId' => (new PupilData)->pupil_id,
         ]);
     }
 }
