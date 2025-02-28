@@ -12,6 +12,9 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+Route::get('impersonation/{pupilId}', [LoginController::class, 'impersonate'])
+    ->name('impersonate');
+
 
 Route::get('login', [LoginController::class, 'redirectLogin'])
     ->name('login');

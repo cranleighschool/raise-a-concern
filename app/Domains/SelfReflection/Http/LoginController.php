@@ -4,9 +4,12 @@ namespace App\Domains\SelfReflection\Http;
 
 use App\Http\Controllers\Auth\FireflyAuth;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +25,16 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->url = config('services.firefly.selfreflections.url');
+    }
+
+    public function impersonate(string $username): RedirectResponse
+    {
+        Gate::allowIf(auth()?->user()?->username === 'FRB', 'Only FRB can impersonate');
+        $user = User::where('sso_type', 'stu')->where('username', $username)->firstOrFail();
+
+        Auth::logout();
+        Auth::login($user);
+        return redirect()->route('selfreflection.index');
     }
 
     public function redirectLogin(): RedirectResponse
