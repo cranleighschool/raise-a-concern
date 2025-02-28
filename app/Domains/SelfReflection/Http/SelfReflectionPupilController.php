@@ -15,6 +15,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Normalizer;
 
 class SelfReflectionPupilController extends Controller
 {
@@ -62,7 +64,7 @@ class SelfReflectionPupilController extends Controller
         if (! $text) {
             return $text;
         }
-        $text = \Normalizer::normalize($text, \Normalizer::FORM_KD);
+        $text = Normalizer::normalize($text, Normalizer::FORM_KD);
         $text = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $text);
 
         return trim($text);
@@ -81,7 +83,8 @@ class SelfReflectionPupilController extends Controller
         ]);
 
         $data = $request->validate([
-            'reflection' => 'required|string|max:5000|min:10|regex:/\A(?!.*[:;]-\))[\r\n -~]+\z/',
+            //'reflection' => 'required|string|max:5000|min:10|regex:/\A(?!.*[:;]-\))[\r\n -~]+\z/',
+            'reflection' => 'required|string|max:5000|min:10|regex:/\A(?!.*[:;]-\))[\p{L}\p{N}\p{P}\p{Z}\r\n]+\z/u',
         ], [
             'reflection.regex' => 'Please only use standard characters. No emojis or special characters.',
             'reflection.required' => 'Please enter a reflection.',
@@ -102,6 +105,14 @@ class SelfReflectionPupilController extends Controller
                 'nc_year' => (new PupilData)->ncYear,
             ])
             ->throw();
+
+        Log::info('Self Reflection saved', [
+            'reportCycleId' => $reportCycleId,
+            'pupilId' => (new PupilData)->pupil_id,
+            'teachingSetId' => $teachingSetId,
+            'teacherId' => $teacherId,
+            'reflection' => $writtenReflection,
+        ]);
 
         session()->flash('alert-success', 'Reflection saved successfully.');
 
