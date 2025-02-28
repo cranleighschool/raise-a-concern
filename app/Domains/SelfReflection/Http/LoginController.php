@@ -34,7 +34,7 @@ class LoginController extends Controller
 
         Auth::logout();
         Auth::login($user);
-        return redirect()->route('selfreflection.index');
+        return redirect()->route('selfreflection.home');
     }
 
     public function redirectLogin(): RedirectResponse
