@@ -12,7 +12,7 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::get('impersonation/{pupilId}', [LoginController::class, 'impersonate'])
+Route::get('impersonate/{username}', [LoginController::class, 'impersonate'])
     ->name('impersonate');
 
 
