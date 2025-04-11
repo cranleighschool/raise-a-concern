@@ -9,7 +9,7 @@
 
     @include('partials.favicons')
 
-    @cspMetaTag(App\Http\ContentSecurityPolicy::class)
+    @cspMetaTag
 
     <title>{{ config('app.name', 'Raise a Concern') }}</title>
 
