@@ -29,9 +29,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectGuestsTo('/login');
         $middleware->redirectUsersTo('/submit');
         $middleware->appendToGroup('web', [
+            \App\Http\Middleware\AddNonceHeaders::class,
             SecurityHeaders::class,
             AddCspHeaders::class,
             FrameGuard::class,
+
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
