@@ -9,8 +9,6 @@
 
     @include('partials.favicons')
 
-    @cspMetaTag
-
     <title>{{ config('app.name', 'Raise a Concern') }}</title>
 
     <!-- Fonts -->

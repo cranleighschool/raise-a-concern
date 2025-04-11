@@ -8,7 +8,6 @@ return [
      * any class that extends `Spatie\Csp\Preset`
      */
     'presets' => [
-        \App\Http\ContentSecurityPolicy::class,
     ],
 
     /**
@@ -23,7 +22,7 @@ return [
      * a new policy or changes to existing CSP policy without breaking anything.
      */
     'report_only_presets' => [
-        //
+        \App\Http\ContentSecurityPolicy::class,
     ],
 
     /**
