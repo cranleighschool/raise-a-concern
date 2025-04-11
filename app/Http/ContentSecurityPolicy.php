@@ -15,7 +15,7 @@ class ContentSecurityPolicy extends Basic
         if (app()->environment('production')) {
 
             $policy->add(Directive::STYLE, 'fonts.googleapis.com')
-                ->add(Directive::STYLE_ELEM, Keyword::UNSAFE_INLINE)
+                ->add(Directive::STYLE_ELEM, [Keyword::UNSAFE_INLINE, Keyword::SELF, 'fonts.googleapis.com'])
                 ->add(Directive::STYLE, Keyword::UNSAFE_INLINE)
                 ->add(Directive::CONNECT, 'cdn.tiny.cloud')
                 ->add(Directive::SCRIPT, 'cdn.tiny.cloud')
