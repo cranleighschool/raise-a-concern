@@ -8,6 +8,10 @@ use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 Route::get('health', HealthCheckResultsController::class)->name('health');
 Route::get('health.json', HealthCheckJsonResultsController::class)->name('health.json');
 
-Route::post('csp-report', function () {
+Route::post('csp-report', function (\Illuminate\Http\Request $request) {
+    \Illuminate\Support\Facades\Log::error('Content Security Policy Violation', [
+        'csp-report' => $request->input('csp-report'),
+        'ip' => \Illuminate\Support\Facades\Request::ip(),
+    ]);
     return response()->json(['status' => 'ok']);
 })->name('csp-report');
