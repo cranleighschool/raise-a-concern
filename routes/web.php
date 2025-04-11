@@ -9,8 +9,10 @@ Route::get('health', HealthCheckResultsController::class)->name('health');
 Route::get('health.json', HealthCheckJsonResultsController::class)->name('health.json');
 
 Route::post('csp-report', function (\Illuminate\Http\Request $request) {
-    \Illuminate\Support\Facades\Log::error('Content Security Policy Violation', [
-        'request' => $request->all(),
-    ]);
-    return response()->json(['status' => 'ok']);
+    $payload = json_decode($request->getContent(), true);
+
+    \Illuminate\Support\Facades\Log::info('CSP Violation:', $payload);
+
+    return response()->noContent();
+
 })->name('csp-report');
