@@ -10,8 +10,7 @@ Route::get('health.json', HealthCheckJsonResultsController::class)->name('health
 
 Route::post('csp-report', function (\Illuminate\Http\Request $request) {
     \Illuminate\Support\Facades\Log::error('Content Security Policy Violation', [
-        'csp-report' => $request->input('csp-report'),
-        'ip' => \Illuminate\Support\Facades\Request::ip(),
+        'request' => $request->all(),
     ]);
     return response()->json(['status' => 'ok']);
 })->name('csp-report');
