@@ -1,5 +1,5 @@
 /**
- * TinyMCE version 7.3.0 (2024-08-07)
+ * TinyMCE version 7.8.0 (TBD)
  */
 
 (function () {
@@ -59,13 +59,15 @@
       editor.ui.registry.addButton('help', {
         icon: 'help',
         tooltip: 'Help',
-        onAction: dialogOpener
+        onAction: dialogOpener,
+        context: 'any'
       });
       editor.ui.registry.addMenuItem('help', {
         text: 'Help',
         icon: 'help',
         shortcut: 'Alt+0',
-        onAction: dialogOpener
+        onAction: dialogOpener,
+        context: 'any'
       });
     };
 
@@ -634,6 +636,11 @@
         type: 'premium'
       },
       {
+        key: 'uploadcare',
+        name: 'Image Optimizer Powered by Uploadcare',
+        type: 'premium'
+      },
+      {
         key: 'importword',
         name: 'Import from Word',
         type: 'premium'
@@ -773,7 +780,8 @@
       const getPluginKeys = editor => {
         const keys$1 = keys(editor.plugins);
         const forcedPlugins = getForcedPlugins(editor);
-        return isUndefined(forcedPlugins) ? keys$1 : filter(keys$1, k => !contains(forcedPlugins, k));
+        const hiddenPlugins = isUndefined(forcedPlugins) ? ['onboarding'] : forcedPlugins.concat(['onboarding']);
+        return filter(keys$1, k => !contains(hiddenPlugins, k));
       };
       const pluginLister = editor => {
         const pluginKeys = getPluginKeys(editor);

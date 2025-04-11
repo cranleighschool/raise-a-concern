@@ -3,29 +3,30 @@
 namespace App\Http;
 
 use Spatie\Csp\Directive;
-use Spatie\Csp\Policies\Basic;
+use Spatie\Csp\Policy;
+use Spatie\Csp\Presets\Basic;
 
 class ContentSecurityPolicy extends Basic
 {
-    public function configure(): void
+    public function configure(Policy $policy): void
     {
-        parent::configure();
+        parent::configure($policy);
         if (app()->environment('production')) {
-            $this
-                ->addDirective(Directive::SCRIPT, 'self')
-                ->addDirective(Directive::STYLE, 'self')
-                ->addNonceForDirective(Directive::SCRIPT)
-                ->addNonceForDirective(Directive::STYLE);
+            $policy
+                ->add(Directive::SCRIPT, 'self')
+                ->add(Directive::STYLE, 'self')
+                ->addNonce(Directive::SCRIPT)
+                ->addNonce(Directive::STYLE);
 
-            $this->addDirective(Directive::STYLE, 'fonts.googleapis.com');
-            $this->addDirective(Directive::CONNECT, 'cdn.tiny.cloud');
-            $this->addDirective(Directive::SCRIPT, 'cdn.tiny.cloud');
-            $this->addDirective(Directive::STYLE, 'cdn.tiny.cloud');
-            $this->addDirective(Directive::FONT, 'fonts.gstatic.com');
-            $this->addDirective(Directive::FONT, 'data:');
-            $this->addDirective(Directive::FONT, 'self');
-            $this->addDirective(Directive::IMG, 'sp.tinymce.com');
-            $this->addDirective(Directive::STYLE, 'rsms.me'); // for laravel health check page
+            $policy->add(Directive::STYLE, 'fonts.googleapis.com')
+                ->add(Directive::CONNECT, 'cdn.tiny.cloud')
+                ->add(Directive::SCRIPT, 'cdn.tiny.cloud')
+                ->add(Directive::STYLE, 'cdn.tiny.cloud')
+                ->add(Directive::FONT, 'fonts.gstatic.com')
+                ->add(Directive::FONT, 'data:')
+                ->add(Directive::FONT, 'self')
+                ->add(Directive::IMG, 'sp.tinymce.com')
+                ->add(Directive::STYLE, 'rsms.me'); // for laravel health check page
         }
     }
 }

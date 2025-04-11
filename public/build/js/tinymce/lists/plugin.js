@@ -1,5 +1,5 @@
 /**
- * TinyMCE version 7.3.0 (2024-08-07)
+ * TinyMCE version 7.8.0 (TBD)
  */
 
 (function () {
@@ -836,11 +836,11 @@
     const isWithinNonEditable = (editor, element) => element !== null && !editor.dom.isEditable(element);
     const selectionIsWithinNonEditableList = editor => {
       const parentList = getParentList(editor);
-      return isWithinNonEditable(editor, parentList);
+      return isWithinNonEditable(editor, parentList) || !editor.selection.isEditable();
     };
     const isWithinNonEditableList = (editor, element) => {
       const parentList = editor.dom.getParent(element, 'ol,ul,dl');
-      return isWithinNonEditable(editor, parentList);
+      return isWithinNonEditable(editor, parentList) || !editor.selection.isEditable();
     };
     const setNodeChangeHandler = (editor, nodeChangeHandler) => {
       const initialNode = editor.selection.getNode();
@@ -1758,15 +1758,16 @@
           });
           return true;
         } else if (willMergeParentIntoChild && !isForward && otherLi !== li) {
+          const commonAncestorParent = rng.commonAncestorContainer.parentElement;
+          if (!commonAncestorParent || dom.isChildOf(otherLi, commonAncestorParent)) {
+            return false;
+          }
           editor.undoManager.transact(() => {
-            if (rng.commonAncestorContainer.parentElement) {
-              const bookmark = createBookmark(rng);
-              const oldParentElRef = rng.commonAncestorContainer.parentElement;
-              moveChildren(dom, rng.commonAncestorContainer.parentElement, otherLi);
-              oldParentElRef.remove();
-              const resolvedBookmark = resolveBookmark(bookmark);
-              editor.selection.setRng(resolvedBookmark);
-            }
+            const bookmark = createBookmark(rng);
+            moveChildren(dom, commonAncestorParent, otherLi);
+            commonAncestorParent.remove();
+            const resolvedBookmark = resolveBookmark(bookmark);
+            editor.selection.setRng(resolvedBookmark);
           });
           return true;
         } else if (!otherLi) {
@@ -1794,8 +1795,9 @@
       const block = dom.getParent(selectionStartElm, dom.isBlock, root);
       if (block && dom.isEmpty(block, undefined, { checkRootAsContent: true })) {
         const rng = normalizeRange(editor.selection.getRng());
-        const otherLi = dom.getParent(findNextCaretContainer(editor, rng, isForward, root), 'LI', root);
-        if (otherLi) {
+        const nextCaretContainer = findNextCaretContainer(editor, rng, isForward, root);
+        const otherLi = dom.getParent(nextCaretContainer, 'LI', root);
+        if (nextCaretContainer && otherLi) {
           const findValidElement = element => contains$1([
             'td',
             'th',
@@ -1811,7 +1813,7 @@
             const parentNode = otherLi.parentNode;
             removeBlock(dom, block, root);
             mergeWithAdjacentLists(dom, parentNode);
-            editor.selection.select(otherLi, true);
+            editor.selection.select(nextCaretContainer, true);
             editor.selection.collapse(isForward);
           });
           return true;
@@ -1831,7 +1833,14 @@
     const backspaceDeleteRange = editor => {
       if (hasListSelection(editor)) {
         editor.undoManager.transact(() => {
+          let shouldFireInput = true;
+          const inputHandler = () => shouldFireInput = false;
+          editor.on('input', inputHandler);
           editor.execCommand('Delete');
+          editor.off('input', inputHandler);
+          if (shouldFireInput) {
+            editor.dispatch('input');
+          }
           normalizeLists(editor.dom, editor.getBody());
         });
         return true;
