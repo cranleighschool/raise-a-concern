@@ -186,7 +186,7 @@
     <footer class="py-4">
         <div class="container img-thumbnail bg-cranleigh text-white raiseaconcern-container">
             <div class="row">
-                <div class="col-7">Cranleigh's Raise a Concern and Pastoral Module is a bespoke system designed and
+                <div class="col-7">Cranleigh's Raise a Concern and Pastoral Module are both bespoke systems designed and
                     developed at Cranleigh. <br/>Any technical queries should be directed to <a
                         href="mailto:servicedesk@cranleigh.org">the developer</a>.
                 </div>
