@@ -32,6 +32,9 @@ if (! function_exists('displayAlertMsg')) {
 if(!function_exists('csp_nonce')) {
     function csp_nonce(): string
     {
+        if (!app()->bound('csp-nonce')) {
+            return '';
+        }
         return app('csp-nonce');
     }
 }
