@@ -35,5 +35,9 @@ class AppServiceProvider extends ServiceProvider
                 ->baseUrl(config('pastoral-module.apiUrl'))
                 ->acceptJson();
         });
+
+        \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::except([
+            'csp-report',
+        ]);
     }
 }
