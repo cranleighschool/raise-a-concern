@@ -13,11 +13,6 @@ class ContentSecurityPolicy extends Basic
     {
         parent::configure($policy);
         if (app()->environment('production')) {
-            //            $policy
-            //                ->add(Directive::SCRIPT, 'self')
-            //                ->add(Directive::STYLE, 'self')
-            //                ->addNonce(Directive::SCRIPT)
-            //                ->addNonce(Directive::STYLE);
 
             $policy->add(Directive::STYLE, 'fonts.googleapis.com')
                 ->add(Directive::CONNECT, 'cdn.tiny.cloud')
@@ -25,10 +20,10 @@ class ContentSecurityPolicy extends Basic
                 ->add(Directive::STYLE, 'cdn.tiny.cloud')
                 ->add(Directive::FONT, 'fonts.gstatic.com')
                 ->add(Directive::FONT, 'data:')
-                // ->add(Directive::FONT, 'self')
-                ->add(Directive::SCRIPT, Keyword::UNSAFE_INLINE)
+                 ->add(Directive::FONT, Keyword::SELF)
                 ->add(Directive::IMG, 'sp.tinymce.com')
                 ->add(Directive::IMG, 'www.cranleigh.org')
+                ->add(Directive::REPORT, config('csp.report_uri'))
                 ->add(Directive::STYLE, 'rsms.me'); // for laravel health check page
         }
     }
