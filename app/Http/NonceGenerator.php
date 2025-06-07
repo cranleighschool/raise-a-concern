@@ -9,7 +9,7 @@ class NonceGenerator extends RandomString
 {
     public function generate(): string
     {
-        return Vite::cspNonce();
+        return Vite::useCspNonce();
     }
 
 

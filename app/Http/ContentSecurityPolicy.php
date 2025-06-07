@@ -22,7 +22,7 @@ class ContentSecurityPolicy extends Basic
                 ->add(Directive::STYLE, 'cdn.tiny.cloud')
                 ->add(Directive::FONT, 'fonts.gstatic.com')
                 ->add(Directive::FONT, 'data:')
-                 ->add(Directive::FONT, Keyword::SELF)
+                ->add(Directive::FONT, Keyword::SELF)
                 ->add(Directive::IMG, 'sp.tinymce.com')
                 ->add(Directive::IMG, 'www.cranleigh.org')
                 ->add(Directive::REPORT, config('csp.report_uri'))
