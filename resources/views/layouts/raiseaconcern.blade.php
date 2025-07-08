@@ -21,10 +21,11 @@
     'resources/sass/app.scss'
     ])
 
-{{--    @include('partials.tinymce')--}}
+    {{--    @include('partials.tinymce')--}}
 </head>
 <body>
-<div id="app">
+<div id="app" class="d-flex flex-column min-vh-100">
+    <h1 class="visually-hidden">{{ config('app.name', 'Raise a Concern') }}</h1>
     <nav class="navbar navbar-dark shadow-sm">
         <div class="container d-flex justify-content-between align-items-center">
             <a class="navbar-brand" href="{{ url('/') }}">
@@ -48,12 +49,12 @@
         </div>
     </nav>
 
-    <main class="py-4">
+    <main class="py-4 flex-grow-1">
         <div class="container img-thumbnail bg-white raiseaconcern-container">
             <div class="row">
                 <div class="col-12">
                     <p class="lead text-danger text-center">If you think that a child is in immediate danger you should
-                        call: <a class="text-gold" href="tel:999">999</a>.</p>
+                        call: <a class="" href="tel:999">999</a>.</p>
                     <hr/>
                 </div>
                 <div class="col-xl-7 col-12">
@@ -104,8 +105,8 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <p>Read more about our safeguarding team on the website: <br /><span class="float-end"><a
-                                    href="https://www.cranleigh.org/welcome/people/safeguarding" target="_blank">Senior
+                            <p>Read more about our safeguarding team on the website: <br/><span class="float-end"><a
+                                        href="https://www.cranleigh.org/welcome/people/safeguarding" target="_blank">Senior
                                     School</a> | <a href="https://www.cranprep.org/welcome/people/safeguarding"
                                                     target="_blank">Prep School</a></span></p>
                         </div>
@@ -126,48 +127,69 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="spacer">&nbsp;</div>
+                </div>
+            </div>
+            <div class="spacer">&nbsp;</div>
+
+            <div class="row">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">Useful External Links</h4>
                         </div>
                         <div class="card-body">
-                            <ul>
-                                <li><a href="https://www.ceop.police.uk/Safety-Centre/" target="_blank">CEOP Safety
-                                        Centre</a> Reporting a concern direct to the police
-                                </li>
-                                <li><a href="https://www.internetmatters.org/resources/social-media-advice-hub/"
-                                       target="_blank">Internet Matters</a> Information about how to help children stay
-                                    safe on social media
-                                </li>
-                                <li>
-                                    <a href="https://www.mariecollinsfoundation.org.uk/what-we-do/working-with-children-and-families"
-                                       target="_blank">Marie Collins Foundation</a> Support for children abused online
-                                    and their families
-                                </li>
-                                <li><a href="https://www.nspcc.org.uk/"
-                                       target="_blank">NSPCC</a> Every child is worth fighting for
-                                </li>
-                                <li><a href="https://www.childline.org.uk"
-                                       target="_blank">Childline</a> Direct Advice for Children
-                                </li>
-                                <li><a href="https://www.youngminds.org.uk"
-                                       target="_blank">Young Minds</a> Fighting for young people's mental health
-                                </li>
-                                <li><a href="https://www.surreycc.gov.uk/children/contact-childrens-services"
-                                       target="_blank">Surrey's Children's Single Point of Access (C-SPA)</a> Surrey
-                                    County Council's direct details
-                                </li>
-                            </ul>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <ul>
+                                        <li><a href="https://www.ceop.police.uk/Safety-Centre/" target="_blank">CEOP
+                                                Safety
+                                                Centre</a> Reporting a concern direct to the police
+                                        </li>
+
+                                        <li>
+                                            <a href="https://www.mariecollinsfoundation.org.uk/what-we-do/working-with-children-and-families"
+                                               target="_blank">Marie Collins Foundation</a> Support for children abused
+                                            online
+                                            and their families
+                                        </li>
+                                        <li><a href="https://www.nspcc.org.uk/"
+                                               target="_blank">NSPCC</a> Every child is worth fighting for
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <ul>
+                                        <li><a href="https://www.internetmatters.org/resources/social-media-advice-hub/"
+                                               target="_blank">Internet Matters</a> Information about how to help
+                                            children stay
+                                            safe on social media
+                                        </li>
+                                        <li><a href="https://www.childline.org.uk"
+                                               target="_blank">Childline</a> Direct Advice for Children
+                                        </li>
+                                        <li><a href="https://www.youngminds.org.uk"
+                                               target="_blank">Young Minds</a> Fighting for young people's mental health
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <ul>
+                                        <li><a href="https://www.surreycc.gov.uk/children/contact-childrens-services"
+                                               target="_blank">Surrey's Children's Single Point of Access (C-SPA)</a>
+                                            Surrey
+                                            County Council's direct details
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </main>
-    <footer class="py-4">
-        <div class="container img-thumbnail bg-cranleigh text-white raiseaconcern-container">
+    <footer class="">
+        <div class="container-fluid bg-cranleigh text-white raiseaconcern-container py-4">
             <div class="row">
                 <div class="col-7">Cranleigh's Raise a Concern and Pastoral Module are both bespoke systems designed and
                     developed at Cranleigh. <br/>Any technical queries should be directed to <a

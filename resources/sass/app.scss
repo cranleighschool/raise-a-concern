@@ -12,6 +12,12 @@
  */
 $cranleigh-blue: #021E42;
 $cranleigh-gold: #B0AA7E;
+$wey-blue: #7d9CC0;
+$cranleigh-clay: #c09c83;
+$heathland-green: #7f9c90;
+$chalk-lane: #d0d0ce;
+$ivory-hall: #d6d2c4;
+$boxwood-mist: #bac5b9;
 
 a {
     color: $cranleigh-blue;
@@ -33,7 +39,15 @@ $theme-colors: (
 .bg-cranleigh {
     background: $cranleigh-blue;
 }
-
+.bg-gold {
+    background: $cranleigh-gold !important;
+}
+.bg-blue {
+    background: $cranleigh-blue;
+}
+.bg-white {
+    background: #ffffff;
+}
 footer a {
     color: white;
     text-decoration: underline;
@@ -44,9 +58,14 @@ nav.navbar.navbar-dark {
     color: #fff !important;
     border-bottom: 10px solid $cranleigh-gold;
 }
+footer>.container-fluid {
+    background: $cranleigh-blue !important;
+    color: #fff !important;
+    border-top: 10px solid $cranleigh-gold;
+}
 
 a {
-    text-decoration: none;
+    text-decoration: underline;
     &:hover:not(.btn) {
         text-decoration: underline;
     }
@@ -54,24 +73,48 @@ a {
 .text-gold {
     color: $cranleigh-gold;
 }
+.text-blue {
+    color: $cranleigh-blue;
+}
+.text-wey-blue {
+    color: $wey-blue;
+}
+.text-clay {
+    color: $cranleigh-clay;
+}
+.text-heathland-green {
+    color: $heathland-green;
+}
 .card {
-    border-color: $cranleigh-blue;
+    border-color: $heathland-green;
     a:not(.btn) {
-        color: $cranleigh-gold;
+        color: $cranleigh-blue;
     }
 }
-
+.card-body {
+    ul {
+        //display: block;
+        //list-style-type: disc;
+        margin-block-start: 0px;
+        margin-block-end: 0px;
+        //padding-inline-start: 40px;
+        unicode-bidi: isolate;
+    }
+}
+.card-body ul>li {
+    padding: 5px 0;
+}
 .card-header {
-    background-color: $cranleigh-blue;
-    color: #fff;
+    background-color: $boxwood-mist;
+    color: $cranleigh-blue;
 }
 
 .card-footer {
-    background-color: $cranleigh-blue;
-    color: #fff;
+    background-color: $boxwood-mist;
+    color: #000;
 
     a {
-        color: $cranleigh-gold;
+        color: $cranleigh-blue !important;
     }
 }
 
@@ -98,7 +141,7 @@ a {
     @include button-outline-variant($cranleigh-gold, #ffffff);
 }
 .btn-gold-fill {
-    @include button-variant($cranleigh-gold, $cranleigh-gold, #ffffff, $cranleigh-blue, $cranleigh-gold, $cranleigh-gold, $cranleigh-gold, #ffffff);
+    @include button-variant($cranleigh-gold, $cranleigh-gold, $cranleigh-blue, $cranleigh-blue, $cranleigh-gold, $cranleigh-gold, $cranleigh-gold, #ffffff);
 }
 
 #whogetsnotified {
