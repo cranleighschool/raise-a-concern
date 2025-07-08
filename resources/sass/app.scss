@@ -7,6 +7,16 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+/**
+ * 2025 Cranleigh Rebrand Colours
+ */
+$cranleigh-blue: #021E42;
+$cranleigh-gold: #B0AA7E;
+
+a {
+    color: $cranleigh-blue;
+}
+
 .raiseaconcern-container {
     border: 0px;
     padding-top: 10px;
@@ -18,10 +28,10 @@
 }
 
 $theme-colors: (
-    "primary": #0c223f,
+    "primary": $cranleigh-blue,
 );
 .bg-cranleigh {
-    background: #0c223f;
+    background: $cranleigh-blue;
 }
 
 footer a {
@@ -30,30 +40,38 @@ footer a {
 }
 
 nav.navbar.navbar-dark {
-    background: #0c223f !important;
+    background: $cranleigh-blue !important;
     color: #fff !important;
-    border-bottom: 10px solid #8eb8ef;
+    border-bottom: 10px solid $cranleigh-gold;
 }
 
 a {
     text-decoration: none;
+    &:hover:not(.btn) {
+        text-decoration: underline;
+    }
 }
-
+.text-gold {
+    color: $cranleigh-gold;
+}
 .card {
-    border-color: #0c223f;
+    border-color: $cranleigh-blue;
+    a:not(.btn) {
+        color: $cranleigh-gold;
+    }
 }
 
 .card-header {
-    background-color: #0c223f;
+    background-color: $cranleigh-blue;
     color: #fff;
 }
 
 .card-footer {
-    background-color: #8eb8ef;
+    background-color: $cranleigh-blue;
     color: #fff;
 
     a {
-        color: #0c223f;
+        color: $cranleigh-gold;
     }
 }
 
@@ -72,12 +90,15 @@ a {
     padding-bottom: 10px;
 }
 
-.btn-cranleigh {
-    @include button-outline-variant(#0c223f);
+.btn-blue, .btn-cranleigh {
+    @include button-outline-variant($cranleigh-blue);
 }
 
-.btn-cranprep {
-    @include button-outline-variant(#8eb8ef, #ffffff);
+.btn-gold, .btn-cranprep {
+    @include button-outline-variant($cranleigh-gold, #ffffff);
+}
+.btn-gold-fill {
+    @include button-variant($cranleigh-gold, $cranleigh-gold, #ffffff, $cranleigh-blue, $cranleigh-gold, $cranleigh-gold, $cranleigh-gold, #ffffff);
 }
 
 #whogetsnotified {

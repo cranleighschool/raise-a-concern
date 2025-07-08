@@ -40,6 +40,11 @@ return [
             'app' => env('FIREFLY_SELFREFLECTIONS_APP'),
         ],
     ],
+    'policies' => [
+        'cs' => env('POLICIES_CS_POLICY', 'https://www.cranleigh.org/policies/child-protection-safeguarding/'),
+        'cps' => env('POLICIES_CPS_POLICY', 'https://www.cranprep.org/policies/safeguarding-child-protection-policy/'),
+    ],
+
     'isams' => [
         'batch_api_key' => env('ISAMS_BATCH_API_KEY'),
         'batch_api_url' => env('ISAMS_BATCH_API_URL', 'https://isams.cranleigh.org/api/batch/1.0/xml.ashx'),

@@ -25,40 +25,25 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-md navbar-dark shadow-sm">
-        <div class="container">
+    <nav class="navbar navbar-dark shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Raise a Concern') }}
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav me-auto">
+            <div class="d-flex align-items-center">
+                @guest
+                    @if (!request()->routeIs('raiseaconcern.login'))
+                        <a class="btn btn-gold-fill" href="{{ route('raiseaconcern.login') }}">{{ __('Login') }}</a>
+                    @endif
+                @endguest
 
-                </ul>
-
-                <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ms-auto">
-                    <!-- Authentication Links -->
-                    @guest
-                        @if (!request()->routeIs('raiseaconcern.login'))
-                            <li class="nav-item">
-                                <a class="btn btn-cranprep" href="{{ route('raiseaconcern.login') }}">{{ __('Login') }}</a>
-                            </li>
-                        @endif
-                    @endguest
-                </ul>
-                @if (auth()->user())
-                    <form class="d-flex" role="logout" action="{{ route('raiseaconcern.logout') }}" method="POST">
+                @auth
+                    <form class="ms-2" role="logout" action="{{ route('raiseaconcern.logout') }}" method="POST">
                         @csrf
                         <button class="btn btn-danger" type="submit">Logout</button>
                     </form>
-                @endif
+                @endauth
             </div>
         </div>
     </nav>
@@ -68,7 +53,7 @@
             <div class="row">
                 <div class="col-12">
                     <p class="lead text-danger text-center">If you think that a child is in immediate danger you should
-                        call: <a href="tel:999">999</a>.</p>
+                        call: <a class="text-gold" href="tel:999">999</a>.</p>
                     <hr/>
                 </div>
                 <div class="col-xl-7 col-12">
@@ -104,13 +89,13 @@
                                     </tr>
                                     <tr>
                                         <td>Dr Andrea Saxel<br/>
-                                            <em class="small">CS Designated Safeguarding Lead</em></td>
+                                            <em class="small">Senior School DSL</em></td>
                                         <td><a href="tel:+447810026050">07810 026050</a></td>
                                         <td><a href="mailto:aps@cranleigh.org">aps@cranleigh.org</a></td>
                                     </tr>
                                     <tr>
                                         <td>Mrs Emma Lewis<br/>
-                                            <em class="small">CPS Designated Safeguarding Lead</em></td>
+                                            <em class="small">Prep School DSL</em></td>
                                         <td><a href="tel:+447810007922">07810 007922</a></td>
                                         <td><a href="mailto:efl@cranprep.org">efl@cranprep.org</a></td>
                                     </tr>
@@ -119,10 +104,10 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <p>Read more about our safeguarding team on the website: <a
-                                    href="https://www.cranleigh.org/welcome/people/safeguarding" target="_blank">Cranleigh
+                            <p>Read more about our safeguarding team on the website: <br /><span class="float-end"><a
+                                    href="https://www.cranleigh.org/welcome/people/safeguarding" target="_blank">Senior
                                     School</a> | <a href="https://www.cranprep.org/welcome/people/safeguarding"
-                                                    target="_blank">Cranleigh Prep School</a></p>
+                                                    target="_blank">Prep School</a></span></p>
                         </div>
                     </div>
                     <div class="spacer">&nbsp;</div>
@@ -134,10 +119,10 @@
                             <ul>
                                 <li><a href="https://cranleigh.fireflycloud.net/teen-and-parent-resources"
                                        target="_blank">Cranleigh's Teen and Parent Resources</a></li>
-                                <li><a href="https://www.cranleigh.org/policies/child-protection-safeguarding/"
-                                       target="_blank">Cranleigh School's Safeguarding Policy</a></li>
-                                <li><a href="https://www.cranprep.org/policies/safeguarding-child-protection-policy/"
-                                       target="_blank">Cranleigh Prep School's Safeguarding Policy</a></li>
+                                <li><a href="{{ config('services.policies.cs') }}"
+                                       target="_blank">Senior School's Safeguarding Policy</a></li>
+                                <li><a href="{{ config('services.policies.cps') }}"
+                                       target="_blank">Prep School's Safeguarding Policy</a></li>
                             </ul>
                         </div>
                     </div>
