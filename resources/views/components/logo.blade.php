@@ -5,7 +5,7 @@
 ])
 @if ($school === 'CPS')
     @if ($type === 'PNG')
-        <img class="{{ $class }}" src="{{ asset('CRA001_Cranleigh_Prep_School_Rev_RGB.png') }}"
+        <img class="{{ $class }}" src="storage/CRA001_Cranleigh_Prep_School_Rev_RGB.png"
              alt="Cranleigh Preparatory School Logo"/>
     @else
         <svg
@@ -386,7 +386,7 @@
     @endif
 @else
     @if ($type === 'PNG')
-<img src="{{ asset('CRA001_Cranleigh_School_Rev_RGB.png') }}" class="{{ $class }}" alt="Cranleigh School Logo">
+<img src="storage/CRA001_Cranleigh_School_Rev_RGB.png" class="{{ $class }}" alt="Cranleigh School Logo">
     @else
         <svg
             version="1.1"
