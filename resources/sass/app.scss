@@ -31,12 +31,13 @@ a {
 
 .login-card {
     background: #fff;
-    a>img{
-        padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
-    }
+    position: relative;
 }
 .card-body.no-padding {
     padding: 0px;
+}
+.login-card:hover .btn-gold-fill {
+    @include button-variant($cranleigh-gold, $cranleigh-gold, $cranleigh-blue, $cranleigh-blue, $cranleigh-gold, $cranleigh-gold, $cranleigh-gold, #ffffff);
 }
 
 $theme-colors: (
