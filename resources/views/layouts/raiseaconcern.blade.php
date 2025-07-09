@@ -123,9 +123,9 @@
                             <ul>
                                 <li><a href="https://cranleigh.fireflycloud.net/teen-and-parent-resources"
                                        target="_blank">Cranleigh's Teen and Parent Resources</a></li>
-                                <li><a href="{{ config('services.policies.cs') }}"
+                                <li><a href="{{ App\Domains\RaiseAConcern\Enums\SafeguardingLink::SeniorSchool->getUrl() }}"
                                        target="_blank">Senior School's Safeguarding Policy</a></li>
-                                <li><a href="{{ config('services.policies.cps') }}"
+                                <li><a href="{{ App\Domains\RaiseAConcern\Enums\SafeguardingLink::PrepSchool->getUrl() }}"
                                        target="_blank">Prep School's Safeguarding Policy</a></li>
                             </ul>
                         </div>

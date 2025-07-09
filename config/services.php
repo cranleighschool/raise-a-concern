@@ -41,8 +41,8 @@ return [
         ],
     ],
     'policies' => [
-        'cs' => env('POLICIES_CS_POLICY', 'https://www.cranleigh.org/policies/child-protection-safeguarding/'),
-        'cps' => env('POLICIES_CPS_POLICY', 'https://www.cranprep.org/policies/safeguarding-child-protection-policy/'),
+        'cs' => env('POLICIES_CS_POLICY', null),
+        'cps' => env('POLICIES_CPS_POLICY', null),
     ],
 
     'isams' => [
