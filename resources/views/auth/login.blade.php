@@ -10,16 +10,13 @@
     <div class="row">
         <div class="col-6">
             <div class="card login-card">
-                <a href="{{ route('raiseaconcern.firefly-login', 'senior') }}">
-                    <x-logo class="card-img-top p-5"/>
-                </a>
+                <x-logo class="card-img-top p-5"/>
                 <div class="card-body">
                     <h3 class="card-title text-blue">Senior School</h3>
                     <p class="card-text">Parents, Pupils and Staff login with Firefly below.</p>
                     <div class="d-grid">
-                        <a href="{{ route('raiseaconcern.firefly-login', 'senior') }}"
-                           class="btn btn-gold-fill stretched-link">Login with
-                            <span class="visually-hidden">Senior School</span> Firefly</a>
+                        <a aria-label="Login using Senior School Firefly" href="{{ route('raiseaconcern.firefly-login', 'senior') }}"
+                           class="btn btn-gold-fill stretched-link">Login with Firefly</a>
                     </div>
                 </div>
             </div>
@@ -32,10 +29,9 @@
                     <h3 class="card-title text-blue">Prep School</h3>
                     <p class="card-text">Parents, Pupils and Staff login with Firefly below.</p>
                     <div class="d-grid">
-                        <a href="{{ route('raiseaconcern.firefly-login', 'prep') }}"
-                           class="btn btn-gold-fill stretched-link">Login with <span
-                                class="visually-hidden">Prep School</span>
-                            Firefly</a>
+                        <a aria-label="Login using Prep School Firefly"
+                           href="{{ route('raiseaconcern.firefly-login', 'prep') }}"
+                           class="btn btn-gold-fill stretched-link">Login with Firefly</a>
                     </div>
                 </div>
             </div>

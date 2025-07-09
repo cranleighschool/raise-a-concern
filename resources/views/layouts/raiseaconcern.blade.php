@@ -78,6 +78,7 @@
                         <div class="card-body no-padding">
                             <div class="table-responsive">
                                 <table class="table table-striped mb-0">
+                                    <caption class="sr-only">Contact information for safeguarding personnel, including name, phone, and email.</caption>
                                     <thead>
                                     <th scope="col">Name</th>
                                     <th scope="col">Phone</th>
@@ -197,7 +198,7 @@
                     developed at Cranleigh. <br/>Any technical queries should be directed to <a
                         href="mailto:servicedesk@cranleigh.org">the developer</a>.
                 </div>
-                <div class="col-5"><span class="badge bg-secondary float-end">{{ getAppVersion() }}</span></div>
+                <div class="col-5"><span class="badge bg-secondary float-end" aria-hidden="true">{{ getAppVersion() }}</span></div>
             </div>
         </div>
     </footer>
