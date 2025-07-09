@@ -18,7 +18,7 @@
                     <div class="d-grid">
                         <a href="{{ route('raiseaconcern.firefly-login', 'senior') }}"
                            class="btn btn-gold-fill">Login with
-                            Firefly</a>
+                            <span class="visually-hidden">Senior School</span> Firefly</a>
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                     <h3 class="card-title text-blue">Prep School</h3>
                     <p class="card-text">Parents, Pupils and Staff login with Firefly below.</p>
                     <div class="d-grid">
-                        <a href="{{ route('raiseaconcern.firefly-login', 'prep') }}" class="btn btn-gold-fill">Login with
+                        <a href="{{ route('raiseaconcern.firefly-login', 'prep') }}" class="btn btn-gold-fill">Login with <span class="visually-hidden">Prep School</span>
                             Firefly</a>
                     </div>
                 </div>

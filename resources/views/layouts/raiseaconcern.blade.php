@@ -79,9 +79,9 @@
                             <div class="table-responsive">
                                 <table class="table table-striped mb-0">
                                     <thead>
-                                    <th>Name</th>
-                                    <th>Phone</th>
-                                    <th>Email</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Email</th>
                                     </thead>
                                     <tbody>
                                     <tr>
