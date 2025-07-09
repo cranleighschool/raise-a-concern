@@ -70,7 +70,7 @@
 
                     @yield('content')
                 </div>
-                <aside class="col-xl-5 col-12 mt-5 mt-xl-0">
+                <aside id="sidebar" class="col-xl-5 col-12 mt-5 mt-xl-0">
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">Useful Contacts</h4>
@@ -135,7 +135,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <aside class="card">
+                    <aside class="card" id="useful-links-card">
                         <div class="card-header">
                             <h4 class="card-title">Useful External Links</h4>
                         </div>
