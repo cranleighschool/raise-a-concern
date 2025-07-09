@@ -78,7 +78,7 @@
                         <div class="card-body no-padding">
                             <div class="table-responsive">
                                 <table class="table table-striped mb-0">
-                                    <caption class="sr-only">Contact information for safeguarding personnel, including name, phone, and email.</caption>
+                                    <caption class="visually-hidden">Contact information for safeguarding personnel, including name, phone, and email.</caption>
                                     <thead>
                                     <th scope="col">Name</th>
                                     <th scope="col">Phone</th>
