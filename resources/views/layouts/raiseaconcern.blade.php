@@ -25,6 +25,7 @@
 </head>
 <body>
 <div id="app" class="d-flex flex-column min-vh-100">
+    <header>
     <h1 class="visually-hidden">{{ config('app.name', 'Raise a Concern') }}</h1>
     <nav class="navbar navbar-dark shadow-sm">
         <div class="container d-flex justify-content-between align-items-center">
@@ -40,7 +41,7 @@
                 @endguest
 
                 @auth
-                    <form class="ms-2" role="logout" action="{{ route('raiseaconcern.logout') }}" method="POST">
+                    <form class="ms-2" action="{{ route('raiseaconcern.logout') }}" method="POST">
                         @csrf
                         <button class="btn btn-danger" type="submit">Logout</button>
                     </form>
@@ -48,6 +49,7 @@
             </div>
         </div>
     </nav>
+    </header>
 
     <main class="py-4 flex-grow-1">
         <div class="container img-thumbnail bg-white raiseaconcern-container">
@@ -68,14 +70,14 @@
 
                     @yield('content')
                 </div>
-                <div class="col-xl-5 col-12 mt-5 mt-xl-0">
+                <aside class="col-xl-5 col-12 mt-5 mt-xl-0">
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">Useful Contacts</h4>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body no-padding">
                             <div class="table-responsive">
-                                <table class="table table-striped">
+                                <table class="table table-striped mb-0">
                                     <thead>
                                     <th>Name</th>
                                     <th>Phone</th>
@@ -107,8 +109,8 @@
                         <div class="card-footer">
                             <p>Read more about our safeguarding team on the website: <br/><span class="float-end"><a
                                         href="https://www.cranleigh.org/welcome/people/safeguarding" target="_blank">Senior
-                                    School</a> | <a href="https://www.cranprep.org/welcome/people/safeguarding"
-                                                    target="_blank">Prep School</a></span></p>
+                                    School <span class="visually-hidden">(opens in a new tab)</span></a> | <a href="https://www.cranprep.org/welcome/people/safeguarding"
+                                                    target="_blank">Prep School <span class="visually-hidden">(opens in a new tab)</span></a></span></p>
                         </div>
                     </div>
                     <div class="spacer">&nbsp;</div>
@@ -127,13 +129,13 @@
                             </ul>
                         </div>
                     </div>
-                </div>
+                </aside>
             </div>
             <div class="spacer">&nbsp;</div>
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card">
+                    <aside class="card">
                         <div class="card-header">
                             <h4 class="card-title">Useful External Links</h4>
                         </div>
@@ -183,7 +185,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </aside>
                 </div>
             </div>
         </div>

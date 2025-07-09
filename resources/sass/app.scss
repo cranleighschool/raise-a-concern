@@ -30,7 +30,13 @@ a {
 }
 
 .login-card {
-    padding: 20px;
+    background: #fff;
+    a>img{
+        padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+    }
+}
+.card-body.no-padding {
+    padding: 0px;
 }
 
 $theme-colors: (
