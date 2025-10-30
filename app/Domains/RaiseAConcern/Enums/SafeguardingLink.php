@@ -5,6 +5,9 @@ namespace App\Domains\RaiseAConcern\Enums;
 use App\Domains\RaiseAConcern\Actions\ScrapeWebsitePolicies;
 use Illuminate\Support\Facades\Cache;
 
+/**
+ * @deprecated
+ */
 enum SafeguardingLink
 {
     case SeniorSchool;
@@ -29,7 +32,8 @@ enum SafeguardingLink
         if (config("services.policies.{$this->getKey()}", 'unkonwn')) {
             return config("services.policies.{$this->getKey()}", 'unkonwn');
         }
-Cache::forget('safeguarding_policy_link_'.$domain);
+        Cache::forget('safeguarding_policy_link_'.$domain);
+
         // Use caching to avoid repeated requests for the same domain.
         return Cache::remember(
             'safeguarding_policy_link_'.$domain,

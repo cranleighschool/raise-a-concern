@@ -4,6 +4,9 @@ namespace App\Domains\RaiseAConcern\Actions;
 
 use Illuminate\Support\Facades\Http;
 
+/**
+ * @deprecated
+ */
 class ScrapeWebsitePolicies
 {
     public function __construct(public string $site)
