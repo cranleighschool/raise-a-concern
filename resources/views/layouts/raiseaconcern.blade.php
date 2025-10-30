@@ -93,15 +93,15 @@
                                     </tr>
                                     <tr>
                                         <td>Dr Andrea Saxel<br/>
-                                            <em class="small">Senior School DSL</em></td>
+                                            <em class="small">Cranleigh Senior DSL</em></td>
                                         <td><a href="tel:+447810026050">07810 026050</a></td>
                                         <td><a href="mailto:aps@cranleigh.org">aps@cranleigh.org</a></td>
                                     </tr>
                                     <tr>
                                         <td>Mrs Emma Lewis<br/>
-                                            <em class="small">Prep School DSL</em></td>
+                                            <em class="small">Cranleigh Prep DSL</em></td>
                                         <td><a href="tel:+447810007922">07810 007922</a></td>
-                                        <td><a href="mailto:efl@cranprep.org">efl@cranprep.org</a></td>
+                                        <td><a href="mailto:efl@cranleigh.org">efl@cranleigh.org</a></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -109,9 +109,8 @@
                         </div>
                         <div class="card-footer">
                             <p>Read more about our safeguarding team on the website: <br/><span class="float-end"><a
-                                        href="https://www.cranleigh.org/welcome/people/safeguarding" target="_blank">Senior
-                                    School <span class="visually-hidden">(opens in a new tab)</span></a> | <a href="https://www.cranprep.org/welcome/people/safeguarding"
-                                                    target="_blank">Prep School <span class="visually-hidden">(opens in a new tab)</span></a></span></p>
+                                        href="https://www.cranleigh.org/welcome/people/safeguarding" target="_blank">Senior <span class="visually-hidden">(opens in a new tab)</span></a> | <a href="https://www.cranprep.org/welcome/people/safeguarding"
+                                                    target="_blank">Prep <span class="visually-hidden">(opens in a new tab)</span></a></span></p>
                         </div>
                     </div>
                     <div class="spacer">&nbsp;</div>
@@ -123,13 +122,16 @@
                             <ul>
                                 <li><a href="https://cranleigh.fireflycloud.net/teen-and-parent-resources"
                                        target="_blank">Cranleigh's Teen and Parent Resources</a></li>
-                                <li><a href="{{ App\Domains\RaiseAConcern\Enums\SafeguardingLink::SeniorSchool->getUrl() }}"
-                                       target="_blank">Senior School's Safeguarding Policy</a></li>
-                                <li><a href="{{ App\Domains\RaiseAConcern\Enums\SafeguardingLink::PrepSchool->getUrl() }}"
-                                       target="_blank">Prep School's Safeguarding Policy</a></li>
+                                <li><a href="https://www.cranleigh.org/about-us/policies/"
+                                       target="_blank">Read our School Policies</a></li>
                             </ul>
                         </div>
                     </div>
+                    @if(\Illuminate\Support\Facades\Route::is('raiseaconcern.login'))
+                    <p class="lead pt-4 d-none d-xl-block">In most cases it's best if we know who is raising the concern, in case there are
+                        further details we need to in order keep someone safe.</p><p class="lead pt-2 d-none d-xl-block">However, if you really want to remain anonymous <a
+                            href="{{ route('raiseaconcern.submit') }}">you can do that too.</a></p>
+                        @endif
                 </aside>
             </div>
             <div class="spacer">&nbsp;</div>
@@ -144,44 +146,25 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <ul>
-                                        <li><a href="https://www.ceop.police.uk/Safety-Centre/" target="_blank">CEOP
-                                                Safety
-                                                Centre</a> Reporting a concern direct to the police
-                                        </li>
+                                        <li><a href="https://www.ceop.police.uk/Safety-Centre/" target="_blank">CEOP Safety Centre</a> Report concerns about online abuse directly to the police</li>
+                                        <li><a href="https://www.mariecollinsfoundation.org.uk/what-we-do/working-with-children-and-families" target="_blank">Marie Collins Foundation</a> Support for children and families affected by online abuse</li>
+                                        <li><a href="https://www.nspcc.org.uk/" target="_blank">NSPCC</a> Support and advice to help keep every child safe from harm</li>
+                                    </ul>
+                                </div>
 
-                                        <li>
-                                            <a href="https://www.mariecollinsfoundation.org.uk/what-we-do/working-with-children-and-families"
-                                               target="_blank">Marie Collins Foundation</a> Support for children abused
-                                            online
-                                            and their families
-                                        </li>
-                                        <li><a href="https://www.nspcc.org.uk/"
-                                               target="_blank">NSPCC</a> Every child is worth fighting for
-                                        </li>
-                                    </ul>
-                                </div>
                                 <div class="col-md-4">
                                     <ul>
-                                        <li><a href="https://www.internetmatters.org/resources/social-media-advice-hub/"
-                                               target="_blank">Internet Matters</a> Information about how to help
-                                            children stay
-                                            safe on social media
-                                        </li>
-                                        <li><a href="https://www.childline.org.uk"
-                                               target="_blank">Childline</a> Direct Advice for Children
-                                        </li>
-                                        <li><a href="https://www.youngminds.org.uk"
-                                               target="_blank">Young Minds</a> Fighting for young people's mental health
-                                        </li>
+                                        <li><a href="https://www.internetmatters.org/resources/social-media-advice-hub/" target="_blank">Internet Matters</a> Practical advice to help children stay safe on social media</li>
+                                        <li><a href="https://www.childline.org.uk" target="_blank">Childline</a> Free, confidential support and advice for children and young people</li>
+                                        <li><a href="https://www.youngminds.org.uk" target="_blank">Young Minds</a> Helping young people with their mental health and wellbeing</li>
                                     </ul>
                                 </div>
+
                                 <div class="col-md-4">
                                     <ul>
-                                        <li><a href="https://www.surreycc.gov.uk/children/contact-childrens-services"
-                                               target="_blank">Surrey's Children's Single Point of Access (C-SPA)</a>
-                                            Surrey
-                                            County Council's direct details
-                                        </li>
+                                        <li><a href="https://www.surreycc.gov.uk/children/contact-childrens-services" target="_blank">Surrey's Children's Single Point of Access (C-SPA)</a> Direct contact details for the Council’s safeguarding team</li>
+                                        <li><a href="https://saferinternet.org.uk" target="_blank">UK Safer Internet Centre</a> Expert advice and resources to help young people stay safe online</li>
+                                        <li><a href="https://www.minded.org.uk" target="_blank">MindEd</a> Free guidance and training for adults supporting young people’s mental health</li>
                                     </ul>
                                 </div>
                             </div>

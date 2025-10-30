@@ -26,10 +26,10 @@ enum SafeguardingLink
         };
 
         // Allow Override using config/env files
-        if (config("services.policies.{$this->getKey()}")) {
-            return config("services.policies.{$this->getKey()}");
+        if (config("services.policies.{$this->getKey()}", 'unkonwn')) {
+            return config("services.policies.{$this->getKey()}", 'unkonwn');
         }
-
+Cache::forget('safeguarding_policy_link_'.$domain);
         // Use caching to avoid repeated requests for the same domain.
         return Cache::remember(
             'safeguarding_policy_link_'.$domain,
@@ -40,6 +40,7 @@ enum SafeguardingLink
 
     private function fetchPolicyLink(string $domain): string
     {
+        return '';
         $scraper = new ScrapeWebsitePolicies($domain);
 
         // Search for the safeguarding policy link in the HTML content.

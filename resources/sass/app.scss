@@ -98,6 +98,11 @@ a {
         color: $cranleigh-blue;
     }
 }
+img.main-logo {
+    display: block;
+    height:20px;
+    min-height: 200px !important;
+}
 .card-body {
     ul {
         //display: block;
