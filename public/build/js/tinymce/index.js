@@ -1,7 +1,7 @@
-// Exports the "wordcount" plugin for usage with module loaders
+// Exports the "preview" plugin for usage with module loaders
 // Usage:
 //   CommonJS:
-//     require('tinymce/plugins/wordcount')
+//     require('tinymce/plugins/preview')
 //   ES2015:
-//     import 'tinymce/plugins/wordcount'
+//     import 'tinymce/plugins/preview'
 require('./plugin.js');

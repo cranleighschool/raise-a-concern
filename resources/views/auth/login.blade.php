@@ -17,12 +17,12 @@
             <div class="card login-card">
                 <img aria-hidden="true" src="/senior.jpg" class="card-img-top" alt="Cranleigh School Logo">
                 <div class="card-body">
-                    <h3 class="card-title text-blue">Cranleigh Senior</h3>
-                    <p class="card-text">Parents, Pupils and Staff login with Firefly below.</p>
+                    <h3 class="card-title text-blue text-center">Cranleigh Senior</h3>
+                    <p class="card-text text-center">Parents, Pupils and Staff login with Firefly below</p>
                     <div class="d-grid">
                         <a aria-label="Login using Senior School Firefly"
                            href="{{ route('raiseaconcern.firefly-login', 'senior') }}"
-                           class="btn btn-gold-fill stretched-link">Login with Firefly</a>
+                           class="btn btn-clay-fill stretched-link">Login with Firefly</a>
                     </div>
                 </div>
             </div>
@@ -32,12 +32,12 @@
             <div class="card login-card">
                 <img aria-hidden="true" src="/prep.jpg" class="card-img-top" alt="Cranleigh School Logo">
                 <div class="card-body">
-                    <h3 class="card-title text-blue">Cranleigh Prep</h3>
-                    <p class="card-text">Parents, Pupils and Staff login with Firefly below.</p>
+                    <h3 class="card-title text-blue text-center">Cranleigh Prep</h3>
+                    <p class="card-text text-center">Parents, Pupils and Staff login with Firefly below</p>
                     <div class="d-grid">
                         <a aria-label="Login using Prep School Firefly"
                            href="{{ route('raiseaconcern.firefly-login', 'prep') }}"
-                           class="btn btn-gold-fill stretched-link">Login with Firefly</a>
+                           class="btn btn-clay-fill stretched-link">Login with Firefly</a>
                     </div>
                 </div>
             </div>

@@ -155,6 +155,9 @@ img.main-logo {
 .btn-gold-fill {
     @include button-variant($cranleigh-gold, $cranleigh-gold, $cranleigh-blue, $cranleigh-blue, $cranleigh-gold, $cranleigh-gold, $cranleigh-gold, #ffffff);
 }
+.btn-clay-fill {
+    @include button-variant($cranleigh-clay, $cranleigh-clay, $cranleigh-blue, $ivory-hall, $cranleigh-clay, $cranleigh-clay, $cranleigh-clay, #ffffff);
+}
 
 #whogetsnotified {
     font-weight: bolder;
