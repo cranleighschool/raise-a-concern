@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Log;
 
 class ConcernController extends Controller
 {
-    public const SENIOR_SCHOOL_ID = 1;
+    public const int SENIOR_SCHOOL_ID = 1;
 
-    public const PREP_SCHOOL_ID = 2;
+    public const int PREP_SCHOOL_ID = 2;
 
     private null|Authenticatable|User $loggedInUser = null;
 
