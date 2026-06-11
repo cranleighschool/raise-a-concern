@@ -130,7 +130,7 @@ return [
 
     'cookie' => env(
         'SESSION_COOKIE',
-        '__Host-'.Str::slug(env('APP_NAME', 'laravel'), '_').'_session'
+        '__Host-'.Str::snake(env('APP_NAME', 'laravel')).'_session'
     ),
 
     /*
