@@ -20,21 +20,21 @@ Route::domain(config('app.domains.selfreflection.url'))->group(function () {
             return response()->json(['error' => 'There was an error with your request', 'validation_errors' => $validator->errors()], 400);
         }
 
-        $withoutFilter = (bool)$request->get('withoutFilter', true);
+        $withoutFilter = (bool) $request->input('withoutFilter', true);
 
         if ($request->has('refresh')) {
-            Cache::forget('get-all-report-cycles' . $withoutFilter);
+            Cache::forget('get-all-report-cycles'.$withoutFilter);
         }
 
-        $data = Cache::remember('get-all-report-cycles' . $withoutFilter, now()->addDay(), function () use ($withoutFilter) {
+        $data = Cache::remember('get-all-report-cycles'.$withoutFilter, now()->addDay(), function () use ($withoutFilter) {
             return ReportCycles::all(withoutFilter: $withoutFilter)
                 ->map(function (object $obj) {
                     return [
-                        'reportCycleId' => (int)$obj->reportCycleId,
+                        'reportCycleId' => (int) $obj->reportCycleId,
                         'CycleName' => $obj->CycleName,
                         'StartDate' => $obj->StartDate,
                         'EndDate' => $obj->EndDate,
-                        'ReportYear' => (int)$obj->ReportYear,
+                        'ReportYear' => (int) $obj->ReportYear,
                     ];
                 })->sortByDesc('EndDate')->values();
         });
