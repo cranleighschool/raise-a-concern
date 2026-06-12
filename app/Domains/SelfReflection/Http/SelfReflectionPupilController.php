@@ -83,7 +83,7 @@ class SelfReflectionPupilController extends Controller
         ]);
 
         $data = $request->validate([
-            //'reflection' => 'required|string|max:5000|min:10|regex:/\A(?!.*[:;]-\))[\r\n -~]+\z/',
+            // 'reflection' => 'required|string|max:5000|min:10|regex:/\A(?!.*[:;]-\))[\r\n -~]+\z/',
             'reflection' => 'required|string|max:5000|min:10|regex:/\A(?!.*[:;]-\))[\p{L}\p{N}\p{P}\p{Z}\r\n]+\z/u',
         ], [
             'reflection.regex' => 'Please only use standard characters. No emojis or special characters.',

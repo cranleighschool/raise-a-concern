@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\ContentSecurityPolicy;
+use App\Http\NonceGenerator;
 
 return [
 
@@ -22,7 +24,7 @@ return [
      * a new policy or changes to existing CSP policy without breaking anything.
      */
     'report_only_presets' => [
-        \App\Http\ContentSecurityPolicy::class,
+        ContentSecurityPolicy::class,
     ],
 
     /**
@@ -46,7 +48,7 @@ return [
     /*
      * The class responsible for generating the nonces used in inline tags and headers.
      */
-    'nonce_generator' => \App\Http\NonceGenerator::class,
+    'nonce_generator' => NonceGenerator::class,
 
     /*
      * Set false to disable automatic nonce generation and handling.

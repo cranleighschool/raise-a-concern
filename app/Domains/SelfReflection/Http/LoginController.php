@@ -34,6 +34,7 @@ class LoginController extends Controller
 
         Auth::logout();
         Auth::login($user);
+
         return redirect()->route('selfreflection.home');
     }
 
@@ -48,7 +49,7 @@ class LoginController extends Controller
             'failURL' => $failure,
         ]);
 
-        return redirect($this->url . '/login/api/webgettoken?' . $query);
+        return redirect($this->url.'/login/api/webgettoken?'.$query);
     }
 
     /**
@@ -60,7 +61,7 @@ class LoginController extends Controller
             'ffauth_secret' => 'string|required',
         ]);
 
-        $fireflyReponse = Http::get($this->url . '/login/api/sso', [
+        $fireflyReponse = Http::get($this->url.'/login/api/sso', [
             'ffauth_secret' => $request->get('ffauth_secret'),
             'ffauth_device_id' => config('services.firefly.selfreflections.app'),
         ]);

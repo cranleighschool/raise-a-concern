@@ -15,14 +15,12 @@ Route::get('/', function () {
 Route::get('impersonate/{username}', [LoginController::class, 'impersonate'])
     ->name('impersonate');
 
-
 Route::get('login', [LoginController::class, 'redirectLogin'])
     ->name('login');
 Route::get('login/callback/success', [LoginController::class, 'callbackSuccess'])
     ->name('login.callback.success');
 Route::get('login/callback/failure', [LoginController::class, 'callbackFailure'])
     ->name('login.callback.failure');
-
 
 Route::middleware('auth')->group(function () {
     Route::get('pupil/{pupilId}', [SelfReflectionPupilController::class, 'index'])->name('pupil.index');

@@ -11,6 +11,4 @@ class NonceGenerator extends RandomString
     {
         return Vite::useCspNonce();
     }
-
-
 }

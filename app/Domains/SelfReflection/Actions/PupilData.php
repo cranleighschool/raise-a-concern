@@ -102,7 +102,7 @@ readonly class PupilData
      */
     public static function get(string $value)
     {
-        $api = new self();
+        $api = new self;
         if (isset($api->$value)) {
             return $api->$value;
         }

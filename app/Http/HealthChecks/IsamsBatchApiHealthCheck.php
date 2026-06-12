@@ -20,6 +20,7 @@ class IsamsBatchApiHealthCheck extends Check
                 if ($allReportCycles->isEmpty()) {
                     return $result->failed('All Report Cycles are missing');
                 }
+
                 return $result->warning('There are no active Report Cycles');
             }
 
