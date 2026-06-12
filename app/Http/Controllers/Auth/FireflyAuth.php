@@ -15,17 +15,17 @@ use Illuminate\Support\Str;
 trait FireflyAuth
 {
     use AuthenticatesUsers, AuthorizesRequests;
-/*
-    public function logoutUser(Request $request): RedirectResponse
-    {
-        auth()->logout();
+    /*
+        public function logoutUser(Request $request): RedirectResponse
+        {
+            auth()->logout();
 
-        if ($request->server('HTTP_HOST') === config('app.domains.selfreflection.url')) {
-            return redirect()->route('selfreflection.home');
-        }
+            if ($request->server('HTTP_HOST') === config('app.domains.selfreflection.url')) {
+                return redirect()->route('selfreflection.home');
+            }
 
-        return redirect('/');
-    }*/
+            return redirect('/');
+        }*/
 
     /**
      * @throws RequestException
@@ -47,9 +47,9 @@ trait FireflyAuth
         $request->merge([
             'email' => $user->email,
             'username' => $user->email,
-            'password' => Str::random()
+            'password' => Str::random(),
         ]);
-        session()->flash('alert-success', 'You have logged in as: ' . auth()->user()->name);
+        session()->flash('alert-success', 'You have logged in as: '.auth()->user()->name);
 
         return $this->sendLoginResponse($request);
     }
@@ -92,7 +92,7 @@ trait FireflyAuth
 
         return [
             'table' => $db,
-            'id' => (int)$isamsId,
+            'id' => (int) $isamsId,
         ];
     }
 }

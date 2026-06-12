@@ -16,6 +16,7 @@ class PastoralModuleApiConnectionCheck extends Check
             $user = Http::pastoralModule()->connectTimeout(300)->get('auth/me')->throw()->collect()->first();
         } catch (\Exception $e) {
             Log::error('Health Check: '.$e->getMessage(), [$e]);
+
             return $result->failed('Error thrown whilst trying to access Pastoral Module API User');
         }
         if (is_null($user)) {

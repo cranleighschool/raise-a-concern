@@ -30,7 +30,7 @@ class LoginController extends Controller
     /**
      * Where to redirect users after login.
      */
-    protected string $redirectTo = '/submit'; //RouteServiceProvider::HOME;
+    protected string $redirectTo = '/submit'; // RouteServiceProvider::HOME;
 
     public function showLoginForm(): View|RedirectResponse
     {
@@ -59,7 +59,7 @@ class LoginController extends Controller
                 'senior' => 'cranleigh',
                 'prep' => 'cranprep'
             };
-            $fireflyReponse = Http::get('https://' . $subdomain . '.fireflycloud.net/login/api/sso', [
+            $fireflyReponse = Http::get('https://'.$subdomain.'.fireflycloud.net/login/api/sso', [
                 'ffauth_device_id' => 'raiseaconcern-cranleigh',
                 'ffauth_secret' => $request->get('ffauth_secret'),
             ]);
@@ -93,6 +93,6 @@ class LoginController extends Controller
 
         $url = route('raiseaconcern.firefly-success', $school);
 
-        return redirect('https://' . $subdomain . '.fireflycloud.net/login/api/webgettoken?app=raiseaconcern-cranleigh&successURL=' . $url);
+        return redirect('https://'.$subdomain.'.fireflycloud.net/login/api/webgettoken?app=raiseaconcern-cranleigh&successURL='.$url);
     }
 }

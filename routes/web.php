@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Spatie\Health\Http\Controllers\HealthCheckJsonResultsController;
 use Spatie\Health\Http\Controllers\HealthCheckResultsController;
@@ -8,10 +10,10 @@ use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 Route::get('health', HealthCheckResultsController::class)->name('health');
 Route::get('health.json', HealthCheckJsonResultsController::class)->name('health.json');
 
-Route::post('csp-report', function (\Illuminate\Http\Request $request) {
+Route::post('csp-report', function (Request $request) {
     $payload = json_decode($request->getContent(), true);
 
-    \Illuminate\Support\Facades\Log::info('CSP Violation:', $payload);
+    Log::info('CSP Violation:', $payload);
 
     return response()->noContent();
 

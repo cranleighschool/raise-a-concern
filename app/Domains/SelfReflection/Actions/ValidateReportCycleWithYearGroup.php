@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Http;
  */
 readonly class ValidateReportCycleWithYearGroup
 {
-    public function __construct(private int $reportCycleId, private int $ncYear)
-    {
-    }
+    public function __construct(private int $reportCycleId, private int $ncYear) {}
 
     /**
      * @throws RequestException

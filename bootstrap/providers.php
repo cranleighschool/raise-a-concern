@@ -1,7 +1,11 @@
 <?php
 
+use App\Providers\AppServiceProvider;
+use App\Providers\HealthCheckServiceProvider;
+use App\Providers\SelfReflectionGateProvider;
+
 return [
-    App\Providers\AppServiceProvider::class,
-    App\Providers\HealthCheckServiceProvider::class,
-    App\Providers\SelfReflectionGateProvider::class,
+    AppServiceProvider::class,
+    HealthCheckServiceProvider::class,
+    SelfReflectionGateProvider::class,
 ];
